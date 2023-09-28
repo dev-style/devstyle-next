@@ -141,31 +141,31 @@ Just follow these steps :
 
 <p align="left">
   <a href="https://twitter.com/_devstyle">
-    <img height="20" src="./src/assets/icons/twitter-white.png" />
+    <img height="20" src="./public/assets/icons/twitter-white.png" />
   </a>
   &nbsp;
   &nbsp;
   <a href="https://discord.gg/Hgq6UZH5">
-    <img height="20" src="./src/assets/icons/discord-white.png" />
+    <img height="20" src="./public/assets/icons/discord-white.png" />
   </a>
   &nbsp;
   &nbsp;
   <a href="https://api.whatsapp.com/send/?phone=237692650993&text=Hello%20_DevStyle">
-    <img height="20" src="./src/assets/icons/whatsapp-white.png" />
+    <img height="20" src="./public/assets/icons/whatsapp-white.png" />
   </a>
   &nbsp;
   &nbsp;
    <a href="https://www.facebook.com/devstyl">
-    <img height="20" src="./src/assets/icons/facebook-white.png" />
+    <img height="20" src="./public/assets/icons/facebook-white.png" />
   </a>
   &nbsp;
   &nbsp;
   <a href="https://www.instagram.com/_devstyle/">
-    <img height="20" src="./src/assets/icons/insta-white.png" />
+    <img height="20" src="./public/assets/icons/insta-white.png" />
   </a>
   &nbsp;
   &nbsp;
   <a href="https://www.tiktok.com/@_devstyle">
-    <img height="20" src="./src/assets/icons/tiktok-white.png" />
+    <img height="20" src="./public/assets/icons/tiktok-white.png" />
   </a>
 </p>

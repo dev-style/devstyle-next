@@ -1,22 +1,20 @@
 require("dotenv").config();
 import mongoose, { Document, Model, Schema } from "mongoose";
+import DiffPlugin from "mongoose-history-diff";
+import { INewsletter } from "../lib/interfaces";
 
-interface INewsletter extends Document {
-  email: string;
-  createdAt: Date;
-}
+const newsletterSchema: Schema<INewsletter> = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+  },
+  { timestamps: true }
+);
 
-const newsletterSchema: Schema<INewsletter> = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+newsletterSchema.plugin(DiffPlugin);
 
 export default mongoose.models.Newsletter ||
   mongoose.model("Newsletter", newsletterSchema);

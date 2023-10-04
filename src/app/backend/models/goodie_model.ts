@@ -1,87 +1,75 @@
 require("dotenv").config();
 import mongoose, { Document, Model, Schema } from "mongoose";
+import DiffPlugin from "mongoose-history-diff";
+import { IGoodie } from "../lib/interfaces";
 
-export interface IGoodie extends Document {
-  name: string;
-  description: string;
-  slug: string;
-  fromCollection: mongoose.Schema.Types.ObjectId;
-  promoPercentage: number;
-  price: number;
-  inPromo: boolean;
-  views: number;
-  size: Array<Object>;
-  images: Array<{
-    public_id: string;
-    url: string;
-  }>;
-  availableColors: Array<string>;
-  backgroundColors: Array<string>;
-  likes: number;
-  createdAt: any;
-}
-
-const goodieSchema: Schema<IGoodie> = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  slug: {
-    type: String,
-    required: true,
-    lowercase: true,
-    unique: true,
-  },
-  fromCollection: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Collection",
-    required: true,
-  },
-  promoPercentage: {
-    type: Number,
-  },
-  price: {
-    type: Number,
-    required: true,
-  },
-  inPromo: {
-    type: Boolean,
-    required: true,
-  },
-  views: {
-    type: Number,
-  },
-  size: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Size",
+const goodieSchema: Schema<IGoodie> = new mongoose.Schema(
+  {
+    name: {
+      type: String,
       required: true,
     },
-  ],
-  images: [
-    {
-      public_id: {
-        type: String,
-      },
-      url: {
-        type: String,
-      },
+    description: {
+      type: String,
+      required: true,
     },
-  ],
-  availableColors: [String],
-  backgroundColors: [String],
+    slug: {
+      type: String,
+      required: true,
+      lowercase: true,
+      unique: true,
+    },
+    fromCollection: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Collection",
+      required: true,
+    },
+    promoPercentage: {
+      type: Number,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    inPromo: {
+      type: Boolean,
+      required: true,
+    },
+    views: {
+      type: Number,
+    },
+    size: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Size",
+        required: true,
+      },
+    ],
+    images: [
+      {
+        public_id: {
+          type: String,
+        },
+        url: {
+          type: String,
+        },
+      },
+    ],
+    availableColors: [String],
+    backgroundColors: [String],
 
-  likes: {
-    type: Number,
+    likes: {
+      type: Number,
+    },
+    show: {
+      type: Boolean,
+      default: false,
+    },
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+
+  { timestamps: true }
+);
+
+goodieSchema.plugin(DiffPlugin);
 
 export default mongoose.models.Goodie || mongoose.model("Goodie", goodieSchema);

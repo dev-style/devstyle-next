@@ -1,28 +1,24 @@
 require("dotenv").config();
 import mongoose, { Document, Model, Schema } from "mongoose";
+import DiffPlugin from "mongoose-history-diff";
+import { IClient } from "../lib/interfaces";
 
+const clientSchema: Schema<IClient> = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    number: { type: Number, required: true },
+    from: {
+      type: String,
+      required: true,
+    },
+  },
 
-interface IClient extends Document {
-  name: string;
-  number: number;
-  from: string;
-  createdAt: Date;
-}
+  { timestamps: true }
+);
 
-const clientSchema:Schema<IClient> = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  number: { type: Number, required: true },
-  from: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+clientSchema.plugin(DiffPlugin);
 
 export default mongoose.models.Client || mongoose.model("Client", clientSchema);

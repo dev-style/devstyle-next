@@ -1,17 +1,9 @@
 require("dotenv").config();
 import mongoose, { Document, Model, Schema } from "mongoose";
+import DiffPlugin from "mongoose-history-diff";
+import { IPartner } from "../lib/interfaces";
 
-
-interface IPartner extends Document {
-  name: string;
-  logoColor: {};
-  logoWhite: {};
-  logoBlack: {};
-  link: string;
-  createdAt: Date;
-}
-
-const partnerSchema:Schema<IPartner> = new mongoose.Schema(
+const partnerSchema: Schema<IPartner> = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -24,12 +16,16 @@ const partnerSchema:Schema<IPartner> = new mongoose.Schema(
       type: String,
       required: true,
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
+    show: {
+      type: Boolean,
+      default: false,
     },
-  }
+  },
 
-  );
+  { timestamps: true }
+);
 
-export default mongoose.models.Partner || mongoose.model("Partner", partnerSchema);
+partnerSchema.plugin(DiffPlugin);
+
+export default mongoose.models.Partner ||
+  mongoose.model("Partner", partnerSchema);

@@ -1,25 +1,23 @@
 require("dotenv").config();
 import mongoose, { Document, Model, Schema } from "mongoose";
+import DiffPlugin from "mongoose-history-diff";
+import { IAnnouncement } from "../lib/interfaces";
 
-interface IAnnouncement extends Document {
-  text: string;
-  link: string;
-  createdAt: Date;
-}
+const announcementSchema: Schema<IAnnouncement> = new mongoose.Schema(
+  {
+    text: {
+      type: String,
+      required: true,
+    },
+    link: {
+      type: String,
+    },
+  },
 
-const announcementSchema: Schema<IAnnouncement> = new mongoose.Schema({
-  text: {
-    type: String,
-    required: true,
-  },
-  link: {
-    type: String,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  { timestamps: true }
+);
+
+announcementSchema.plugin(DiffPlugin);
 
 export default mongoose.models.Announcement ||
   mongoose.model("Announcement", announcementSchema);

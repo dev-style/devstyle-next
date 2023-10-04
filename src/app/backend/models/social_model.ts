@@ -1,13 +1,9 @@
 require("dotenv").config();
 import mongoose, { Document, Model, Schema } from "mongoose";
+import DiffPlugin from "mongoose-history-diff";
+import { ISocial } from "../lib/interfaces";
 
-interface ISocial extends Document {
-  id: number;
-  name: string;
-  createdAt: Date;
-}
-
-const socialSchema:Schema<ISocial> = new mongoose.Schema(
+const socialSchema: Schema<ISocial> = new mongoose.Schema(
   {
     id: {
       type: Number,
@@ -20,11 +16,11 @@ const socialSchema:Schema<ISocial> = new mongoose.Schema(
       type: String,
       required: true,
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-  }
+  },
+
+  { timestamps: true }
 );
+
+socialSchema.plugin(DiffPlugin);
 
 export default mongoose.models.Social || mongoose.model("Social", socialSchema);

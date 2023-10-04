@@ -1,27 +1,26 @@
 require("dotenv").config();
 import mongoose, { Document, Model, Schema } from "mongoose";
+import DiffPlugin from "mongoose-history-diff";
+import { IHeroSection } from "../lib/interfaces";
 
-interface IHeroSection extends Document {
-  text: string;
-  image: {};
-  createdAt: Date;
-}
-
-const heroSectionSchema:Schema<IHeroSection> = new mongoose.Schema(
+const heroSectionSchema: Schema<IHeroSection> = new mongoose.Schema(
   {
     text: {
       type: String,
       required: true,
     },
     image: {},
-    createdAt: {
-      type: Date,
-      default: Date.now,
+
+    show: {
+      type: Boolean,
+      default: false,
+    },
   },
-  }
-  
+
+  { timestamps: true }
 );
 
+heroSectionSchema.plugin(DiffPlugin);
 
-
-export default mongoose.models.HeroSection || mongoose.model("HeroSection", heroSectionSchema);
+export default mongoose.models.HeroSection ||
+  mongoose.model("HeroSection", heroSectionSchema);

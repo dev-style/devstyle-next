@@ -9,5 +9,11 @@ const nextConfig = (module.exports = {
       },
     ],
   },
+
+  env: {
+    DB_URI:
+      "mongodb+srv://Dev-scott:Scotty-dev-camer123@devstyle.45jjjdi.mongodb.net/devstyle?retryWrites=true&w=majority",
+    API_URL: "http://localhost:3000",
+  },
 });
 module.exports = nextConfig;

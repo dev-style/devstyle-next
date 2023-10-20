@@ -1,13 +1,18 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import Image from "next/image";
+import Link from "next/link";
 
-import { calculatePromoPrice, scrollToTop } from "../utils/utils.script";
-import "./goodieCard.styles.scss";
+import { IGoodie } from "@/app/lib/interfaces";
+import {
+  calculatePromoPrice,
+  scrollToTop,
+} from "@/app/(client)/lib/utils-script";
 import { ArrowForwardIosRounded } from "@mui/icons-material";
+import "./goodieCard.scss";
 
 const GoodieCard = ({
-  _id,
+  id,
   name,
   mainImage,
   price,
@@ -15,21 +20,27 @@ const GoodieCard = ({
   inPromo,
   backgroundColors,
   slug,
-}) => {
+}: IGoodie) => {
   return (
     <Box
       className="goodie-card-wrapper animate__animated animate__fadeIn"
-      key={_id}
+      key={id}
     >
       <Link
-        to={`/goodie/${slug}`}
+        href={`/goodie/${slug}`}
         style={{ textDecoration: "none" }}
         onClick={() => scrollToTop()}
       >
         <Box className="goodie-card-container">
           <Box className="top" padding={1.25} bgcolor={backgroundColors[0]}>
             {inPromo && <Box className="promo">-{promoPercentage}%</Box>}
-            <img src={mainImage.url} alt="goodie" className="image" />
+            <Image
+              src={mainImage.url}
+              alt="goodie"
+              className="image"
+              width={200}
+              height={200}
+            />
           </Box>
           <Box className="bottom" paddingX={2} paddingY={1}>
             <Typography className="name">{name}</Typography>

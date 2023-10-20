@@ -1,65 +1,92 @@
-interface Cart {
-  [key: string]: GoodieForCart;
+import mongoose from "mongoose";
+
+export interface ICart {
+  [key: string]: IGoodieForCart;
 }
 
-interface Goodie extends GoodieForCart {
+export interface IGoodie extends IGoodieForCart {
   availableColors: string[];
   likes: number;
   views: number;
 }
 
-interface GoodieForCart {
+export interface IGoodieForCart {
   cartID: string;
   id: string;
   slug: string;
   name: string;
-  mainImage: Url;
+  mainImage: IUrlWithColor;
   quantity: number;
   price: number;
   inPromo: boolean;
   promoPercentage: number;
-  images: Url[];
+  images: IUrlWithColor[];
   backgroundColors: string[];
   selectedColor?: string;
   selectedSize?: string;
-  fromCollection: CollectionForCart;
-  size: GoodieSize;
+  fromCollection: ICollectionForCart;
+  sizes: IGoodieSize[];
   color: string;
 }
 
-interface GoodieSize {
+export interface IUrlWithColor extends IUrl {
+  color: string;
+}
+export interface IGoodieSize {
   id: string;
   size: string;
 }
 
-interface CollectionForCart {
+export interface ICollectionForCart {
   id: string;
   slug: string;
   title: string;
 }
 
-interface Collection extends CollectionForCart {
+export interface ICollection extends ICollectionForCart {
   colors: string;
-  images: Url;
+  image: IUrl;
   views: number;
 }
 
-interface Url {
+export interface IUrl {
   url: string;
 }
 
-interface Announcement {
-  id: string;
+export interface IAnnouncement {
+  _id: string;
   link: string;
   text: string;
 }
 
-interface Partner {
+export interface IPartner {
   id: string;
   name: string;
-  logoColor: Url;
-  logoWhite: Url;
-  logoBlack: Url;
+  logoColor: IUrl;
+  logoWhite: IUrl;
+  logoBlack: IUrl;
   link: string;
   show: boolean;
+}
+
+export interface IAffiliation {
+  ambassadorId: mongoose.Schema.Types.ObjectId;
+  affiliateCode: string;
+  affiliateLink: string;
+  clicksCount: number;
+  createdAt: Date;
+}
+
+export interface IAmbassador {
+  id: string;
+  name: string;
+  image: IUrl;
+  social: (ISocial & { link: string })[];
+  colors: string;
+  show: boolean;
+}
+
+export interface ISocial {
+  id: number;
+  name: string;
 }

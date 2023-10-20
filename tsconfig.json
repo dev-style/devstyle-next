@@ -6,6 +6,10 @@
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
+    "types": [
+      "node",
+      "webpack-env" // here
+    ],
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",

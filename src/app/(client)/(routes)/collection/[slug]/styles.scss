@@ -1,0 +1,48 @@
+.collection-wrapper {
+  padding: 0 96px;
+  @media screen and (max-width: 1000px) {
+    padding: 0px;
+  }
+
+  .collection-hero-section-wrapper {
+    min-height: calc(100vh - 200px);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    .collection-hero-section-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      .text {
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 96px;
+        line-height: 125px;
+
+        @media screen and (max-width: 1000px) {
+          font-size: 45px;
+          line-height: 60px;
+        }
+
+        display: flex;
+        align-items: center;
+
+        color: #ffffff;
+
+        text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+        position: relative;
+        z-index: 5;
+      }
+      img {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        max-height: 95%;
+      }
+    }
+  }
+}

@@ -102,7 +102,7 @@ function CartContextProvider({
       );
     }
     cartDispatch({ type: "SET_CART", payload: { ...localStorageContent } });
-  });
+  }, []);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

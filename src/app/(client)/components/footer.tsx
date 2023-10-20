@@ -5,6 +5,7 @@ import { Box, Grid, Tooltip, Typography, useMediaQuery } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { toast } from "react-toastify";
+import { IPartner } from "@/app/lib/interfaces";
 
 import Spinner from "./spinner";
 
@@ -14,7 +15,7 @@ import "./footer.scss";
 
 const Footer = () => {
   const [isLoadingPartners, setIsLoadingPartners] = useState(true);
-  const [partners, setPartners] = useState<Partner[]>([]);
+  const [partners, setPartners] = useState<IPartner[]>([]);
 
   const match900 = useMediaQuery("(max-width:900px)");
 

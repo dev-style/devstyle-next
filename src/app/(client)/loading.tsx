@@ -1,7 +1,3 @@
-import React from "react";
-
-function loading() {
-  return <div>loading</div>;
+export default function LoadingPage() {
+  return <span className="loading loading-dots loading-lg m-auto block" />;
 }
-
-export default loading;

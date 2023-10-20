@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -19,14 +19,16 @@ import {
 } from "@mui/icons-material";
 
 import CartContext from "../contexts/cart/cartContext";
+import myAxios from "@/app/(client)/lib/axios.config";
 import "./nav.scss";
-// import myAxios from "../utils/axios.config";
 // import { analyticsEventTracker } from "../app";
 import {
   getCartCount,
   getTotalPrice,
   calculatePromoPrice,
 } from "@/app/(client)/lib/utils-script";
+import { IAnnouncement, ICart, IGoodieForCart } from "@/app/lib/interfaces";
+import { CartContent } from "../contexts/cart/cartInterface";
 
 const Nav = () => {
   const theme = useTheme();
@@ -34,7 +36,7 @@ const Nav = () => {
   const match = useMediaQuery("(max-width:1000px)");
   const match400 = useMediaQuery("(min-width:400px)");
 
-  const [announce, setAnnounce] = useState<Announcement>();
+  const [announce, setAnnounce] = useState<IAnnouncement>();
 
   const { cartContent: cart, cartDispatch } = useContext(CartContext);
   const handleSideNav = () => {
@@ -51,29 +53,28 @@ const Nav = () => {
     element?.classList.toggle("animate__slideInDown");
   };
 
-  // useEffect(() => {
-  //   myAxios
-  //     .get("/announcement")
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         setAnnounce(response.data.message);
-  //       } else {
-  //         console.log(response.data.message);
-  //         setAnnounce({});
-  //       }
-  //     })
-  //     .catch((error) => console.log(error));
-  // }, []);
+  useEffect(() => {
+    myAxios
+      .get("/announcement")
+      .then((response: any) => {
+        if (response.status === 200) {
+          setAnnounce(response.data.message);
+        } else {
+          console.log(response.data.message);
+        }
+      })
+      .catch((error: any) => console.log(error));
+  }, []);
 
-  // useEffect(() => {
-  //   let cartFromLocalStorage = JSON.parse(
-  //     localStorage.getItem("devStyle_cart") ?? ""
-  //   );
-  //   if (cartFromLocalStorage) {
-  //     setCart(cartFromLocalStorage);
-  //   }
-  // }, []);
-
+  useEffect(() => {
+    let cartFromLocalStorage = JSON.parse(
+      localStorage.getItem("devStyle_cart") ?? ""
+    ) as ICart;
+    if (cartFromLocalStorage) {
+      cartDispatch({ type: "SET_CART", payload: cartFromLocalStorage });
+    }
+  }, [cartDispatch]);
+  console.log(announce);
   return (
     <Box id="nav-wrapper" paddingX={match ? "10%" : 12} paddingY={4}>
       {/* Christmas Design 🎄🎅🏾*/}
@@ -216,12 +217,13 @@ const Nav = () => {
             </IconButton>
           )}
           <Box className="cart-button" onClick={() => handleSideNav()}>
+            {/* eslint-disable-next-line @next/next/no-img-element*/}
             <img src={"/assets/icons/cart.png"} alt="cart icon" />
             <span>{getCartCount(cart) ?? 0}</span>
           </Box>
         </Box>
       </Box>
-      {announce?.id && (
+      {announce?._id && (
         <Box className="notif-wrapper animate__animated animate__rotateInDownLeft">
           <a
             href={announce.link}
@@ -262,16 +264,16 @@ const Nav = () => {
           <Image
             src="/assets/images/devstyle-white-logo.png"
             alt="Devstyle logo"
-            fill={true}
-            objectFit="contain"
+            width={150}
+            height={150}
           />
 
           <IconButton onClick={() => handleDownNav()}>
             <Image
               src="/assets/icons/close.png"
               alt="close icon"
-              fill={true}
-              objectFit="contain"
+              width={30}
+              height={30}
             />
           </IconButton>
         </Box>
@@ -394,9 +396,9 @@ const Nav = () => {
               >
                 <Image
                   src={goodie.mainImage.url}
+                  objectFit="contain"
                   alt="goodie"
                   fill={true}
-                  objectFit="contain"
                 />
               </Box>
             </Box>

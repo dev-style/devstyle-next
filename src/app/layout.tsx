@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins, Roboto_Slab } from "next/font/google";
 import "./globals.css";
+import "animate.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -14,8 +15,11 @@ const robotoSlab = Roboto_Slab({
 });
 
 export const metadata: Metadata = {
-  title:
-    "_DevStyle | La premiere boutique dedié aux amoureux de la Tech #TT237",
+  title: {
+    template: "%s | La premiere boutique dedié aux amoureux de la Tech #TT237",
+    default:
+      "_DevStyle | La premiere boutique dedié aux amoureux de la Tech #TT237",
+  },
   description:
     "Devstyle est une platforme de vente des Tshirts, Stickers, Hoodies, Mugs, Hats, Sweatshirts, Polos, Posters, et Bracelets pour les amoureux de la Tech #TT237",
 };

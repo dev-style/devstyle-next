@@ -1,11 +1,11 @@
-export const importAll = (paths: { [index: string]: string }) => {
+import { ICart } from "@/app/lib/interfaces";
+
+export const importAll = (paths: string[]) => {
+  paths = paths.slice(0, paths.length / 2); // remove the extra long paths added by webpack
   let images: { [index: string]: string } = {};
-  Object(paths)
-    .keys()
-    .map(
-      (item: string, index: string) =>
-        (images[item.replace("./", "")] = paths[item])
-    );
+  paths.map(
+    (item: string, i: number) => (images[item.replace("./", "")] = paths[i])
+  );
   return images;
 };
 
@@ -22,7 +22,7 @@ export const scrollToTop = () => {
   }
 };
 
-export const getTotalPrice = (cart: Cart) => {
+export const getTotalPrice = (cart: ICart) => {
   let total = Object.values(cart).reduce(
     (acc, goodie, i) =>
       (acc +=
@@ -36,7 +36,7 @@ export const getTotalPrice = (cart: Cart) => {
   return total;
 };
 
-export const getCartCount = (cart: Cart) => {
+export const getCartCount = (cart: ICart) => {
   let count = Object.entries(cart).length;
   return count;
 };

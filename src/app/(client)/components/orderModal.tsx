@@ -1,12 +1,13 @@
+/* eslint-disable react/no-unescaped-entities */
 import * as React from "react";
 import { Box, Typography, Modal, Button, Divider } from "@mui/material";
 import { toast } from "react-toastify";
 
 import Spinner from "./spinner";
 
-import myAxios from "../utils/axios.config";
+import myAxios from "@/app/(client)/lib/axios.config";
 
-import "./orderModal.styles.scss";
+import "./orderModal.scss";
 
 const style = {
   position: "absolute",
@@ -21,8 +22,16 @@ const style = {
   p: 4,
 };
 
-const OrderModal = ({ open, handleClose, message = () => "" }) => {
-  const [number, setNumber] = React.useState(null);
+const OrderModal = ({
+  open,
+  handleClose,
+  message = () => "",
+}: {
+  open: boolean;
+  handleClose: () => void;
+  message?: () => string;
+}) => {
+  const [number, setNumber] = React.useState(0);
   const [isSending, setIsSending] = React.useState(false);
 
   const send = () => {
@@ -44,7 +53,7 @@ const OrderModal = ({ open, handleClose, message = () => "" }) => {
           number,
           description: `%0A%60%60%60%3C%20MA%20COMMANDE%20%2F%3E%60%60%60%F0%9F%9B%92%0A${message()}%5B%20%C3%A0%20ne%20pas%20supprimer%F0%9F%91%86%F0%9F%8F%BD%20%5D`,
         })
-        .then((response) => {
+        .then((response: any) => {
           if (response.status === 200) {
             window.localStorage.setItem(
               "_devStyle-order-number",
@@ -52,7 +61,7 @@ const OrderModal = ({ open, handleClose, message = () => "" }) => {
                 .split("")
                 .reduce(
                   (acc, val, i) =>
-                    (acc += String.fromCharCode(val.charCodeAt() + 3)),
+                    (acc += String.fromCharCode(val.charCodeAt(0) + 3)),
                   ""
                 )
             );
@@ -65,7 +74,7 @@ const OrderModal = ({ open, handleClose, message = () => "" }) => {
             );
             // console.log(response.data.message);
           } else {
-            toast.erreur(
+            toast.error(
               <div style={{ color: "#fff" }}>Une erreur est survenu</div>,
               {
                 style: { textAlign: "center" },
@@ -74,8 +83,8 @@ const OrderModal = ({ open, handleClose, message = () => "" }) => {
             console.log(response.data.message);
           }
         })
-        .catch((error) => {
-          toast.erreur(
+        .catch((error: any) => {
+          toast.error(
             <div style={{ color: "#fff" }}>
               Une erreur est survenu, réessayer
             </div>,
@@ -94,13 +103,13 @@ const OrderModal = ({ open, handleClose, message = () => "" }) => {
 
   const contact = () => {
     window
-      .open(
+      ?.open(
         `https://api.whatsapp.com/send/?phone=237692650993&text=%0A%60%60%60%3C%20MA%20COMMANDE%20%2F%3E%60%60%60%F0%9F%9B%92%0A${
           message() ?? ""
         }%5B%20%C3%A0%20ne%20pas%20supprimer%F0%9F%91%86%F0%9F%8F%BD%20%5D`,
         "_blank"
       )
-      .focus();
+      ?.focus();
   };
   React.useEffect(() => {
     let localNumber = window.localStorage.getItem("_devStyle-order-number");
@@ -111,7 +120,7 @@ const OrderModal = ({ open, handleClose, message = () => "" }) => {
             .split("")
             .reduce(
               (acc, val, i) =>
-                (acc += String.fromCharCode(val.charCodeAt() - 3)),
+                (acc += String.fromCharCode(val.charCodeAt(0) - 3)),
               ""
             )
         )
@@ -175,7 +184,7 @@ const OrderModal = ({ open, handleClose, message = () => "" }) => {
               placeholder="Numéro whatsapp valide"
               type={"number"}
               value={number}
-              onChange={(e) => setNumber(e.target.value)}
+              onChange={(e) => setNumber(Number(e.target.value))}
             />
             <Button
               className="button"

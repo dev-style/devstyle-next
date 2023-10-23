@@ -67,11 +67,15 @@ const Nav = () => {
   }, []);
 
   useEffect(() => {
-    let cartFromLocalStorage = JSON.parse(
-      localStorage.getItem("devStyle_cart") ?? ""
-    ) as ICart;
-    if (cartFromLocalStorage) {
-      cartDispatch({ type: "SET_CART", payload: cartFromLocalStorage });
+    try {
+      let cartFromLocalStorage = JSON.parse(
+        localStorage.getItem("devStyle_cart") ?? ""
+      ) as ICart;
+      if (cartFromLocalStorage) {
+        cartDispatch({ type: "SET_CART", payload: cartFromLocalStorage });
+      }
+    } catch (error) {
+      console.log(error);
     }
   }, [cartDispatch]);
   console.log(announce);

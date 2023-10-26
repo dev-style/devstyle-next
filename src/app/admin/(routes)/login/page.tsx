@@ -15,6 +15,7 @@ import {
 import Image from "next/image";
 import * as React from "react";
 
+import LockOpenIcon from "@mui/icons-material/LockOpen";
 export default function Page() {
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -28,7 +29,14 @@ export default function Page() {
 
   return (
     <Box className=" flex justify-center w-full h-[100vh] flex-col  md:flex-row ">
-      <Box className=" w-[100%] h-[50%]  bg-yellow-400 md:w-[100%] md:h-[100%] flex items-center justify-center ">
+      <Box
+        style={{
+          background: "url('/assets/images/login_bg.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center"
+        }}
+        className="  w-[100%] h-[50%]   md:w-[100%] md:h-[100%] flex items-center justify-center "
+      >
         <Box className="w-[90%] h-[90%] flex justify-center  flex-col items-center   ">
           <Box className="w-full  h-[70%] flex justify-center items-center">
             <img
@@ -50,6 +58,7 @@ export default function Page() {
       </Box>
       <Box className=" w-[100%] h-[50%] bg-white  md:w-[100%] md:h-[100%]  flex items-center justify-center">
         <Box className="max-w-[50%] w-full h-[90%]  bg-white flex items-center flex-col justify-center px-4 py-4 ">
+          <LockOpenIcon sx={{ fontSize: "30px", marginBottom: "10px" }} />
           <Typography className="text-gray font-bold text-2xl mt-2 mb-2">
             Bienvenue chez Devstyle admin
           </Typography>

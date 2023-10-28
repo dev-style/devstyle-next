@@ -13,6 +13,7 @@ import {
   Typography
 } from "@mui/material";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -58,6 +59,8 @@ export default function Page() {
             style: { textAlign: "center" }
           }
         );
+
+        return redirect("/admin");
       }
       if (error) {
         if ("data" in error) {

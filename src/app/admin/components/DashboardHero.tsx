@@ -1,7 +1,26 @@
-const DashboardHero = () =>{
-    return (
-        <div>Voici le dashboard</div>
-    )
-}
+import { useState } from "react";
+import DashboardHeader from "./DashboardHeader";
 
-export default DashboardHero
+type Props = {
+  isDashboard: boolean;
+};
+
+const DashboardHero = ({ isDashboard }: Props) => {
+
+    const [open , setOpen] = useState(false)
+
+  return (
+    <div>
+    <DashboardHeader open={open} setOpen={setOpen} />
+    {
+      isDashboard && (
+        <div>
+            salut
+        </div>
+      )
+    }
+  </div>
+  )
+};
+
+export default DashboardHero;

@@ -7,17 +7,19 @@ import DashboardHero from "./components/DashboardHero";
 
 const page = () => {
   return (
-    <div>
-      <div className="flex min-h-screen">
-        <div className="1500px:w-[16%] w-1/5">
-          <AdminSidebar />
-        </div>
+    <Protected>
+      <div>
+        <div className="flex min-h-screen">
+          <div className="1500px:w-[16%] w-1/5">
+            <AdminSidebar />
+          </div>
 
-        <div className="w-[85%]">
-          <DashboardHero isDashboard={true} />
+          <div className="w-[85%]">
+            <DashboardHero isDashboard={true} />
+          </div>
         </div>
       </div>
-    </div>
+    </Protected>
   );
 };
 

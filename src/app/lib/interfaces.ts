@@ -12,7 +12,7 @@ export interface IGoodie extends IGoodieForCart {
 
 export interface IGoodieForCart {
   cartID: string;
-  id: string;
+  _id: string;
   slug: string;
   name: string;
   mainImage: IUrlWithColor;
@@ -33,12 +33,12 @@ export interface IUrlWithColor extends IUrl {
   color: string;
 }
 export interface IGoodieSize {
-  id: string;
+  _id: string;
   size: string;
 }
 
 export interface ICollectionForCart {
-  id: string;
+  _id: string;
   slug: string;
   title: string;
 }
@@ -60,7 +60,7 @@ export interface IAnnouncement {
 }
 
 export interface IPartner {
-  id: string;
+  _id: string;
   name: string;
   logoColor: IUrl;
   logoWhite: IUrl;
@@ -70,6 +70,7 @@ export interface IPartner {
 }
 
 export interface IAffiliation {
+  _id: string;
   ambassadorId: mongoose.Schema.Types.ObjectId;
   affiliateCode: string;
   affiliateLink: string;
@@ -78,7 +79,7 @@ export interface IAffiliation {
 }
 
 export interface IAmbassador {
-  id: string;
+  _id: string;
   name: string;
   image: IUrl;
   social: (ISocial & { link: string })[];
@@ -87,6 +88,6 @@ export interface IAmbassador {
 }
 
 export interface ISocial {
-  id: number;
+  _id: number;
   name: string;
 }

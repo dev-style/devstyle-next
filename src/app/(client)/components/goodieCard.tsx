@@ -12,7 +12,7 @@ import { ArrowForwardIosRounded } from "@mui/icons-material";
 import "./goodieCard.scss";
 
 const GoodieCard = ({
-  id,
+  _id,
   name,
   mainImage,
   price,
@@ -24,7 +24,7 @@ const GoodieCard = ({
   return (
     <Box
       className="goodie-card-wrapper animate__animated animate__fadeIn"
-      key={id}
+      key={_id}
     >
       <Link
         href={`/goodie/${slug}`}
@@ -34,13 +34,7 @@ const GoodieCard = ({
         <Box className="goodie-card-container">
           <Box className="top" padding={1.25} bgcolor={backgroundColors[0]}>
             {inPromo && <Box className="promo">-{promoPercentage}%</Box>}
-            <Image
-              src={mainImage.url}
-              alt="goodie"
-              className="image"
-              width={200}
-              height={200}
-            />
+            <img src={mainImage.url} alt="goodie" className="image" />
           </Box>
           <Box className="bottom" paddingX={2} paddingY={1}>
             <Typography className="name">{name}</Typography>

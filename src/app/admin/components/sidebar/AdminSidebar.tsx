@@ -1,29 +1,13 @@
 import { FC, useEffect, useState } from "react";
-import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
+import { ProSidebar, SubMenu , Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography } from "@mui/material";
 import "react-pro-sidebar/dist/css/styles.css";
 
 import avatarDefault from "../../../../../public/assets/images/avatar.png";
 
 
-import {
-  HomeOutlinedIcon,
-  ArrowForwardIosIcon,
-  ArrowBackIosIcon,
-  PeopleOutlinedIcon,
-  ReceiptOutlinedIcon,
-  BarChartOutlinedIcon,
-  MapOutlinedIcon,
-  GroupsIcon,
-  OndemandVideoIcon,
-  VideoCallIcon,
-  WebIcon,
-  QuizIcon,
-  WysiwygIcon,
-  ManageHistoryIcon,
-  SettingsIcon,
-  ExitToAppIcon
-} from "./Icon";
+import {GroupAddIcon ,RecentActorsIcon,ArrowForwardIosIcon,ExitToAppIcon, AssessmentIcon , BarChartIcon ,ChecklistRtlIcon,Diversity3Icon, ArrowBackIosIcon , HomeOutlinedIcon ,AddCircleIcon, GroupsIcon} from "./Icon"
+
 import { useSelector } from "react-redux";
 import Link from "next/link";
 import Image from "next/image";
@@ -168,6 +152,9 @@ const Sidebar = () => {
           )}
 
 <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+
+
+
             <Item
               title="Dashboard"
               to="/admin"
@@ -183,99 +170,49 @@ const Sidebar = () => {
             >
               {!isCollapsed && "Data"}
             </Typography>
+            
+            <SubMenu  title={!isCollapsed? "USER":""}  icon={<GroupsIcon />}    selected={selected}
+              setSelected={setSelected}>
+
             <Item
-              title="Users"
+              title="Create users"
               to="/admin/users"
-              icon={<GroupsIcon />}
+              icon={<GroupAddIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+              />
+            <Item
+              title="List users"
+              to="/admin/users"
+              icon={<RecentActorsIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              />
+              </SubMenu>
 
-            <Item
-              title="Affiliations"
-              to="/admin/affiliations"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Ambassadors"
-              to="/admin/ambassadors"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Collections"
-              to="/admin/collections"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Orders"
-              to="/admin/orders"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Sizes"
-              to="/admin/sizes"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Socials"
-              to="/admin/socials"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Partners"
-              to="/admin/partners"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Announcements"
-              to="/admin/announcements"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Partners"
-              to="/admin/partners"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Goodies"
-              to="/admin/goodies"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+         
+            <SubMenu  title={!isCollapsed? "GOODIES":""}  icon={<GroupsIcon />}    selected={selected}
+              setSelected={setSelected}>
 
-            <Typography
-              variant="h5"
-              className="!text-[18px] text-black dark:text-[#ffffffc1] capitalize !font-[400]"
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              {!isCollapsed && "Content"}
-            </Typography>
             <Item
               title="Create goodie"
-              to="/admin/create-goodie"
-              icon={<VideoCallIcon />}
+              to="/admin/goodie"
+              icon={<AddCircleIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+              />
+            <Item
+              title="List goodies"
+              to="/admin/users"
+              icon={<ChecklistRtlIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              />
+              </SubMenu>
+
+         
+
+       
            
            
 
@@ -289,7 +226,7 @@ const Sidebar = () => {
             <Item
               title="Manage Team"
               to="/admin/team"
-              icon={<PeopleOutlinedIcon />}
+              icon={<Diversity3Icon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -304,14 +241,14 @@ const Sidebar = () => {
             <Item
               title="goodies Analytics"
               to="/admin/goodies-analytics"
-              icon={<BarChartOutlinedIcon />}
+              icon={<AssessmentIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Orders Analytics"
               to="/admin/orders-analytics"
-              icon={<MapOutlinedIcon />}
+              icon={<BarChartIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -319,7 +256,7 @@ const Sidebar = () => {
             <Item
               title="Users Analytics"
               to="/admin/users-analytics"
-              icon={<ManageHistoryIcon />}
+              icon={<AssessmentIcon />}
               selected={selected}
               setSelected={setSelected}
             />

@@ -1,35 +1,30 @@
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
-import GroupsIcon from "@mui/icons-material/Groups";
-import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
-import VideoCallIcon from "@mui/icons-material/VideoCall";
-import WebIcon from "@mui/icons-material/Web";
-import QuizIcon from "@mui/icons-material/Quiz";
-import WysiwygIcon from "@mui/icons-material/Wysiwyg";
-import ManageHistoryIcon from "@mui/icons-material/ManageHistory";
-import SettingsIcon from "@mui/icons-material/Settings";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import RecentActorsIcon from '@mui/icons-material/RecentActors';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import GroupsIcon from '@mui/icons-material/Groups';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ChecklistRtlIcon from '@mui/icons-material/ChecklistRtl';
+import Diversity3Icon from '@mui/icons-material/Diversity3';
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp'
+
 
 export {
-    HomeOutlinedIcon,
+
+  GroupAddIcon,
+  RecentActorsIcon,
   ArrowForwardIosIcon,
   ArrowBackIosIcon,
-  PeopleOutlinedIcon,
-  ReceiptOutlinedIcon,
-  BarChartOutlinedIcon,
-  MapOutlinedIcon,
+  HomeOutlinedIcon,
   GroupsIcon,
-  OndemandVideoIcon,
-  VideoCallIcon,
-  WebIcon,
-  QuizIcon,
-  WysiwygIcon,
-  ManageHistoryIcon,
-  SettingsIcon,
-  ExitToAppIcon,
+  AddCircleIcon,
+  ChecklistRtlIcon,
+  Diversity3Icon,
+  AssessmentIcon,
+  BarChartIcon,
+  ExitToAppIcon
+
 }

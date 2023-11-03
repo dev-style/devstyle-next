@@ -1,6 +1,13 @@
 .footer-wrapper {
   background-color: #220f00;
   height: auto;
+  > div {
+    padding: 45px 80px;
+
+    @media screen and (max-width: 900px) {
+      padding: 45px;
+    }
+  }
   .footer-container {
     padding-bottom: 150px;
     color: white;

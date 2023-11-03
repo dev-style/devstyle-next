@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 
 import React, { useState } from "react";
@@ -6,66 +7,66 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 
 import Spinner from "./spinner";
+import myAxios from "@/app/(client)/lib/axios.config";
 
 import "./newsletter.scss";
-// import myAxios from "../utils/axios.config";
-// import { analyticsEventTracker } from "../app";
+import { analyticsEventTracker } from "@/app/(client)/lib/google-analytics";
 
 const Newsletter = () => {
   const [email, setEmail] = useState("");
   const [isSubscribing, setIsSubscribing] = useState(false);
   const match900 = useMediaQuery("(max-width:900px)");
 
-  // const subscribe = () => {
-  //   setIsSubscribing(true);
-  //   if (!email) {
-  //     toast.error(
-  //       <div style={{ color: "#fff" }}> Entrer une email valide</div>,
-  //       {
-  //         style: { textAlign: "center" },
-  //       }
-  //     );
-  //     setIsSubscribing(false);
-  //   } else {
-  //     analyticsEventTracker("CONTACT")("Newsletter");
-  //     myAxios
-  //       .post("/newsletter/save", { email: email })
-  //       .then((response) => {
-  //         if (response.status === 200) {
-  //           toast.success(
-  //             <div style={{ color: "#fff" }}>Bienvenue à bord 🎉</div>,
-  //             {
-  //               style: { textAlign: "center" },
-  //             }
-  //           );
-  //           console.log(response.data.message);
-  //         } else {
-  //           toast.info(
-  //             <div style={{ color: "#fff" }}>
-  //               Vous êtes déjà l'un des nôtres 😉
-  //             </div>,
-  //             {
-  //               style: { textAlign: "center" },
-  //             }
-  //           );
-  //           console.log(response.data.message);
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         if (error.status === 500) {
-  //           console.log("hello checked");
-  //         }
-  //         toast.error(<div style={{ color: "#fff" }}>{error.message}</div>, {
-  //           style: { textAlign: "center" },
-  //         });
-  //         console.log(error);
-  //       })
-  //       .finally(() => {
-  //         setEmail("");
-  //         setIsSubscribing(false);
-  //       });
-  //   }
-  // };
+  const subscribe = () => {
+    setIsSubscribing(true);
+    if (!email) {
+      toast.error(
+        <div style={{ color: "#fff" }}> Entrer une email valide</div>,
+        {
+          style: { textAlign: "center" },
+        }
+      );
+      setIsSubscribing(false);
+    } else {
+      analyticsEventTracker("CONTACT")("Newsletter");
+      myAxios
+        .post("/newsletter/save", { email: email })
+        .then((response) => {
+          if (response.status === 200) {
+            toast.success(
+              <div style={{ color: "#fff" }}>Bienvenue à bord 🎉</div>,
+              {
+                style: { textAlign: "center" },
+              }
+            );
+            console.log(response.data.message);
+          } else {
+            toast.info(
+              <div style={{ color: "#fff" }}>
+                Vous êtes déjà l'un des nôtres 😉
+              </div>,
+              {
+                style: { textAlign: "center" },
+              }
+            );
+            console.log(response.data.message);
+          }
+        })
+        .catch((error) => {
+          if (error.status === 500) {
+            console.log("hello checked");
+          }
+          toast.error(<div style={{ color: "#fff" }}>{error.message}</div>, {
+            style: { textAlign: "center" },
+          });
+          console.log(error);
+        })
+        .finally(() => {
+          setEmail("");
+          setIsSubscribing(false);
+        });
+    }
+  };
   return (
     <Box
       className="newsletter-wrapper"
@@ -124,7 +125,7 @@ const Newsletter = () => {
           <Button
             className="button"
             disabled={isSubscribing}
-            // onClick={() => subscribe()}
+            onClick={() => subscribe()}
           >
             {isSubscribing ? (
               <Spinner size={25} thickness={3} color={"white"} />

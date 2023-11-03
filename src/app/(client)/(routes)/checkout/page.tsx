@@ -169,7 +169,7 @@ const Checkout = () => {
     const cartDescription = Object.values(cartContent).reduce(
       (acc, goodie, i) => {
         return (acc += `
-*ID:* ${goodie.id} ;
+*ID:* ${goodie._id} ;
 *Name:* ${goodie.name} ;
 *Link:* https://dev-style.com/goodie/${goodie.slug} ;
 *Collection:* ${goodie.fromCollection.title} ;

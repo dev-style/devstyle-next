@@ -27,8 +27,7 @@ import {
   getTotalPrice,
   calculatePromoPrice,
 } from "@/app/(client)/lib/utils-script";
-import { IAnnouncement, ICart, IGoodieForCart } from "@/app/lib/interfaces";
-import { CartContent } from "../contexts/cart/cartInterface";
+import { IAnnouncement, ICart } from "@/app/lib/interfaces";
 
 const Nav = () => {
   const theme = useTheme();
@@ -67,14 +66,17 @@ const Nav = () => {
   }, []);
 
   useEffect(() => {
-    let cartFromLocalStorage = JSON.parse(
-      localStorage.getItem("devStyle_cart") ?? ""
-    ) as ICart;
-    if (cartFromLocalStorage) {
-      cartDispatch({ type: "SET_CART", payload: cartFromLocalStorage });
+    try {
+      let cartFromLocalStorage = JSON.parse(
+        localStorage.getItem("devStyle_cart") ?? ""
+      ) as ICart;
+      if (cartFromLocalStorage) {
+        cartDispatch({ type: "SET_CART", payload: cartFromLocalStorage });
+      }
+    } catch (error) {
+      console.log(error);
     }
   }, [cartDispatch]);
-  console.log(announce);
   return (
     <Box id="nav-wrapper" paddingX={match ? "10%" : 12} paddingY={4}>
       {/* Christmas Design 🎄🎅🏾*/}

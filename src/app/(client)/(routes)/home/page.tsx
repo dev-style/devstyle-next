@@ -18,10 +18,9 @@ import GoodieCard from "@/app/(client)/components/goodieCard";
 import GoodieCardSkeleton from "@/app/(client)/components/goodieCardSkeleton";
 import Spinner from "@/app/(client)/components/spinner";
 
-import { importAll } from "@/app/(client)/lib/utils-script";
-import { scrollToTop } from "@/app/(client)/lib/utils-script";
+import { importAll, scrollToTop } from "@/app/(client)/lib/utils-script";
+import myAxios from "@/app/(client)/lib/axios.config";
 import "./style.scss";
-// import myAxios from "../utils/axios.config";
 // import { analyticsEventTracker } from "../app";
 
 const Home = () => {
@@ -107,68 +106,68 @@ const Home = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   myAxios
-  //     .get("/collection/all")
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         setCollections(response.data.message);
-  //       } else {
-  //         console.log(response.data.message);
-  //         setCollections([]);
-  //       }
-  //     })
-  //     .catch((error) => console.log(error))
-  //     .finally(() => setIsLoadingCollections(false));
-  // }, []);
+  useEffect(() => {
+    myAxios
+      .get("/collection/all")
+      .then((response) => {
+        if (response.status === 200) {
+          setCollections(response.data.message);
+        } else {
+          console.log(response.data.message);
+          setCollections([]);
+        }
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoadingCollections(false));
+  }, []);
 
-  // useEffect(() => {
-  //   myAxios
-  //     .get("/goodies/hot-goodies")
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         setTrendingGoodies(response.data.message);
-  //       } else {
-  //         console.log(response.data.message);
-  //         setTrendingGoodies([]);
-  //       }
-  //     })
-  //     .catch((error) => console.log(error))
-  //     .finally(() => setIsLoadingTrendingGoodies(false));
-  // }, []);
+  useEffect(() => {
+    myAxios
+      .get("/goodies/hot-goodies")
+      .then((response) => {
+        if (response.status === 200) {
+          setTrendingGoodies(response.data.message);
+        } else {
+          console.log(response.data.message);
+          setTrendingGoodies([]);
+        }
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoadingTrendingGoodies(false));
+  }, []);
 
-  // useEffect(() => {
-  //   myAxios
-  //     .get("/goodies/new-goodies")
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         setNewGoodies(response.data.message);
-  //       } else {
-  //         console.log(response.data.message);
-  //         setNewGoodies([]);
-  //       }
-  //     })
-  //     .catch((error) => console.log(error))
-  //     .finally(() => setIsLoadingNewGoodies(false));
-  // }, []);
+  useEffect(() => {
+    myAxios
+      .get("/goodies/new-goodies")
+      .then((response) => {
+        if (response.status === 200) {
+          setNewGoodies(response.data.message);
+        } else {
+          console.log(response.data.message);
+          setNewGoodies([]);
+        }
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoadingNewGoodies(false));
+  }, []);
 
-  // useEffect(() => {
-  //   myAxios
-  //     .get("/hero/all")
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         setHeroSection((prevState) => [
-  //           ...prevState,
-  //           ...response.data.message,
-  //         ]);
-  //       } else {
-  //         console.log(response.data.message);
-  //         setHeroSection((prevState) => [...prevState]);
-  //       }
-  //     })
-  //     .catch((error) => console.log(error));
-  //   // .finally(() => setIsLoadingHeroSection(false));
-  // }, []);
+  useEffect(() => {
+    myAxios
+      .get("/hero/all")
+      .then((response) => {
+        if (response.status === 200) {
+          setHeroSection((prevState) => [
+            ...prevState,
+            ...response.data.message,
+          ]);
+        } else {
+          console.log(response.data.message);
+          setHeroSection((prevState) => [...prevState]);
+        }
+      })
+      .catch((error) => console.log(error));
+    // .finally(() => setIsLoadingHeroSection(false));
+  }, []);
 
   useEffect(() => {
     if (heroSection.length > 1) {
@@ -279,6 +278,26 @@ const Home = () => {
                   <Image
                     src={"/assets/icons/twitter.png"}
                     alt="devstyle twitter icon"
+                    fill={true}
+                    objectFit="contain"
+                  />
+                </Box>
+              </a>
+              <a
+                target="_blank"
+                onClick={() => {
+                  // analyticsEventTracker("SOCIAL")("twitter");
+                }}
+                rel="noopener noreferrer"
+                href="https://www.linkedin.com/company/devstyle"
+              >
+                <Box
+                  position={"relative"}
+                  style={{ height: "24px", width: "24px" }}
+                >
+                  <Image
+                    src={"/assets/icons/linkedin.png"}
+                    alt="devstyle linkedin icon"
                     fill={true}
                     objectFit="contain"
                   />
@@ -522,7 +541,7 @@ const Home = () => {
                   item
                   xs={12}
                   lg={i === collections.length - 1 ? 12 : 6}
-                  key={i + "" + collection.id}
+                  key={i + "" + collection._id}
                 >
                   <Link
                     href={`/collection/${collection.slug}`}
@@ -579,7 +598,8 @@ const Home = () => {
                         </Button>
                       </Grid>
                       <Grid item xs={2} className="collection-image-container">
-                        <Image
+                        {/*eslint-disable-next-line @next/next/no-img-element */}
+                        <img
                           className="collection-image"
                           src={collection.image.url}
                           alt={collection.title + " image"}
@@ -676,7 +696,7 @@ const Home = () => {
             ) : (
               newGoodies.map((goodie, i) => (
                 <Grid
-                  key={i + " " + goodie.id}
+                  key={i + " " + goodie._id}
                   item
                   xs={12}
                   md={6}
@@ -774,7 +794,7 @@ const Home = () => {
             ) : (
               trendingGoodies.map((goodie, i) => (
                 <Grid
-                  key={i + " " + goodie.id}
+                  key={i + " " + goodie._id}
                   item
                   xs={12}
                   md={6}

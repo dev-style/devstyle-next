@@ -1,6 +1,7 @@
 "use client";
 
 import { useReducer, useContext, useEffect } from "react";
+import ReactGA from "react-ga";
 import CartContext from "./cartContext";
 
 import {
@@ -10,6 +11,7 @@ import {
   CartContent,
 } from "./cartInterface";
 import { toast } from "react-toastify";
+import { usePathname } from "next/navigation";
 
 const cartReducer = (state: State, action: Action) => {
   switch (action.type) {
@@ -30,11 +32,12 @@ const cartReducer = (state: State, action: Action) => {
       }
 
       localStorage.setItem("devStyle_cart", JSON.stringify(copyCart));
-
-      //   toast.info(<div style={{ color: "#fff" }}> Dans le panier</div>, {
-      //     icon: "🗑️",
-      //     style: { textAlign: "center" },
-      //   });
+      console.log(
+        toast.info(<div style={{ color: "#fff" }}> Dans le panier</div>, {
+          icon: "🗑️",
+          style: { textAlign: "center" },
+        })
+      );
 
       return { cartContent: copyCart, cartDispatch: state.cartDispatch };
     }
@@ -93,6 +96,13 @@ function CartContextProvider({
     cartContent: cartContentState.cartContent,
     cartDispatch,
   };
+
+  ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID as string);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    ReactGA.pageview(pathname);
+  }, [pathname]);
 
   useEffect(() => {
     let localStorageContent = {};

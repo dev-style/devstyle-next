@@ -86,8 +86,8 @@ if(data){
               type="name"
               name=""
               required
-              value=""
-              onChange={(e: any) => {}}
+              value={goodieInfo.name}
+              onChange={(e: any) => setGoodieInfo({...goodieInfo , name:e.target.value}) }
               id="name"
               placeholder="Best goodie ever"
               className={`${styles.input}`}
@@ -101,12 +101,12 @@ if(data){
             <textarea
               name=""
               id=""
-              cols="30"
-              rows="8"
+              cols={30}
+              rows={8}
               placeholder="Write something amazing ..."
               className={`${styles.input} !h-min !py-2`}
-              value=""
-              onChange={(e: any) => {}}
+              value={goodieInfo.description}
+              onChange={(e: any) => setGoodieInfo({ ...goodieInfo , description :e.target.value}) }
             />
           </div>
           <br />
@@ -121,8 +121,8 @@ if(data){
                 required
                 name=""
                 value=""
-                onChange={(e: any) => {}}
-                id="tags"
+                onChange={(e: any) => setGoodieInfo({ ...goodieInfo , slug :e.target.value}) }
+                id="slug"
                 placeholder="MERN,Next 13,Socket io,tailwind css,LMS"
                 className={`
             ${styles.input}`}
@@ -134,10 +134,10 @@ if(data){
               </label>
               <select
                 name=""
-                id=""
+                id="collection"
                 className={`${styles.input}`}
-                value=""
-                onChange={(e: any) => {}}
+                value={goodieInfo.fromCollection}
+                onChange={(e: any) => setGoodieInfo({...goodieInfo , fromCollection:e.target.value})}
               >
                 <option value="">Select Collection</option>
                 {collections &&
@@ -159,8 +159,8 @@ if(data){
                 type="number"
                 name=""
                 required
-                value=""
-                onChange={(e: any) => {}}
+                value={goodieInfo.price}
+                onChange={(e: any) => setGoodieInfo({...goodieInfo , price:e.target.value})}
                 id="price"
                 placeholder="29"
                 className={`
@@ -174,9 +174,9 @@ if(data){
               <input
                 type="number"
                 name=""
-                value=""
-                onChange={(e: any) => {}}
-                id="price"
+                value={goodieInfo.promoPercentage}
+                onChange={(e: any) => setGoodieInfo({...goodieInfo , promoPercentage:e.target.value}) }
+                id="Pro percentage"
                 placeholder="79"
                 className={`
             ${styles.input}`}
@@ -192,9 +192,9 @@ if(data){
                 type="number"
                 name=""
                 required
-                value=""
-                onChange={(e: any) => {}}
-                id="price"
+                value={goodieInfo.views}
+                onChange={(e: any) => setGoodieInfo({...goodieInfo , views:e.target.value}) }
+                id="views"
                 placeholder="29"
                 className={`
             ${styles.input}`}
@@ -223,8 +223,8 @@ if(data){
                 name=""
                 id=""
                 className={`${styles.input}`}
-                value=""
-                onChange={(e: any) => {}}
+                value={goodieInfo.show}
+                onChange={(e: any) => setGoodieInfo({...goodieInfo , show:e.target.value}) }
               >
                 <option value="true">True</option>
                 <option value="False">False</option>
@@ -236,8 +236,8 @@ if(data){
                 name=""
                 id=""
                 className={`${styles.input}`}
-                value=""
-                onChange={(e: any) => {}}
+                value={goodieInfo.inPromo}
+                onChange={(e: any) => setGoodieInfo({...goodieInfo , inPromo:e.target.value}) }
               >
                 <option value="true">True</option>
                 <option value="False">False</option>
@@ -277,6 +277,39 @@ if(data){
             )}
           </label>
         </div>
+
+        <br />
+
+        
+        <div className="w-full flex justify-between">
+            <div className="w-[45%]">
+              <label className={`${styles.label}`}>Likes</label>
+              <input
+                type="number"
+                name=""
+                required
+                value={goodieInfo.views}
+                onChange={(e: any) => setGoodieInfo({...goodieInfo , likes:e.target.value}) }
+                id="likes"
+                placeholder="29"
+                className={`
+            ${styles.input}`}
+              />
+            </div>
+            <div className="w-[50%]">
+              <label className={`${styles.label} w-[50%]`}>Sizes</label>
+              <input
+                type="number"
+                name=""
+                value=""
+                onChange={(e: any) => {}}
+                id="price"
+                placeholder="79"
+                className={`
+            ${styles.input}`}
+              />
+            </div>
+          </div>
 
         </form>
       </div>

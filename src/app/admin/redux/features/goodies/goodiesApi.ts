@@ -4,7 +4,7 @@ export const goodiesApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createGoodie: builder.mutation({
       query: (data) => ({
-        url: "create-goodie",
+        url: "goodie/create",
         method: "POST",
         body: data,
         credentials: "include" as const

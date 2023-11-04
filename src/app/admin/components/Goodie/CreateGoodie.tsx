@@ -1,8 +1,45 @@
 import { useEffect, useState } from "react";
 import { styles } from "../../styles/style";
 import { useGetCollectionsQuery } from "../../redux/features/Collections/collectionsApi";
+import { useCreateGoodieMutation } from "../../redux/features/goodies/goodiesApi";
+import { toast } from "react-toastify";
 
-const CreateGoodie = () => {
+type Props ={
+
+}
+
+const CreateGoodie = (props:Props) => {
+
+  const [createGoodie , {isLoading , isSuccess , error}] = useCreateGoodieMutation();
+
+
+  useEffect(()=>{
+    if(isSuccess){
+      toast.success(
+        <div style={{ color: "#131010", backgroundColor: "green" }}>
+          success
+        </div>,
+        {
+          icon: "🌐",
+          style: { textAlign: "center" }
+        }
+      );
+    }
+    if(error){
+
+      const errorMessage = error as any;
+      toast.error(
+        <div style={{ color: "#131010", backgroundColor: "green" }}>
+          {errorMessage.data.message}
+        </div>,
+        {
+          icon: "🌐",
+          style: { textAlign: "center" }
+        }
+      );
+
+    }
+  })
 
     const [dragging, setDragging] = useState(false);
     const { data } = useGetCollectionsQuery({});
@@ -75,15 +112,23 @@ if(data){
         }
       };
     
+      
+      const handleGoodieCreate = async (e:any) =>{
+        const data = goodieInfo;
+        console.log("Les donne du goodie a cree sont ",data)
+        if(!isLoading){
+          await createGoodie(data);
+        }
+      }
 
   return (
     <div className="flex  w-full min-h-screen py-10 justify-center items-center">
       <div className="w-[80%] h-[90%]">
-        <form>
-          <div>
+        <form className="mt-24">
+          <div >
             <label htmlFor="">Goodie Name</label>
             <input
-              type="name"
+              type="text"
               name=""
               required
               value={goodieInfo.name}
@@ -120,7 +165,7 @@ if(data){
                 type="text"
                 required
                 name=""
-                value=""
+                value={goodieInfo.slug}
                 onChange={(e: any) => setGoodieInfo({ ...goodieInfo , slug :e.target.value}) }
                 id="slug"
                 placeholder="MERN,Next 13,Socket io,tailwind css,LMS"
@@ -142,7 +187,7 @@ if(data){
                 <option value="">Select Collection</option>
                 {collections &&
                 collections.map((item: any) => (
-                  <option value={item.title} key={item._id}>
+                  <option value={item._id} key={item._id}>
                     {item.title}
                   </option>
                 ))}
@@ -186,11 +231,11 @@ if(data){
           <br />
 
           <div className="w-full flex justify-between">
-            <div className="w-[45%]">
+            <div className="w-[100%]">
               <label className={`${styles.label}`}>Views</label>
               <input
                 type="number"
-                name=""
+                name="views"
                 required
                 value={goodieInfo.views}
                 onChange={(e: any) => setGoodieInfo({...goodieInfo , views:e.target.value}) }
@@ -200,20 +245,40 @@ if(data){
             ${styles.input}`}
               />
             </div>
+       
+          </div>
+          <br />
+
+          <div className="w-full flex justify-between">
             <div className="w-[50%]">
-              <label className={`${styles.label} w-[50%]`}>Likes</label>
+              <label className={`${styles.label}`}>availableColors</label>
               <input
-                type="number"
+                type="text"
+                name="availableColors"
+                required
+                value={goodieInfo.availableColors}
+                onChange={(e: any) => setGoodieInfo({...goodieInfo , availableColors:[e.target.value]}) }
+                id="availableColors"
+                placeholder="29"
+                className={`
+            ${styles.input}`}
+              />
+            </div>
+            <div className="w-[45%]">
+              <label className={`${styles.label} w-[50%]`}>backgroundColors</label>
+              <input
+                type="text"
                 name=""
-                value=""
-                onChange={(e: any) => {}}
-                id="price"
+                value={goodieInfo.backgroundColors}
+                onChange={(e: any) => setGoodieInfo({...goodieInfo , backgroundColors:[e.target.value]})}
+                id="backgroundColors"
                 placeholder="79"
                 className={`
             ${styles.input}`}
               />
             </div>
           </div>
+
           <br />
 
           <div className="w-full flex justify-between">
@@ -288,7 +353,7 @@ if(data){
                 type="number"
                 name=""
                 required
-                value={goodieInfo.views}
+                value={goodieInfo.likes}
                 onChange={(e: any) => setGoodieInfo({...goodieInfo , likes:e.target.value}) }
                 id="likes"
                 placeholder="29"
@@ -301,15 +366,25 @@ if(data){
               <input
                 type="number"
                 name=""
-                value=""
-                onChange={(e: any) => {}}
-                id="price"
+                value={goodieInfo.size}
+                onChange={(e: any) => setGoodieInfo({...goodieInfo , size:[e.target.value]})}
+                id="size"
                 placeholder="79"
                 className={`
             ${styles.input}`}
               />
             </div>
           </div>
+
+
+          <div
+          className="w-full 800px:w-[180px] flex items-center justify-center h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-8 cursor-pointer"
+          onClick={ handleGoodieCreate}
+        >
+         
+          Create
+         
+        </div>
 
         </form>
       </div>

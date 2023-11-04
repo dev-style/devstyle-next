@@ -30,6 +30,7 @@ const Item: FC<itemProps> = ({ title, to, icon, selected, setSelected }) => {
       <Typography className="!text-[16px] !font-Poppins">
         {title}
       </Typography>
+      <Link href={to}/>
     </MenuItem>
   );
 };
@@ -183,7 +184,7 @@ const Sidebar = () => {
               />
             <Item
               title="List users"
-              to="/admin/users"
+              to="/admin/"
               icon={<RecentActorsIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -196,14 +197,14 @@ const Sidebar = () => {
 
             <Item
               title="Create goodie"
-              to="/admin/goodie"
+              to="/admin/create-goodie"
               icon={<AddCircleIcon />}
               selected={selected}
               setSelected={setSelected}
               />
             <Item
               title="List goodies"
-              to="/admin/users"
+              to="/admin/list-goodies"
               icon={<ChecklistRtlIcon />}
               selected={selected}
               setSelected={setSelected}

@@ -3,18 +3,18 @@ import { styles } from "../../styles/style";
 import { useGetCollectionsQuery } from "../../redux/features/Collections/collectionsApi";
 import { useCreateGoodieMutation } from "../../redux/features/goodies/goodiesApi";
 import { toast } from "react-toastify";
+import { boolean } from "yup";
 
-type Props ={
+type Props = {};
 
-}
+const CreateGoodie = (props: Props) => {
+  const [
+    createGoodie,
+    { isLoading, isSuccess, error }
+  ] = useCreateGoodieMutation();
 
-const CreateGoodie = (props:Props) => {
-
-  const [createGoodie , {isLoading , isSuccess , error}] = useCreateGoodieMutation();
-
-
-  useEffect(()=>{
-    if(isSuccess){
+  useEffect(() => {
+    if (isSuccess) {
       toast.success(
         <div style={{ color: "#131010", backgroundColor: "green" }}>
           success
@@ -25,8 +25,7 @@ const CreateGoodie = (props:Props) => {
         }
       );
     }
-    if(error){
-
+    if (error) {
       const errorMessage = error as any;
       toast.error(
         <div style={{ color: "#131010", backgroundColor: "green" }}>
@@ -37,102 +36,79 @@ const CreateGoodie = (props:Props) => {
           style: { textAlign: "center" }
         }
       );
-
     }
-  })
+  });
 
-    const [dragging, setDragging] = useState(false);
-    const { data } = useGetCollectionsQuery({});
-    const [collections, setCollections] = useState([]);
+  const [dragging, setDragging] = useState(false);
+  const { data } = useGetCollectionsQuery({});
+  const [collections, setCollections] = useState([]);
+  const [images, setImages] = useState([]);
 
-const [goodieInfo , setGoodieInfo] = useState({
-    name:"",
-    description:"",
-    slug:"",
-    fromCollection:"",
-    promoPercentage:"",
-    price:"",
-    inPromo:"",
-    views:"",
-    size:[""],
-    image:"",
-    availableColors:[""],
-    backgroundColors:[""],
-    likes:"",
-    show:""
-
-
-})
-useEffect(()=>{
-if(data){
-    setCollections(data.message)
-    console.log("voici les data de la collection" , data)
-}
-
-} , [data])
-  
-
-    const handleFileChange = (e: any) => {
-        const file = e.target.files?.[0];
-        if (file) {
-          const reader = new FileReader();
-    
-          reader.onload = (e: any) => {
-            if (reader.readyState === 2) {
-              setGoodieInfo({ ...goodieInfo, image: reader.result });
-            }
-          };
-          reader.readAsDataURL(file);
-        }
-      };
-    
-      const handleDragOver = (e: any) => {
-        e.preventDefault();
-        setDragging(true);
-      };
-    
-      const handleDragLeave = (e: any) => {
-        e.preventDefault();
-        setDragging(false);
-      };
-    
-      const handleDrop = (e: any) => {
-        e.preventDefault();
-        setDragging(false);
-    
-        const file = e.dataTransfer.files?.[0];
-    
-        if (file) {
-          const reader = new FileReader();
-    
-          reader.onload = () => {
-            setGoodieInfo({ ...goodieInfo, image: reader.result });
-          };
-          reader.readAsDataURL(file);
-        }
-      };
-    
-      
-      const handleGoodieCreate = async (e:any) =>{
-        const data = goodieInfo;
-        console.log("Les donne du goodie a cree sont ",data)
-        if(!isLoading){
-          await createGoodie(data);
-        }
+  const [goodieInfo, setGoodieInfo] = useState({
+    name: "",
+    description: "",
+    slug: "",
+    fromCollection: "",
+    promoPercentage: "",
+    price: "",
+    inPromo: true || false,
+    views: "",
+    size: [""],
+    images: [""],
+    availableColors: [""],
+    backgroundColors: [""],
+    likes: "",
+    show: true || false
+  });
+  useEffect(
+    () => {
+      if (data) {
+        setCollections(data.message);
+        console.log("voici les data de la collection", data);
       }
+    },
+    [data]
+  );
+
+  const handleFileChange = (e: any) => {
+    const fileList = Array.from(e.target.files);
+    const imageList: any = [];
+
+    fileList.forEach(file => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        console.log("Le read result", reader.result);
+        imageList.push(reader.result);
+        if (imageList.length === fileList.length) {
+          setGoodieInfo({ ...goodieInfo, images: imageList });
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleGoodieCreate = async (e: any) => {
+    const data = goodieInfo;
+    console.log("Les donne du goodie a cree sont ", data);
+    if (!isLoading) {
+      await createGoodie(data);
+    }
+  };
 
   return (
     <div className="flex  w-full min-h-screen py-10 justify-center items-center">
       <div className="w-[80%] h-[90%]">
         <form className="mt-24">
-          <div >
+          <div>
             <label htmlFor="">Goodie Name</label>
             <input
               type="text"
               name=""
               required
               value={goodieInfo.name}
-              onChange={(e: any) => setGoodieInfo({...goodieInfo , name:e.target.value}) }
+              onChange={(e: any) =>
+                setGoodieInfo({ ...goodieInfo, name: e.target.value })}
               id="name"
               placeholder="Best goodie ever"
               className={`${styles.input}`}
@@ -151,7 +127,8 @@ if(data){
               placeholder="Write something amazing ..."
               className={`${styles.input} !h-min !py-2`}
               value={goodieInfo.description}
-              onChange={(e: any) => setGoodieInfo({ ...goodieInfo , description :e.target.value}) }
+              onChange={(e: any) =>
+                setGoodieInfo({ ...goodieInfo, description: e.target.value })}
             />
           </div>
           <br />
@@ -166,7 +143,8 @@ if(data){
                 required
                 name=""
                 value={goodieInfo.slug}
-                onChange={(e: any) => setGoodieInfo({ ...goodieInfo , slug :e.target.value}) }
+                onChange={(e: any) =>
+                  setGoodieInfo({ ...goodieInfo, slug: e.target.value })}
                 id="slug"
                 placeholder="MERN,Next 13,Socket io,tailwind css,LMS"
                 className={`
@@ -182,15 +160,19 @@ if(data){
                 id="collection"
                 className={`${styles.input}`}
                 value={goodieInfo.fromCollection}
-                onChange={(e: any) => setGoodieInfo({...goodieInfo , fromCollection:e.target.value})}
+                onChange={(e: any) =>
+                  setGoodieInfo({
+                    ...goodieInfo,
+                    fromCollection: e.target.value
+                  })}
               >
                 <option value="">Select Collection</option>
                 {collections &&
-                collections.map((item: any) => (
-                  <option value={item._id} key={item._id}>
-                    {item.title}
-                  </option>
-                ))}
+                  collections.map((item: any) =>
+                    <option value={item._id} key={item._id}>
+                      {item.title}
+                    </option>
+                  )}
               </select>
             </div>
           </div>
@@ -205,7 +187,8 @@ if(data){
                 name=""
                 required
                 value={goodieInfo.price}
-                onChange={(e: any) => setGoodieInfo({...goodieInfo , price:e.target.value})}
+                onChange={(e: any) =>
+                  setGoodieInfo({ ...goodieInfo, price: e.target.value })}
                 id="price"
                 placeholder="29"
                 className={`
@@ -220,7 +203,11 @@ if(data){
                 type="number"
                 name=""
                 value={goodieInfo.promoPercentage}
-                onChange={(e: any) => setGoodieInfo({...goodieInfo , promoPercentage:e.target.value}) }
+                onChange={(e: any) =>
+                  setGoodieInfo({
+                    ...goodieInfo,
+                    promoPercentage: e.target.value
+                  })}
                 id="Pro percentage"
                 placeholder="79"
                 className={`
@@ -238,14 +225,14 @@ if(data){
                 name="views"
                 required
                 value={goodieInfo.views}
-                onChange={(e: any) => setGoodieInfo({...goodieInfo , views:e.target.value}) }
+                onChange={(e: any) =>
+                  setGoodieInfo({ ...goodieInfo, views: e.target.value })}
                 id="views"
                 placeholder="29"
                 className={`
             ${styles.input}`}
               />
             </div>
-       
           </div>
           <br />
 
@@ -257,7 +244,11 @@ if(data){
                 name="availableColors"
                 required
                 value={goodieInfo.availableColors}
-                onChange={(e: any) => setGoodieInfo({...goodieInfo , availableColors:[e.target.value]}) }
+                onChange={(e: any) =>
+                  setGoodieInfo({
+                    ...goodieInfo,
+                    availableColors: [e.target.value]
+                  })}
                 id="availableColors"
                 placeholder="29"
                 className={`
@@ -265,12 +256,18 @@ if(data){
               />
             </div>
             <div className="w-[45%]">
-              <label className={`${styles.label} w-[50%]`}>backgroundColors</label>
+              <label className={`${styles.label} w-[50%]`}>
+                backgroundColors
+              </label>
               <input
                 type="text"
                 name=""
                 value={goodieInfo.backgroundColors}
-                onChange={(e: any) => setGoodieInfo({...goodieInfo , backgroundColors:[e.target.value]})}
+                onChange={(e: any) =>
+                  setGoodieInfo({
+                    ...goodieInfo,
+                    backgroundColors: [e.target.value]
+                  })}
                 id="backgroundColors"
                 placeholder="79"
                 className={`
@@ -289,7 +286,11 @@ if(data){
                 id=""
                 className={`${styles.input}`}
                 value={goodieInfo.show}
-                onChange={(e: any) => setGoodieInfo({...goodieInfo , show:e.target.value}) }
+                onChange={(e: any) =>
+                  setGoodieInfo({
+                    ...goodieInfo,
+                    show: e.target.value === "true"
+                  })}
               >
                 <option value="true">True</option>
                 <option value="False">False</option>
@@ -302,7 +303,11 @@ if(data){
                 id=""
                 className={`${styles.input}`}
                 value={goodieInfo.inPromo}
-                onChange={(e: any) => setGoodieInfo({...goodieInfo , inPromo:e.target.value}) }
+                onChange={(e: any) =>
+                  setGoodieInfo({
+                    ...goodieInfo,
+                    inPromo: e.target.value === "true"
+                  })}
               >
                 <option value="true">True</option>
                 <option value="False">False</option>
@@ -310,43 +315,30 @@ if(data){
             </div>
           </div>
 
-<br />
+          <br />
 
-     <div className="w-full">
-          <input
-            type="file"
-            accept="image/*"
-            id="file"
-            className="hidden"
-            onChange={handleFileChange}
-          />
-          <label
-            htmlFor="file"
-            className={`w-full min-h-[10vh] dark:border-white border-[#00000026] p-3 border flex items-center justify-center ${
-              dragging ? "bg-blue-500" : "bg-transparent"
-            }`}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-          >
-            {goodieInfo.image ? (
+          <div className="w-full">
+            <input
+              type="file"
+              accept="image/*"
+              id="file"
+              multiple
+              onChange={handleFileChange}
+            />
+
+            {images.map((image, index) =>
               <img
-                src={goodieInfo.image}
-                alt=""
-                className="max-h-full w-full object-cover"
+                key={index}
+                src={image}
+                alt={`Image ${image}`}
+                style={{ width: "100px", height: "100px", objectFit: "cover" }}
               />
-            ) : (
-              <span className="text-black dark:text-white">
-                Drag and drop your thumbnail here or click to browse
-              </span>
             )}
-          </label>
-        </div>
+          </div>
 
-        <br />
+          <br />
 
-        
-        <div className="w-full flex justify-between">
+          <div className="w-full flex justify-between">
             <div className="w-[45%]">
               <label className={`${styles.label}`}>Likes</label>
               <input
@@ -354,7 +346,8 @@ if(data){
                 name=""
                 required
                 value={goodieInfo.likes}
-                onChange={(e: any) => setGoodieInfo({...goodieInfo , likes:e.target.value}) }
+                onChange={(e: any) =>
+                  setGoodieInfo({ ...goodieInfo, likes: e.target.value })}
                 id="likes"
                 placeholder="29"
                 className={`
@@ -364,10 +357,11 @@ if(data){
             <div className="w-[50%]">
               <label className={`${styles.label} w-[50%]`}>Sizes</label>
               <input
-                type="number"
+                type="text"
                 name=""
                 value={goodieInfo.size}
-                onChange={(e: any) => setGoodieInfo({...goodieInfo , size:[e.target.value]})}
+                onChange={(e: any) =>
+                  setGoodieInfo({ ...goodieInfo, size: [e.target.value] })}
                 id="size"
                 placeholder="79"
                 className={`
@@ -376,16 +370,12 @@ if(data){
             </div>
           </div>
 
-
           <div
-          className="w-full 800px:w-[180px] flex items-center justify-center h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-8 cursor-pointer"
-          onClick={ handleGoodieCreate}
-        >
-         
-          Create
-         
-        </div>
-
+            className="w-full 800px:w-[180px] flex items-center justify-center h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-8 cursor-pointer"
+            onClick={handleGoodieCreate}
+          >
+            Create
+          </div>
         </form>
       </div>
     </div>

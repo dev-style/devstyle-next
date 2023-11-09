@@ -97,6 +97,7 @@ const Goodie = ({ slug }: { slug: string }) => {
     myAxios
       .get("/goodie/" + slug)
       .then((response) => {
+        console.log(response.data);
         if (response.status === 200) {
           setGoodie({
             ...response.data.message,

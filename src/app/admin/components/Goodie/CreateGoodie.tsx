@@ -4,6 +4,8 @@ import { useGetCollectionsQuery } from "../../redux/features/Collections/collect
 import { useCreateGoodieMutation } from "../../redux/features/goodies/goodiesApi";
 import { toast } from "react-toastify";
 import { boolean } from "yup";
+import { redirect } from "next/navigation";
+import { useGetSizesQuery } from "../../redux/features/Sizes/sizesApi";
 
 type Props = {};
 
@@ -15,15 +17,16 @@ const CreateGoodie = (props: Props) => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success(
-        <div style={{ color: "#131010", backgroundColor: "green" }}>
-          success
-        </div>,
-        {
-          icon: "🌐",
-          style: { textAlign: "center" }
-        }
-      );
+      // toast.success(
+      //   <div style={{ color: "#131010", backgroundColor: "green" }}>
+      //     success
+      //   </div>,
+      //   {
+      //     icon: "🌐",
+      //     style: { textAlign: "center" }
+      //   }
+      // );
+      redirect("/admin/list-goodies");
     }
     if (error) {
       const errorMessage = error as any;
@@ -41,7 +44,9 @@ const CreateGoodie = (props: Props) => {
 
   const [dragging, setDragging] = useState(false);
   const { data } = useGetCollectionsQuery({});
+  const { data: dataSizes } = useGetSizesQuery({});
   const [collections, setCollections] = useState([]);
+  const [sizes, setSizes] = useState([]);
   const [images, setImages] = useState([]);
 
   const [goodieInfo, setGoodieInfo] = useState({
@@ -53,7 +58,7 @@ const CreateGoodie = (props: Props) => {
     price: "",
     inPromo: true || false,
     views: "",
-    size: [""],
+    size: "",
     images: [""],
     availableColors: [""],
     backgroundColors: [""],
@@ -69,6 +74,13 @@ const CreateGoodie = (props: Props) => {
     },
     [data]
   );
+
+  useEffect(() => {
+    if (dataSizes) {
+      setSizes(dataSizes.message);
+      console.log("voici les data de sizes", dataSizes);
+    }
+  }, dataSizes);
 
   const handleFileChange = (e: any) => {
     const fileList = Array.from(e.target.files);
@@ -323,16 +335,32 @@ const CreateGoodie = (props: Props) => {
               accept="image/*"
               id="file"
               multiple
+              className="hidden"
               onChange={handleFileChange}
             />
+            <label
+              htmlFor="file"
+              className={`w-full min-h-[10vh] dark:border-white border-[#00000026] p-3 border flex items-center justify-center ${dragging
+                ? "bg-blue-500"
+                : "bg-transparent"}`}
+            >
+              <span className="text-black dark:text-white">
+                Drag and drop your thumbnail here or click to browse
+              </span>
+            </label>
 
-            {images.map((image, index) =>
-              <img
-                key={index}
-                src={image}
-                alt={`Image ${image}`}
-                style={{ width: "100px", height: "100px", objectFit: "cover" }}
-              />
+            {goodieInfo.images.map((image, index) =>
+              <div key={index} className="mt-5">
+                <img
+                  src={image}
+                  alt={`Image ${image}`}
+                  style={{
+                    width: "100%",
+                    height: "200px",
+                    objectFit: "contain"
+                  }}
+                />
+              </div>
             )}
           </div>
 
@@ -355,18 +383,26 @@ const CreateGoodie = (props: Props) => {
               />
             </div>
             <div className="w-[50%]">
-              <label className={`${styles.label} w-[50%]`}>Sizes</label>
-              <input
-                type="text"
+              <label className={`${styles.label} w-[50%]`}>Our Sizes</label>
+              <select
                 name=""
+                id="Size"
+                className={`${styles.input}`}
                 value={goodieInfo.size}
                 onChange={(e: any) =>
-                  setGoodieInfo({ ...goodieInfo, size: [e.target.value] })}
-                id="size"
-                placeholder="79"
-                className={`
-            ${styles.input}`}
-              />
+                  setGoodieInfo({
+                    ...goodieInfo,
+                    size: e.target.value
+                  })}
+              >
+                <option value="">Select Size</option>
+                {sizes &&
+                  sizes.map((item: any) =>
+                    <option value={item._id} key={item._id}>
+                      {item.size}
+                    </option>
+                  )}
+              </select>
             </div>
           </div>
 

@@ -128,7 +128,6 @@ const Home = () => {
         if (response.status === 200) {
           setTrendingGoodies(response.data.message);
         } else {
-          console.log(response.data.message);
           setTrendingGoodies([]);
         }
       })

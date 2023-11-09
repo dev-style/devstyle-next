@@ -97,7 +97,7 @@ const Collection = ({ slug }: { slug: string }) => {
         .catch((error) => console.log(error));
     }
   }, [slug, onAllGoodies]);
-
+  console.log(collection);
   return (
     <Box className="collection-wrapper">
       <ScrollToTop />

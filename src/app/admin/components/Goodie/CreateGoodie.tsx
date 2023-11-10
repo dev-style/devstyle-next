@@ -59,7 +59,7 @@ const CreateGoodie = (props: Props) => {
     inPromo: true || false,
     views: "",
     size: "",
-    images: [""],
+    images: [{}],
     availableColors: [""],
     backgroundColors: [""],
     likes: "",

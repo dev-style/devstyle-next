@@ -17,15 +17,7 @@ const CreateGoodie = (props: Props) => {
 
   useEffect(() => {
     if (isSuccess) {
-      // toast.success(
-      //   <div style={{ color: "#131010", backgroundColor: "green" }}>
-      //     success
-      //   </div>,
-      //   {
-      //     icon: "🌐",
-      //     style: { textAlign: "center" }
-      //   }
-      // );
+   
       redirect("/admin/list-goodies");
     }
     if (error) {
@@ -255,11 +247,13 @@ const CreateGoodie = (props: Props) => {
                 type="text"
                 name="availableColors"
                 required
-                value={goodieInfo.availableColors}
+                value={goodieInfo.availableColors.join(",")}
                 onChange={(e: any) =>
                   setGoodieInfo({
                     ...goodieInfo,
-                    availableColors: [e.target.value]
+                    availableColors: e.target.value
+                      .split(",")
+                      .map((color: string) => color.trim())
                   })}
                 id="availableColors"
                 placeholder="29"
@@ -274,11 +268,13 @@ const CreateGoodie = (props: Props) => {
               <input
                 type="text"
                 name=""
-                value={goodieInfo.backgroundColors}
+                value={goodieInfo.backgroundColors.join(",")}
                 onChange={(e: any) =>
                   setGoodieInfo({
                     ...goodieInfo,
-                    backgroundColors: [e.target.value]
+                    backgroundColors: e.target.value
+                      .split(",")
+                      .map((color: string) => color.trim())
                   })}
                 id="backgroundColors"
                 placeholder="79"

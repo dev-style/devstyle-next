@@ -1,6 +1,7 @@
 "use client";
 
 import DashboardHeader from "../../components/DashboardHeader";
+import AllGoodies from "../../components/Goodie/AllGoodie";
 import AdminSidebar from "../../components/sidebar/AdminSidebar";
 
 type Props = {};
@@ -14,7 +15,10 @@ const page = (props: Props) => {
         </div>
         <div className="w-[85%]">
           <DashboardHeader />
-          Liste des goodies
+          
+
+          <AllGoodies/>
+
         </div>
       </div>
     </div>

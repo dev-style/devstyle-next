@@ -53,7 +53,6 @@ const EditGoodie: FC<Props> = ({ id }) => {
     () => {
       if (dataCollections) {
         setCollections(dataCollections.message);
-        console.log("voici les data de la collection", dataCollections);
       }
     },
     [dataCollections]
@@ -62,7 +61,6 @@ const EditGoodie: FC<Props> = ({ id }) => {
   useEffect(() => {
     if (dataSizes) {
       setSizes(dataSizes.message);
-      console.log("voici les data de sizes", dataSizes);
     }
   }, dataSizes);
 

@@ -91,3 +91,10 @@ export interface ISocial {
   _id: number;
   name: string;
 }
+
+export interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  authToken?: string;
+}

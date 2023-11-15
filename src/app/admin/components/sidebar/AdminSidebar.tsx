@@ -5,12 +5,14 @@ import "react-pro-sidebar/dist/css/styles.css";
 
 import avatarDefault from "../../../../../public/assets/images/avatar.png";
 
-
+import {persistor} from "../../redux/features/store"
 import {GroupAddIcon ,RecentActorsIcon,ArrowForwardIosIcon,ExitToAppIcon, AssessmentIcon , BarChartIcon ,ChecklistRtlIcon,Diversity3Icon, ArrowBackIosIcon , HomeOutlinedIcon ,AddCircleIcon, GroupsIcon} from "./Icon"
 
 import { useSelector } from "react-redux";
 import Link from "next/link";
 import Image from "next/image";
+import { useLogOutQuery } from "../../redux/features/auth/authApi";
+import { redirect } from "next/navigation";
 
 interface itemProps {
   title: string;
@@ -42,6 +44,15 @@ const Sidebar = () => {
   const [selected, setSelected] = useState("Dashboard");
   const [mounted, setMounted] = useState(false);
 
+  // const {data, isLoading , refetch} = useLogOutQuery({})
+
+  // const { data, error, isLoading, isSuccess, refetch } = useLogOutQuery({});
+
+  const {} = useLogOutQuery(undefined, {
+    skip: !logout ? true : false,
+  });
+
+
 
   useEffect(() => setMounted(true), []);
 
@@ -51,6 +62,9 @@ const Sidebar = () => {
 
   const logoutHandler = () => {
     setlogout(true);
+    // refetch()
+    persistor.purge();
+
   };
 
 

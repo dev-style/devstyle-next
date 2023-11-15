@@ -3,25 +3,26 @@
 import DashboardHeader from "../../components/DashboardHeader";
 import AllGoodies from "../../components/Goodie/AllGoodie";
 import AdminSidebar from "../../components/sidebar/AdminSidebar";
+import Protected from "../../hooks/adminProtected";
 
 type Props = {};
 
 const page = (props: Props) => {
   return (
-    <div>
-      <div className="flex">
-        <div className="1500px:w-[16%] w-1/5">
-          <AdminSidebar />
-        </div>
-        <div className="w-[85%]">
-          <DashboardHeader />
-          
+    <Protected>
+      <div>
+        <div className="flex">
+          <div className="1500px:w-[16%] w-1/5">
+            <AdminSidebar />
+          </div>
+          <div className="w-[85%]">
+            <DashboardHeader />
 
-          <AllGoodies/>
-
+            <AllGoodies />
+          </div>
         </div>
       </div>
-    </div>
+    </Protected>
   );
 };
 

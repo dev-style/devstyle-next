@@ -3,6 +3,7 @@ import React from 'react'
 import AdminSidebar from "../../../components/sidebar/AdminSidebar"
 import DashboardHeader from '@/app/admin/components/DashboardHeader';
 import EditGoodie from '@/app/admin/components/Goodie/EditGoodie';
+import Protected from '@/app/admin/hooks/adminProtected';
 
 type Props = {}
 
@@ -10,6 +11,8 @@ const page = ({params}:any) => {
     const id = params?.id;
 
   return (
+    <Protected>
+
     <div>
       
         <div className="flex">
@@ -23,6 +26,7 @@ const page = ({params}:any) => {
             </div>
         </div>
     </div>
+    </Protected>
   )
 }
 

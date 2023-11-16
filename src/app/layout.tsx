@@ -16,12 +16,45 @@ const robotoSlab = Roboto_Slab({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | La premiere boutique dedié aux amoureux de la Tech #TT237",
+    template:
+      "%s | La premiere boutique dedié aux amoureux de la Tech #TT237 Cameroun",
     default:
       "_DevStyle | La premiere boutique dedié aux amoureux de la Tech #TT237",
   },
   description:
-    "Devstyle est une platforme de vente des Tshirts, Stickers, Hoodies, Mugs, Hats, Sweatshirts, Polos, Posters, et Bracelets pour les amoureux de la Tech #TT237",
+    "Devstyle est une platforme de vente des Tshirts, Stickers, Hoodies, Mugs, Hats, Sweatshirts, Polos, Posters, et Bracelets pour les amoureux de la Tech #TT237 Cameroun",
+  openGraph: {
+    type: "website",
+    locale: "fr_FR",
+    alternateLocale: ["en_US"],
+    url: "https://dev-style.com",
+    siteName: "_DevStyle",
+    countryName: "Cameroun",
+    images: [
+      {
+        url: "https://dev-style.com/assets/images/metadata/devstyle.jpg",
+        width: 1280,
+        height: 720,
+        alt: "DevStyle",
+      },
+    ],
+  },
+  twitter: {
+    site: "https://dev-style.com",
+    creator: "@_devstyle",
+    description:
+      "Devstyle est une platforme de vente des Tshirts, Stickers, Hoodies, Mugs, Hats, Sweatshirts, Polos, Posters, et Bracelets pour les amoureux de la Tech #TT237 Cameroun. #EtreDeveloppeurPlusQu'unMetierC'estUnStyleDeVie #devStyle #devAttitude",
+    title:
+      "EXPRIME TA PASSION POUR LA TECH_ | La premiere boutique dedié aux amoureux de la Tech #TT237",
+    images: [
+      {
+        url: "https://dev-style.com/assets/images/metadata/devstyle.jpg",
+        width: 1280,
+        height: 720,
+        alt: "DevStyle",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

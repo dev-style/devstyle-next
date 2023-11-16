@@ -43,6 +43,14 @@ export const metadata: Metadata = {
     "polo",
   ],
   openGraph: {
+    title: {
+      template:
+        "%s | EXPRIME TA PASSION POUR LA TECH_ | La premiere boutique dedié aux amoureux de la Tech #TT237 Cameroun",
+      default:
+        "_DevStyle | EXPRIME TA PASSION POUR LA TECH_ | La premiere boutique dedié aux amoureux de la Tech #TT237",
+    },
+    description:
+      "Devstyle est une platforme de vente des Tshirts, Stickers, Hoodies, Mugs, Hats, Sweatshirts, Polos, Posters, et Bracelets pour les amoureux de la Tech #TT237 Cameroun",
     type: "website",
     locale: "fr_FR",
     alternateLocale: ["en_US"],

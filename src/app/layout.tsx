@@ -85,6 +85,7 @@ export const metadata: Metadata = {
         alt: "DevStyle",
       },
     ],
+    card: "summary_large_image",
   },
 };
 

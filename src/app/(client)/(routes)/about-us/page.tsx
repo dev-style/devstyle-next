@@ -57,8 +57,9 @@ export const metadata: Metadata = {
     site: "https://dev-style.com/about-us",
     creator: "@_devstyle",
     description:
-      "Devstyle est une platforme de vente des Tshirts, Stickers, Hoodies, Mugs, Hats, Sweatshirts, Polos, Posters, et Bracelets pour les amoureux de la Tech #TT237 Cameroun. #EtreDeveloppeurPlusQu'unMetierC'estUnStyleDeVie #devStyle #devAttitude",
-    title: "À propos de _DevStyle",
+      "Tout comme vous nous sommes Developpeurs </> et passionnés de Tech💙 --- #ForDevelopersByDevelopers",
+    title:
+      "À propos de _DevStyle | La premiere boutique dedié aux amoureux de la Tech #TT237 Cameroun",
     images: [
       {
         url: "https://dev-style.com/assets/images/metadata/devstyle team.jpg",

@@ -11,7 +11,8 @@ const ScrollToTop = dynamic(() => import("@/app/(client)/lib/scrollToTop"), {
 });
 // import { analyticsEventTracker } from "../app";
 export const metadata: Metadata = {
-  title: "À propos de _DevStyle",
+  title:
+    "À propos de _DevStyle | La premiere boutique dedié aux amoureux de la Tech #TT237 Cameroun",
   description:
     "Tout comme vous nous sommes Developpeurs </> et passionnés de Tech💙 --- #ForDevelopersByDevelopers",
   keywords: [

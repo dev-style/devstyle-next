@@ -13,9 +13,68 @@ const ScrollToTop = dynamic(() => import("@/app/(client)/lib/scrollToTop"), {
 });
 
 export const metadata: Metadata = {
-  title: "_DevStyle Ambassadors ",
+  title:
+    "_DevStyle Ambassadors | La premiere boutique dedié aux amoureux de la Tech #TT237 Cameroun",
   description:
-    "Deviens Ambassadeur et représente avec enthousiasme et passion notre Brand🏆 --- #WeLoveDevStyle",
+    "Deviens Ambassadeur et représente avec enthousiasme et passion notre Brand🏆 --- #WeLoveDevStyle💜",
+  keywords: [
+    "devstyle",
+    "developer",
+    "developpeur",
+    "cameroon",
+    "cameroun",
+    "douala",
+    "boutique",
+    "tshirt",
+    "hoodie",
+    "sticker",
+    "pulles",
+    "chapeau",
+    "boutique",
+    "mug",
+    "hat",
+    "sweatshirt",
+    "polo",
+    "ambassador",
+    "ambassadeur",
+  ],
+  openGraph: {
+    title:
+      "_DevStyle Ambassadors | La premiere boutique dedié aux amoureux de la Tech #TT237 Cameroun",
+    description:
+      "Deviens Ambassadeur et représente avec enthousiasme et passion notre Brand🏆 --- #WeLoveDevStyle💜",
+    type: "website",
+    locale: "fr_FR",
+    alternateLocale: ["en_US"],
+    url: "https://dev-style.com/our-ambassadors",
+    siteName: "_DevStyle",
+    countryName: "Cameroun",
+    images: [
+      {
+        url: "https://dev-style.com/assets/images/metadata/devstyle ambassordors.jpg",
+        width: 1280,
+        height: 720,
+        alt: "_DevStyle Ambassadors",
+      },
+    ],
+  },
+  twitter: {
+    site: "https://dev-style.com/our-ambassadors",
+    creator: "@_devstyle",
+    description:
+      "Deviens Ambassadeur et représente avec enthousiasme et passion notre Brand🏆 --- #WeLoveDevStyle💜",
+    title:
+      "_DevStyle Ambassadors | La premiere boutique dedié aux amoureux de la Tech #TT237 Cameroun",
+    images: [
+      {
+        url: "https://dev-style.com/assets/images/metadata/devstyle ambassordors.jpg",
+        width: 1280,
+        height: 720,
+        alt: "_DevStyle Ambassadors",
+      },
+    ],
+    card: "summary_large_image",
+  },
 };
 
 const Ambassador = () => {
@@ -37,7 +96,7 @@ const Ambassador = () => {
               NOS AMBASSADEURS
             </Typography>
             <Typography className="subtext animate__animated animate__fadeInUp animate_delay-5s animate__slower">
-              Ils représentent avec enthousiasme notre <b>Brand🏆</b>
+              Ils représentent avec enthousiasme et passion notre <b>Brand🏆</b>
             </Typography>
           </Box>
           <Box className="image-container">

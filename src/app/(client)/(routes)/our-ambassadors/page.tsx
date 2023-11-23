@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     countryName: "Cameroun",
     images: [
       {
-        url: "https://dev-style.com/assets/images/metadata/devstyle ambassordors.jpg",
+        url: "https://dev-style.com/assets/images/metadata/devstyle ambassadors.jpg",
         width: 1280,
         height: 720,
         alt: "_DevStyle Ambassadors",
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
       "_DevStyle Ambassadors | La premiere boutique dedié aux amoureux de la Tech #TT237 Cameroun",
     images: [
       {
-        url: "https://dev-style.com/assets/images/metadata/devstyle ambassordors.jpg",
+        url: "https://dev-style.com/assets/images/metadata/devstyle ambassadors.jpg",
         width: 1280,
         height: 720,
         alt: "_DevStyle Ambassadors",

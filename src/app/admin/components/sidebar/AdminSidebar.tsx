@@ -120,7 +120,7 @@ const Sidebar = () => {
               >
                 <Link href="/" className="block">
                   <h3 className="text-[25px] font-Poppins uppercase dark:text-white text-black">
-                    ELearning
+                    DevStyle
                   </h3>
                 </Link>
                 <IconButton
@@ -219,6 +219,20 @@ const Sidebar = () => {
             <Item
               title="List goodies"
               to="/admin/list-goodies"
+              icon={<ChecklistRtlIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              />
+              </SubMenu>
+
+         
+         
+            <SubMenu  title={!isCollapsed? "ORDERS":""}  icon={<GroupsIcon />}    selected={selected}
+              setSelected={setSelected}>
+
+            <Item
+              title="List Orders"
+              to="/admin/list-orders"
               icon={<ChecklistRtlIcon />}
               selected={selected}
               setSelected={setSelected}

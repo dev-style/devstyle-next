@@ -56,7 +56,7 @@ function AmbassadorsListing() {
         ) : (
           ambassadors.map((ambassador, i) => (
             <Grid
-              key={i + " " + ambassador.id}
+              key={i + " " + ambassador._id}
               item
               xs={12}
               md={6}
@@ -99,7 +99,7 @@ function AmbassadorsListing() {
                       rel="noopener noreferrer"
                     >
                       <Image
-                        src={`/social/${social.id}.png`}
+                        src={`/social/${social._id}.png`}
                         alt={social.name}
                         width={50}
                         height={50}

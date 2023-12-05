@@ -1,6 +1,5 @@
 import { Box, ThemeProvider } from "@mui/material";
 import { theme } from "./lib/theme";
-
 import CartContextProvider from "./contexts/cart/cartContextProvider";
 
 //Components
@@ -15,13 +14,6 @@ export default function ClientLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
-  // const location = useLocation();
-
-  // useEffect(() => {
-  //   ReactGA.pageview(location.pathname + location.hash);
-  // }, [location]);
-
   return (
     <CartContextProvider>
       <ThemeProvider theme={theme}>

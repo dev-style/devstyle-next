@@ -97,6 +97,7 @@ const Goodie = ({ slug }: { slug: string }) => {
     myAxios
       .get("/goodie/" + slug)
       .then((response) => {
+        console.log(response.data);
         if (response.status === 200) {
           setGoodie({
             ...response.data.message,
@@ -114,12 +115,10 @@ const Goodie = ({ slug }: { slug: string }) => {
 
           myAxios
             .get(
-              `/goodies/hot-goodies/collection/${response.data.message.fromCollection.id}/${response.data.message.id}`
+              `/goodies/hot-goodies/collection/${response.data.message.fromCollection._id}/${response.data.message._id}`
             )
             .then((response) => {
-              console.log("response", response);
               if (response.status === 200) {
-                // console.log(response.data.message);
                 setSomeCollectionGoodies([...response.data.message]);
                 setIsLoadingSomeCollectionGoodies(false);
               } else {
@@ -157,9 +156,9 @@ const Goodie = ({ slug }: { slug: string }) => {
   }, [slug]);
 
   const _devstyle = () => {
-    if (goodie?.id) {
+    if (goodie?._id) {
       let text = `
-*ID:* ${goodie?.id} ;
+*ID:* ${goodie?._id} ;
 *Name:* ${goodie?.name} ;
 *Link:* https://dev-style.com/goodie/${goodie?.slug} ;
 *Collection:* ${goodie?.fromCollection.title} ;
@@ -182,14 +181,13 @@ const Goodie = ({ slug }: { slug: string }) => {
   };
 
   const getCartID = () => {
-    let text = ` ${goodie?.id}-${goodie?.name}-${
+    let text = ` ${goodie?._id}-${goodie?.name}-${
       goodie?.fromCollection.title
     }-${goodie?.selectedColor}-${goodie?.selectedSize}-${goodie?.price}-${
       goodie?.inPromo
         ? calculatePromoPrice(goodie?.price, goodie?.promoPercentage)
         : "none"
     }`;
-    // let encryptText = crypt.encrypt(text);
     return text;
   };
 
@@ -252,7 +250,6 @@ const Goodie = ({ slug }: { slug: string }) => {
     }
   }, [isCopied]);
 
-  console.log(isLiking, hasLiked);
   return (
     <React.Fragment>
       <Box className="goodie-wrapper">
@@ -542,7 +539,7 @@ const Goodie = ({ slug }: { slug: string }) => {
                             onClick={() => handleSelectedSizeChange(size.size)}
                           >
                             <button
-                              key={"size-" + size.id + "-" + i}
+                              key={"size-" + size._id + "-" + i}
                               style={
                                 goodie?.selectedSize === size.size
                                   ? {
@@ -765,10 +762,10 @@ const Goodie = ({ slug }: { slug: string }) => {
                 </>
               ) : (
                 someCollectionGoodies
-                  .filter((_goodie) => _goodie?.id !== goodie?.id)
+                  .filter((_goodie) => _goodie?._id !== goodie?._id)
                   .map((goodie, i) => (
                     <Grid
-                      key={i + " " + goodie?.id}
+                      key={i + " " + goodie?._id}
                       item
                       xs={12}
                       md={6}

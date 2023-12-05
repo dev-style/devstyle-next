@@ -62,7 +62,7 @@ const Collection = ({ slug }: { slug: string }) => {
                   url: "",
                 },
                 views: 0,
-                id: "all-goodies",
+                _id: "all-goodies",
                 slug: "all-goodies",
               },
               goodies: response.data.message,
@@ -97,7 +97,7 @@ const Collection = ({ slug }: { slug: string }) => {
         .catch((error) => console.log(error));
     }
   }, [slug, onAllGoodies]);
-
+  console.log(collection);
   return (
     <Box className="collection-wrapper">
       <ScrollToTop />
@@ -161,7 +161,7 @@ const Collection = ({ slug }: { slug: string }) => {
           ) : (
             collection?.goodies.map((goodie, i) => (
               <Grid
-                key={i + " " + goodie.id}
+                key={i + " " + goodie._id}
                 item
                 xs={12}
                 md={6}

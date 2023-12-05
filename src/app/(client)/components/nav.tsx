@@ -27,8 +27,7 @@ import {
   getTotalPrice,
   calculatePromoPrice,
 } from "@/app/(client)/lib/utils-script";
-import { IAnnouncement, ICart, IGoodieForCart } from "@/app/lib/interfaces";
-import { CartContent } from "../contexts/cart/cartInterface";
+import { IAnnouncement, ICart } from "@/app/lib/interfaces";
 
 const Nav = () => {
   const theme = useTheme();
@@ -78,7 +77,6 @@ const Nav = () => {
       console.log(error);
     }
   }, [cartDispatch]);
-  console.log(announce);
   return (
     <Box id="nav-wrapper" paddingX={match ? "10%" : 12} paddingY={4}>
       {/* Christmas Design 🎄🎅🏾*/}

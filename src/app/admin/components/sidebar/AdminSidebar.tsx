@@ -5,24 +5,15 @@ import "react-pro-sidebar/dist/css/styles.css";
 
 import avatarDefault from "../../../../../public/assets/images/avatar.png";
 
-import {
-  GroupAddIcon,
-  RecentActorsIcon,
-  ArrowForwardIosIcon,
-  ExitToAppIcon,
-  AssessmentIcon,
-  BarChartIcon,
-  ChecklistRtlIcon,
-  Diversity3Icon,
-  ArrowBackIosIcon,
-  HomeOutlinedIcon,
-  AddCircleIcon,
-  GroupsIcon,
-} from "./Icon";
+import {persistor} from "../../redux/features/store"
+import {GroupAddIcon ,RecentActorsIcon,ArrowForwardIosIcon,ExitToAppIcon, AssessmentIcon , BarChartIcon ,ChecklistRtlIcon,Diversity3Icon, ArrowBackIosIcon , HomeOutlinedIcon ,AddCircleIcon, GroupsIcon} from "./Icon"
+
 
 import { useSelector } from "react-redux";
 import Link from "next/link";
 import Image from "next/image";
+import { useLogOutQuery } from "../../redux/features/auth/authApi";
+import { redirect } from "next/navigation";
 
 interface itemProps {
   title: string;
@@ -52,6 +43,18 @@ const Sidebar = () => {
   const [selected, setSelected] = useState("Dashboard");
   const [mounted, setMounted] = useState(false);
 
+
+  // const {data, isLoading , refetch} = useLogOutQuery({})
+
+  // const { data, error, isLoading, isSuccess, refetch } = useLogOutQuery({});
+
+  const {} = useLogOutQuery(undefined, {
+    skip: !logout ? true : false,
+  });
+
+
+
+
   useEffect(() => setMounted(true), []);
 
   if (!mounted) {
@@ -60,6 +63,9 @@ const Sidebar = () => {
 
   const logoutHandler = () => {
     setlogout(true);
+    // refetch()
+    persistor.purge();
+
   };
 
   return (
@@ -114,7 +120,7 @@ const Sidebar = () => {
               >
                 <Link href="/" className="block">
                   <h3 className="text-[25px] font-Poppins uppercase dark:text-white text-black">
-                    ELearning
+                    DevStyle
                   </h3>
                 </Link>
                 <IconButton
@@ -213,7 +219,28 @@ const Sidebar = () => {
                 selected={selected}
                 setSelected={setSelected}
               />
-            </SubMenu>
+              </SubMenu>
+
+         
+         
+            <SubMenu  title={!isCollapsed? "ORDERS":""}  icon={<GroupsIcon />}    selected={selected}
+              setSelected={setSelected}>
+
+            <Item
+              title="List Orders"
+              to="/admin/list-orders"
+              icon={<ChecklistRtlIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              />
+              </SubMenu>
+
+         
+
+       
+           
+           
+
 
             <Typography
               variant="h5"

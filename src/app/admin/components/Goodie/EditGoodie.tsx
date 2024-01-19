@@ -47,17 +47,19 @@ const EditGoodie: FC<Props> = ({ id }) => {
   const [images, setImages] = useState([]);
   const [dragging, setDragging] = useState(false);
 
-  useEffect(() => {
-    if (dataCollections) {
-      setCollections(dataCollections.message);
-      console.log("voici les data de la collection", dataCollections);
-    }
-  }, [dataCollections]);
+  useEffect(
+    () => {
+      if (dataCollections) {
+        setCollections(dataCollections.message);
+      }
+    },
+    [dataCollections]
+  );
+
 
   useEffect(() => {
     if (dataSizes) {
       setSizes(dataSizes.message);
-      console.log("voici les data de sizes", dataSizes);
     }
   }, dataSizes);
 

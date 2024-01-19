@@ -2,6 +2,7 @@
 
 import DashboardHeader from "../../components/DashboardHeader";
 import AllGoodies from "../../components/Goodie/AllGoodie";
+import AllOrders from "../../components/Order/AllOrders";
 import AdminSidebar from "../../components/sidebar/AdminSidebar";
 import Protected from "../../hooks/adminProtected";
 
@@ -17,8 +18,7 @@ const page = (props: Props) => {
           </div>
           <div className="w-[85%]">
             <DashboardHeader />
-
-            <AllGoodies />
+            <AllOrders />
           </div>
         </div>
       </div>

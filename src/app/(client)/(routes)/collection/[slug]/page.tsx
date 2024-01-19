@@ -17,18 +17,18 @@ const ScrollToTop = dynamic(() => import("@/app/(client)/lib/scrollToTop"), {
   ssr: false,
 });
 
-const Collection = ({ slug }: { slug: string }) => {
+const Collection = (props: any) => {
   const [isLoadingCollection, setIsLoadingCollection] = useState(true);
   const [collection, setCollection] = useState<{
     collection: ICollection;
     goodies: IGoodie[];
   }>();
-  let onAllGoodies = slug === "all-goodies";
+  let onAllGoodies = props.slug === "all-goodies";
 
   useEffect(() => {
     if (!onAllGoodies) {
       myAxios
-        .get("/collection/goodies/" + slug)
+        .get("/collection/goodies/" + props.slug)
         .then((response) => {
           if (response.status === 200) {
             setCollection({
@@ -81,12 +81,12 @@ const Collection = ({ slug }: { slug: string }) => {
           console.log(error);
         });
     }
-  }, [slug, onAllGoodies]);
+  }, [props.slug, onAllGoodies]);
 
   useEffect(() => {
     if (!onAllGoodies) {
       myAxios
-        .put("/collection/update/views/" + slug)
+        .put("/collection/update/views/" + props.slug)
         .then((response) => {
           if (response.status === 200) {
             console.log(response.data.message);
@@ -96,7 +96,7 @@ const Collection = ({ slug }: { slug: string }) => {
         })
         .catch((error) => console.log(error));
     }
-  }, [slug, onAllGoodies]);
+  }, [props.slug, onAllGoodies]);
   console.log(collection);
   return (
     <Box className="collection-wrapper">

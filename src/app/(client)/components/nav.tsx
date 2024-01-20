@@ -16,6 +16,7 @@ import {
   DeleteOutlineRounded,
   Close,
   HorizontalSplitOutlined,
+  ChevronRightRounded,
 } from "@mui/icons-material";
 
 import CartContext from "../contexts/cart/cartContext";
@@ -239,9 +240,7 @@ const Nav = () => {
               <Typography className="text">{announce.text}</Typography>
               {announce.link && (
                 <Box className="icon">
-                  <Icon baseClassName="material-icons-round" color="warning">
-                    chevron_right
-                  </Icon>
+                  <ChevronRightRounded color="warning" />
                 </Box>
               )}
             </Typography>

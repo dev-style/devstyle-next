@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { ProSidebar, SubMenu , Menu, MenuItem } from "react-pro-sidebar";
+import { ProSidebar, SubMenu, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography } from "@mui/material";
 import "react-pro-sidebar/dist/css/styles.css";
 
@@ -7,6 +7,7 @@ import avatarDefault from "../../../../../public/assets/images/avatar.png";
 
 import {persistor} from "../../redux/features/store"
 import {GroupAddIcon ,RecentActorsIcon,ArrowForwardIosIcon,ExitToAppIcon, AssessmentIcon , BarChartIcon ,ChecklistRtlIcon,Diversity3Icon, ArrowBackIosIcon , HomeOutlinedIcon ,AddCircleIcon, GroupsIcon} from "./Icon"
+
 
 import { useSelector } from "react-redux";
 import Link from "next/link";
@@ -29,10 +30,8 @@ const Item: FC<itemProps> = ({ title, to, icon, selected, setSelected }) => {
       onClick={() => setSelected(title)}
       icon={icon}
     >
-      <Typography className="!text-[16px] !font-Poppins">
-        {title}
-      </Typography>
-      <Link href={to}/>
+      <Typography className="!text-[16px] !font-Poppins">{title}</Typography>
+      <Link href={to} />
     </MenuItem>
   );
 };
@@ -44,6 +43,7 @@ const Sidebar = () => {
   const [selected, setSelected] = useState("Dashboard");
   const [mounted, setMounted] = useState(false);
 
+
   // const {data, isLoading , refetch} = useLogOutQuery({})
 
   // const { data, error, isLoading, isSuccess, refetch } = useLogOutQuery({});
@@ -51,6 +51,7 @@ const Sidebar = () => {
   const {} = useLogOutQuery(undefined, {
     skip: !logout ? true : false,
   });
+
 
 
 
@@ -67,29 +68,28 @@ const Sidebar = () => {
 
   };
 
-
   return (
     <Box
       sx={{
         "& .pro-sidebar-inner": {
-          background: `${"#fff !important"}`
+          background: `${"#fff !important"}`,
         },
         "& .pro-icon-wrapper": {
-          backgroundColor: "transparent !important"
+          backgroundColor: "transparent !important",
         },
         "& .pro-inner-item:hover": {
-          color: "#868dfb !important"
+          color: "#868dfb !important",
         },
         "& .pro-menu-item.active": {
-          color: "#6870fa !important"
+          color: "#6870fa !important",
         },
         "& .pro-inner-item": {
           padding: "5px 35px 5px 20px !important",
-          opacity: 1
+          opacity: 1,
         },
         "& .pro-menu-item": {
-          color: "#000"
-        }
+          color: "#000",
+        },
       }}
     >
       <ProSidebar
@@ -100,7 +100,7 @@ const Sidebar = () => {
           left: 0,
           height: "100vh",
           zIndex: 99999999999999,
-          width: isCollapsed ? "0%" : "16%"
+          width: isCollapsed ? "0%" : "16%",
         }}
       >
         <Menu iconShape="square">
@@ -108,10 +108,10 @@ const Sidebar = () => {
             onClick={() => setIsCollapsed(!isCollapsed)}
             icon={isCollapsed ? <ArrowForwardIosIcon /> : undefined}
             style={{
-              margin: "10px 0 20px 0"
+              margin: "10px 0 20px 0",
             }}
           >
-            {!isCollapsed &&
+            {!isCollapsed && (
               <Box
                 display="flex"
                 justifyContent="space-between"
@@ -129,7 +129,8 @@ const Sidebar = () => {
                 >
                   <ArrowBackIosIcon className="text-black dark:text-[#ffffffc1]" />
                 </IconButton>
-              </Box>}
+              </Box>
+            )}
           </MenuItem>
 
           {!isCollapsed && (
@@ -160,16 +161,13 @@ const Sidebar = () => {
                   sx={{ m: "10px 0 0 0" }}
                   className="!text-[20px] text-black dark:text-[#ffffffc1] capitalize"
                 >
-                  - {user?.role} 
+                  - {user?.role}
                 </Typography>
               </Box>
             </Box>
           )}
 
-<Box paddingLeft={isCollapsed ? undefined : "10%"}>
-
-
-
+          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
               title="Dashboard"
               to="/admin"
@@ -185,43 +183,41 @@ const Sidebar = () => {
             >
               {!isCollapsed && "Data"}
             </Typography>
-            
-            <SubMenu  title={!isCollapsed? "USER":""}  icon={<GroupsIcon />}    selected={selected}
-              setSelected={setSelected}>
 
-            <Item
-              title="Create users"
-              to="/admin/users"
-              icon={<GroupAddIcon />}
-              selected={selected}
-              setSelected={setSelected}
+            <SubMenu title={!isCollapsed ? "USER" : ""} icon={<GroupsIcon />}>
+              <Item
+                title="Create users"
+                to="/admin/users"
+                icon={<GroupAddIcon />}
+                selected={selected}
+                setSelected={setSelected}
               />
-            <Item
-              title="List users"
-              to="/admin/"
-              icon={<RecentActorsIcon />}
-              selected={selected}
-              setSelected={setSelected}
+              <Item
+                title="List users"
+                to="/admin/"
+                icon={<RecentActorsIcon />}
+                selected={selected}
+                setSelected={setSelected}
               />
-              </SubMenu>
+            </SubMenu>
 
-         
-            <SubMenu  title={!isCollapsed? "GOODIES":""}  icon={<GroupsIcon />}    selected={selected}
-              setSelected={setSelected}>
-
-            <Item
-              title="Create goodie"
-              to="/admin/create-goodie"
-              icon={<AddCircleIcon />}
-              selected={selected}
-              setSelected={setSelected}
+            <SubMenu
+              title={!isCollapsed ? "GOODIES" : ""}
+              icon={<GroupsIcon />}
+            >
+              <Item
+                title="Create goodie"
+                to="/admin/create-goodie"
+                icon={<AddCircleIcon />}
+                selected={selected}
+                setSelected={setSelected}
               />
-            <Item
-              title="List goodies"
-              to="/admin/list-goodies"
-              icon={<ChecklistRtlIcon />}
-              selected={selected}
-              setSelected={setSelected}
+              <Item
+                title="List goodies"
+                to="/admin/list-goodies"
+                icon={<ChecklistRtlIcon />}
+                selected={selected}
+                setSelected={setSelected}
               />
               </SubMenu>
 
@@ -244,6 +240,7 @@ const Sidebar = () => {
        
            
            
+
 
             <Typography
               variant="h5"
@@ -307,8 +304,6 @@ const Sidebar = () => {
               />
             </div>
           </Box>
-
-
         </Menu>
       </ProSidebar>
     </Box>

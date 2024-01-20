@@ -1,5 +1,3 @@
-import mongoose from "mongoose";
-
 export interface ICart {
   [key: string]: IGoodieForCart;
 }
@@ -71,7 +69,7 @@ export interface IPartner {
 
 export interface IAffiliation {
   _id: string;
-  ambassadorId: mongoose.Schema.Types.ObjectId;
+  ambassadorId: string;
   affiliateCode: string;
   affiliateLink: string;
   clicksCount: number;

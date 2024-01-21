@@ -19,8 +19,6 @@ import {
   ChevronRightRounded,
 } from "@mui/icons-material";
 
-import SearchIcon from "@mui/icons-material/Search";
-
 import CartContext from "../contexts/cart/cartContext";
 import myAxios from "@/app/(client)/lib/axios.config";
 import "./nav.scss";
@@ -31,13 +29,13 @@ import {
   calculatePromoPrice,
 } from "@/app/(client)/lib/utils-script";
 import { IAnnouncement, ICart } from "@/app/lib/interfaces";
+import SearchBar from "./searchBar";
 
 const Nav = () => {
   const theme = useTheme();
   const matches = useMediaQuery("(max-width:1365px)");
   const match = useMediaQuery("(max-width:1000px)");
   const match400 = useMediaQuery("(min-width:400px)");
-  const mobileMatch = useMediaQuery("(max-width:800px)");
 
   const [announce, setAnnounce] = useState<IAnnouncement>();
 
@@ -130,14 +128,9 @@ const Nav = () => {
         <li></li>
       </ul> */}
       <Box
-        className="nav-container space-x-2"
+        className="nav-container"
         style={
-          matches
-            ? { display: "flex", justifyContent: "space-between" }
-            : {
-                display: "flex",
-                justifyContent: "space-between",
-              }
+          matches ? { display: "flex", justifyContent: "space-between" } : {}
         }
       >
         <Box className="nav-logo">
@@ -151,7 +144,7 @@ const Nav = () => {
           </Link>
         </Box>
         {!matches ? (
-          <Box className="middle-links flex-shrink-2 ">
+          <Box className="middle-links">
             <Link
               href={"/"}
               style={{
@@ -201,62 +194,31 @@ const Nav = () => {
             </Link>
           </Box>
         ) : null}
-
-        {!matches ? (
-          <Box className="border-gray-200 flex-shrink-2 bg-gray-200 mr-5 w-full max-w-[400px] pl-10 h-12 relative search-bar">
-            <input
-              type="text"
-              placeholder="Search products"
-              className="outline-none bg-transparent border-none "
-            />
-
-            <button
-              onClick={() => handleDownNav()}
-              className="bg-[#220f00] h-full w-10  text-white"
-            >
-              <SearchIcon fontSize="small" />
-            </button>
-          </Box>
-        ) : null}
-
-        {matches && !mobileMatch ? (
-          <Box className="border-gray-200 bg-gray-200 pl-10   w-full h- mt-4 mb-2  relative search-bar">
-            <input
-              type="text"
-              placeholder="Search products"
-              className="outline-none bg-transparent border-none "
-            />
-
-            <button
-              onClick={() => handleDownNav()}
-              className="bg-[#220f00] h-full w-10  text-white"
-            >
-              <SearchIcon fontSize="small" />
-            </button>
-          </Box>
-        ) : null}
-
         <Box className="right-actions">
+          <SearchBar />
+
           {!matches ? (
-            <Button
-              className="custom-goodies-buttom"
-              onClick={() => {
-                try {
-                  // analyticsEventTracker("CUSTOM GOODIE")(
-                  //   "go to custom goodie section"
-                  // );
-                  if (document.querySelector("#custom-section")) {
-                    document
-                      .querySelector("#custom-section")
-                      ?.scrollIntoView(true);
+            <>
+              <Button
+                className="custom-goodies-buttom"
+                onClick={() => {
+                  try {
+                    // analyticsEventTracker("CUSTOM GOODIE")(
+                    //   "go to custom goodie section"
+                    // );
+                    if (document.querySelector("#custom-section")) {
+                      document
+                        .querySelector("#custom-section")
+                        ?.scrollIntoView(true);
+                    }
+                  } catch (error) {
+                    console.log(error);
                   }
-                } catch (error) {
-                  console.log(error);
-                }
-              }}
-            >
-              Goodies customisé
-            </Button>
+                }}
+              >
+                Goodies customisé
+              </Button>
+            </>
           ) : (
             <IconButton onClick={() => handleDownNav()}>
               <HorizontalSplitOutlined fontSize="large" color="primary" />
@@ -269,7 +231,6 @@ const Nav = () => {
           </Box>
         </Box>
       </Box>
-
       {announce?._id && (
         <Box className="notif-wrapper animate__animated animate__rotateInDownLeft">
           <a

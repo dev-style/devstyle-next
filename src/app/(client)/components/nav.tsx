@@ -39,6 +39,8 @@ const Nav = () => {
 
   const [announce, setAnnounce] = useState<IAnnouncement>();
 
+  const [collections, setCollections] = useState([]);
+
   const { cartContent: cart, cartDispatch } = useContext(CartContext);
   const handleSideNav = () => {
     const element = document.querySelector("#side-nav");
@@ -62,6 +64,20 @@ const Nav = () => {
           setAnnounce(response.data.message);
         } else {
           console.log(response.data.message);
+        }
+      })
+      .catch((error: any) => console.log(error));
+  }, []);
+
+  useEffect(() => {
+    myAxios
+      .get("/collection/all")
+      .then((response: any) => {
+        if (response.status == 200) {
+          console.log("Here is my collections", response.data.message);
+          setCollections(response.data.message);
+        } else {
+          console.log(response.data.messge);
         }
       })
       .catch((error: any) => console.log(error));
@@ -195,7 +211,7 @@ const Nav = () => {
           </Box>
         ) : null}
         <Box className="right-actions">
-          <SearchBar />
+          <SearchBar collections = {collections} />
 
           {!matches ? (
             <>

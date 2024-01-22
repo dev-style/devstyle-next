@@ -3,17 +3,18 @@
 import { Box } from "@mui/material";
 import "./searchBar.scss";
 import SearchIcon from "@mui/icons-material/Search";
-import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ICollectionForCart } from "@/app/lib/interfaces";
 
-interface IProducts {
-  products: Object[] | null;
+interface ISearbar {
+  collections: ICollectionForCart[] | null;
 }
 
-const SearchBar = ({ Products }: IProducts) => {
+const SearchBar = ({ collections }: ISearbar) => {
   const router = useRouter();
 
-  const [inputValue, setInputValue] = useState(Products);
+  const [inputValue, setInputValue] = useState<string>("");
 
   const handleInput = () => {
     const element = document.querySelector("#search-bar-container");
@@ -28,9 +29,27 @@ const SearchBar = ({ Products }: IProducts) => {
   };
 
   const handleSearch = () => {
-    if (inputValue) return router.push(`/?q=${inputValue}`);
+    if (inputValue) {
+      collections?.map((collection) => {
+        if (inputValue.toLowerCase().includes(collection.slug.toLowerCase())) {
+          setInputValue("");
+          handleInput();
 
-    if (!inputValue) return router.push("/");
+          return router.push(`/collection/${collection.slug}`);
+        } else {
+          setInputValue("");
+
+          handleInput();
+        }
+      });
+    }
+
+    if (!inputValue) {
+      const element = document.querySelector("#search-bar-container");
+      element?.classList.toggle("hide");
+
+      return router.push("/");
+    }
   };
 
   const handleKeyPress = (e: { key: any }) => {

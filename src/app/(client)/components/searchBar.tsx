@@ -40,6 +40,7 @@ const SearchBar = ({ collections }: ISearbar) => {
           setInputValue("");
 
           handleInput();
+          return router.push(`/collection/${inputValue}`);
         }
       });
     }

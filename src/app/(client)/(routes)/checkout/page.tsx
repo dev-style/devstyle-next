@@ -33,6 +33,8 @@ import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
+import myAxios from "../../lib/axios.config";
+import { toast } from "react-toastify";
 
 const Checkout = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -221,7 +223,43 @@ const Checkout = () => {
   }, []);
 
   const onSubmit: SubmitHandler<IOrderFormSchema> = (data) => {
-    console.log("voici les data", data);
+    // console.log("voici les data", data);
+    // console.log("voici le context", cartContent);
+
+    const propertiesToSelect = ["name", "price", "quantity", "total"];
+
+    const allData = {
+      goodies: Object.values(cartContent).map((child: Record<string, any>) => {
+        const selectedProperty: Record<string, string | number> = {};
+
+        const total = child.price * child.quantity;
+
+        propertiesToSelect.forEach((property) => {
+          selectedProperty["total"] = total;
+          if (child.hasOwnProperty(property)) {
+            selectedProperty[property] = child[property];
+          }
+        });
+        return selectedProperty;
+      }),
+      status: "initiate",
+      ...data,
+    };
+
+    console.log(allData);
+
+    myAxios
+      .post("/order/create", allData)
+      .then((response) => {
+        console.log(response.status);
+      })
+      .catch((error) => {
+        toast.error(<div style={{ color: "#fff" }}>{error.message}</div>, {
+          icon: "🌐",
+          style: { textAlign: "center" },
+        });
+        console.log(error);
+      });
   };
 
   return (
@@ -355,10 +393,7 @@ const Checkout = () => {
                   {...register("name", { required: "This is required" })}
                 />
 
-                <ErrorMessage
-                  errors={errors}
-                  name="name"
-                />
+                <ErrorMessage errors={errors} name="name" />
               </div>
               <div style={{ flex: "1" }}>
                 <label
@@ -378,10 +413,7 @@ const Checkout = () => {
                   className="input-item"
                   {...register("email", { required: "This is required" })}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="email"
-                />
+                <ErrorMessage errors={errors} name="email" />
               </div>
             </div>
             <Button

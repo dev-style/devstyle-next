@@ -29,9 +29,15 @@ import {
 } from "@/app/(client)/lib/utils-script";
 import "./styles.scss";
 
+import { z } from "zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ErrorMessage } from "@hookform/error-message";
+
 const Checkout = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const match900 = useMediaQuery("(max-width:900px)");
+  const match500 = useMediaQuery("(max-width:500px)");
   const { cartDispatch, cartContent } = useContext(CartContext);
   const createData = (
     image: JSX.Element,
@@ -195,13 +201,37 @@ const Checkout = () => {
     return encodeURIComponent(cartDescription);
   };
 
+  const orderFormSchema = z.object({
+    name: z.string().min(2),
+    email: z.string().email().min(5),
+  });
+
+  type IOrderFormSchema = z.infer<typeof orderFormSchema>;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IOrderFormSchema>({ resolver: zodResolver(orderFormSchema) });
+
+  const submit = () => {};
+
   useEffect(() => {
     scrollToTop();
   }, []);
 
+  const onSubmit: SubmitHandler<IOrderFormSchema> = (data) => {
+    console.log("voici les data", data);
+  };
+
   return (
     <Fragment>
-      <Box className="checkout-wrapper" paddingX={match900 ? 2 : 12}>
+      <Box
+        className="checkout-wrapper"
+        paddingX={match900 ? 2 : 12}
+        marginX={"auto"}
+        maxWidth={!match900 ? "80%" : "100%"}
+      >
         <Typography
           className="title"
           style={{ fontSize: match900 ? "30px" : "40px" }}
@@ -289,6 +319,91 @@ const Checkout = () => {
             </Table>
           </TableContainer>
         </Box>
+
+        <Box className="order-form-container" paddingY={"15px"}>
+          <form
+            className="order-form"
+            style={{}}
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <div
+              className="orer-form-item"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: !match500 ? "row" : "column",
+                padding: "10px",
+              }}
+            >
+              <div style={{ flex: "1" }}>
+                <label
+                  htmlFor=""
+                  style={{
+                    fontSize: "20px",
+                    fontWeight: "400px",
+                    fontFamily: "Poppins",
+                    fontStyle: "initial",
+                  }}
+                >
+                  Enter your name
+                </label>
+                <input
+                  type="text"
+                  placeholder="Your name"
+                  className="input-item"
+                  {...register("name", { required: "This is required" })}
+                />
+
+                <ErrorMessage
+                  errors={errors}
+                  name="name"
+                />
+              </div>
+              <div style={{ flex: "1" }}>
+                <label
+                  htmlFor=""
+                  style={{
+                    fontSize: "20px",
+                    fontWeight: "400px",
+                    fontFamily: "Poppins",
+                    fontStyle: "initial",
+                  }}
+                >
+                  Enter your Email
+                </label>
+                <input
+                  type="email"
+                  placeholder="Your name"
+                  className="input-item"
+                  {...register("email", { required: "This is required" })}
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="email"
+                />
+              </div>
+            </div>
+            <Button
+              type="submit"
+              className="button mx-auto "
+              style={{ backgroundColor: "#220F00", color: "white" }}
+              // onClick={() =>
+              //   getTotalPrice(cartContent) ? setModalOpen(true) : null
+              // }
+            >
+              Commander(
+              <Image
+                src={"/assets/icons/whatsapp-green.png"}
+                alt="whatsapp"
+                width={18}
+                height={18}
+              />
+              )
+            </Button>
+          </form>
+        </Box>
+
         <Box
           display={"flex"}
           justifyContent="space-between"
@@ -304,22 +419,6 @@ const Checkout = () => {
             {getTotalPrice(cartContent) ?? 0} FCFA
           </Typography>
         </Box>
-        <Button
-          className="button"
-          style={{ backgroundColor: "#220F00", color: "white" }}
-          onClick={() =>
-            getTotalPrice(cartContent) ? setModalOpen(true) : null
-          }
-        >
-          Commander(
-          <Image
-            src={"/assets/icons/whatsapp-green.png"}
-            alt="whatsapp"
-            width={18}
-            height={18}
-          />
-          )
-        </Button>
       </Box>
       <OrderModal
         open={modalOpen}

@@ -35,9 +35,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@hookform/error-message";
 import myAxios from "../../lib/axios.config";
 import { toast } from "react-toastify";
+import { IOrderData } from "@/app/lib/interfaces";
 
 const Checkout = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [orderData, setOrderData] = useState<IOrderData>();
   const match900 = useMediaQuery("(max-width:900px)");
   const match500 = useMediaQuery("(max-width:500px)");
   const { cartDispatch, cartContent } = useContext(CartContext);
@@ -228,7 +230,7 @@ const Checkout = () => {
 
     const propertiesToSelect = ["name", "price", "quantity", "total"];
 
-    const allData = {
+    const allData: IOrderData | null = {
       goodies: Object.values(cartContent).map((child: Record<string, any>) => {
         const selectedProperty: Record<string, string | number> = {};
 
@@ -246,20 +248,24 @@ const Checkout = () => {
       ...data,
     };
 
-    console.log(allData);
+    // console.log(allData);
 
-    myAxios
-      .post("/order/create", allData)
-      .then((response) => {
-        console.log(response.status);
-      })
-      .catch((error) => {
-        toast.error(<div style={{ color: "#fff" }}>{error.message}</div>, {
-          icon: "🌐",
-          style: { textAlign: "center" },
-        });
-        console.log(error);
-      });
+    setOrderData(allData);
+
+    // myAxios
+    //   .post("/order/create", allData)
+    //   .then((response) => {
+    //     console.log(response.status);
+    //   })
+    //   .catch((error) => {
+    //     toast.error(<div style={{ color: "#fff" }}>{error.message}</div>, {
+    //       icon: "🌐",
+    //       style: { textAlign: "center" },
+    //     });
+    //     console.log(error);
+    //   });
+
+    getTotalPrice(cartContent) ? setModalOpen(true) : null;
   };
 
   return (
@@ -374,7 +380,15 @@ const Checkout = () => {
                 padding: "10px",
               }}
             >
-              <div style={{ flex: "1" }}>
+              <div
+                style={{
+                  flex: "1",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "start",
+                  gap: "15px",
+                }}
+              >
                 <label
                   htmlFor=""
                   style={{
@@ -395,7 +409,15 @@ const Checkout = () => {
 
                 <ErrorMessage errors={errors} name="name" />
               </div>
-              <div style={{ flex: "1" }}>
+              <div
+                style={{
+                  flex: "1",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "start",
+                  gap: "15px",
+                }}
+              >
                 <label
                   htmlFor=""
                   style={{
@@ -456,6 +478,7 @@ const Checkout = () => {
         open={modalOpen}
         handleClose={() => setModalOpen(false)}
         message={() => _devstyle()}
+        orderData={orderData}
       />
     </Fragment>
   );

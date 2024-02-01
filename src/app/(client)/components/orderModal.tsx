@@ -8,6 +8,7 @@ import Spinner from "./spinner";
 import myAxios from "@/app/(client)/lib/axios.config";
 
 import "./orderModal.scss";
+import { IOrderData } from "@/app/lib/interfaces";
 
 const style = {
   position: "absolute",
@@ -26,14 +27,17 @@ const OrderModal = ({
   open,
   handleClose,
   message = () => "",
+  orderData,
 }: {
   open: boolean;
   handleClose: () => void;
   message?: () => string;
+  orderData: IOrderData | undefined;
 }) => {
   const [number, setNumber] = React.useState(0);
   const [isSending, setIsSending] = React.useState(false);
-
+  const [isSendOrder, setIsSendOrder] = React.useState(false);
+  console.log("L'order data dans orderModal", orderData);
   const send = () => {
     setIsSending(true);
     if (!number || String(number).length < 9) {
@@ -48,11 +52,16 @@ const OrderModal = ({
       );
       setIsSending(false);
     } else {
+      if (orderData !== undefined) {
+        orderData["number"] = number;
+        console.log(orderData)
+      } else {
+        console.log("c'est indefinie");
+        return;
+      }
+
       myAxios
-        .post("/order/create", {
-          number,
-          description: `%0A%60%60%60%3C%20MA%20COMMANDE%20%2F%3E%60%60%60%F0%9F%9B%92%0A${message()}%5B%20%C3%A0%20ne%20pas%20supprimer%F0%9F%91%86%F0%9F%8F%BD%20%5D`,
-        })
+        .post("/order/create", orderData)
         .then((response: any) => {
           if (response.status === 200) {
             window.localStorage.setItem(
@@ -102,15 +111,42 @@ const OrderModal = ({
   };
 
   const contact = () => {
-    window
-      ?.open(
-        `https://api.whatsapp.com/send/?phone=237692650993&text=%0A%60%60%60%3C%20MA%20COMMANDE%20%2F%3E%60%60%60%F0%9F%9B%92%0A${
-          message() ?? ""
-        }%5B%20%C3%A0%20ne%20pas%20supprimer%F0%9F%91%86%F0%9F%8F%BD%20%5D`,
-        "_blank"
-      )
-      ?.focus();
+    setIsSendOrder(true);
+    myAxios
+      .post("/order/create", orderData)
+      .then((response) => {
+        if (response.status === 200) {
+          toast.success(
+            <div style={{ color: "#fff" }}>Commande bien reçu</div>,
+            {
+              style: { textAlign: "center" },
+              icon: "🎉",
+            }
+          );
+
+          window
+            ?.open(
+              `https://api.whatsapp.com/send/?phone=237692650993&text=%0A%60%60%60%3C%20MA%20COMMANDE%20%2F%3E%60%60%60%F0%9F%9B%92%0A${
+                message() ?? ""
+              }%5B%20%C3%A0%20ne%20pas%20supprimer%F0%9F%91%86%F0%9F%8F%BD%20%5D`,
+              "_blank"
+            )
+            ?.focus();
+        }
+        console.log(response.status);
+      })
+      .catch((error) => {
+        toast.error(<div style={{ color: "#fff" }}>{error.message}</div>, {
+          icon: "🌐",
+          style: { textAlign: "center" },
+        });
+        console.log(error);
+      })
+      .finally(() => {
+        setIsSendOrder(false);
+      });
   };
+
   React.useEffect(() => {
     let localNumber = window.localStorage.getItem("_devStyle-order-number");
     if (localNumber) {
@@ -159,9 +195,13 @@ const OrderModal = ({
             <Button
               className="button-direct"
               onClick={() => contact()}
-              disabled={isSending}
+              disabled={isSendOrder}
             >
-              Allons-y sur whatsapp
+              {isSendOrder ? (
+                <Spinner size={25} thickness={3} color={"white"} />
+              ) : (
+                "Allons-y sur whatsapp"
+              )}
             </Button>
             <Divider
               light={false}

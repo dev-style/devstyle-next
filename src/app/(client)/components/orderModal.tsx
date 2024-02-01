@@ -54,59 +54,59 @@ const OrderModal = ({
     } else {
       if (orderData !== undefined) {
         orderData["number"] = number;
-        console.log(orderData)
+        console.log(orderData);
+
+        myAxios
+          .post("/order/create", orderData)
+          .then((response: any) => {
+            if (response.status === 200) {
+              window.localStorage.setItem(
+                "_devStyle-order-number",
+                String(number)
+                  .split("")
+                  .reduce(
+                    (acc, val, i) =>
+                      (acc += String.fromCharCode(val.charCodeAt(0) + 3)),
+                    ""
+                  )
+              );
+              toast.success(
+                <div style={{ color: "#fff" }}>Commande bien reçu</div>,
+                {
+                  style: { textAlign: "center" },
+                  icon: "🎉",
+                }
+              );
+              // console.log(response.data.message);
+            } else {
+              toast.error(
+                <div style={{ color: "#fff" }}>Une erreur est survenu</div>,
+                {
+                  style: { textAlign: "center" },
+                }
+              );
+              console.log(response.data.message);
+            }
+          })
+          .catch((error: any) => {
+            toast.error(
+              <div style={{ color: "#fff" }}>
+                Une erreur est survenu, réessayer
+              </div>,
+              {
+                style: { textAlign: "center" },
+                icon: "😕",
+              }
+            );
+            console.log(error);
+          })
+          .finally(() => {
+            setIsSending(false);
+          });
       } else {
         console.log("c'est indefinie");
         return;
       }
-
-      myAxios
-        .post("/order/create", orderData)
-        .then((response: any) => {
-          if (response.status === 200) {
-            window.localStorage.setItem(
-              "_devStyle-order-number",
-              String(number)
-                .split("")
-                .reduce(
-                  (acc, val, i) =>
-                    (acc += String.fromCharCode(val.charCodeAt(0) + 3)),
-                  ""
-                )
-            );
-            toast.success(
-              <div style={{ color: "#fff" }}>Commande bien reçu</div>,
-              {
-                style: { textAlign: "center" },
-                icon: "🎉",
-              }
-            );
-            // console.log(response.data.message);
-          } else {
-            toast.error(
-              <div style={{ color: "#fff" }}>Une erreur est survenu</div>,
-              {
-                style: { textAlign: "center" },
-              }
-            );
-            console.log(response.data.message);
-          }
-        })
-        .catch((error: any) => {
-          toast.error(
-            <div style={{ color: "#fff" }}>
-              Une erreur est survenu, réessayer
-            </div>,
-            {
-              style: { textAlign: "center" },
-              icon: "😕",
-            }
-          );
-          console.log(error);
-        })
-        .finally(() => {
-          setIsSending(false);
-        });
     }
   };
 

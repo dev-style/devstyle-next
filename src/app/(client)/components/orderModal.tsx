@@ -102,6 +102,7 @@ const OrderModal = ({
           })
           .finally(() => {
             setIsSending(false);
+            handleClose();
           });
       } else {
         console.log("c'est indefinie");
@@ -144,6 +145,7 @@ const OrderModal = ({
       })
       .finally(() => {
         setIsSendOrder(false);
+        handleClose();
       });
   };
 

@@ -100,7 +100,7 @@ export default function Page() {
               Bienvenue chez Devstyle admin
             </Typography>
             <Typography className="text-white font-normal">
-              That is the header
+              Manage our product
             </Typography>
           </Box>
         </Box>
@@ -116,6 +116,29 @@ export default function Page() {
           </Typography>
 
           <form onSubmit={handleSubmit}>
+            <div className="mt-5">
+              <label
+                className="text-[16px] font-Poppins text-black dark:text-white"
+                htmlFor="email"
+              >
+                Enter your Email
+              </label>
+              <input
+                type="email"
+                name=""
+                value={values.email}
+                onChange={handleChange}
+                id="email"
+                placeholder="loginmail@gmail.com"
+                className={`${
+                  errors.email && touched.email && "border-red-500"
+                } w-full text-black dark:text-white bg-transparent border rounded h-[40px] px-2 outline-none mt-[10px] font-Poppins `}
+              />
+              {errors.email && touched.email && (
+                <span className="text-red-500 pt-2 block">{errors.email}</span>
+              )}
+            </div>
+
             <div className="w-full mt-5 relative mb-1">
               <label
                 className="text-[16px] font-Poppins text-black dark:text-white"
@@ -153,26 +176,6 @@ export default function Page() {
                 </span>
               )}
             </div>
-            <label
-              className="text-[16px] font-Poppins text-black dark:text-white"
-              htmlFor="email"
-            >
-              Enter your Email
-            </label>
-            <input
-              type="email"
-              name=""
-              value={values.email}
-              onChange={handleChange}
-              id="email"
-              placeholder="loginmail@gmail.com"
-              className={`${
-                errors.email && touched.email && "border-red-500"
-              } w-full text-black dark:text-white bg-transparent border rounded h-[40px] px-2 outline-none mt-[10px] font-Poppins `}
-            />
-            {errors.email && touched.email && (
-              <span className="text-red-500 pt-2 block">{errors.email}</span>
-            )}
             <input
               type="submit"
               value="Login"

@@ -3,9 +3,9 @@ import { apiSlice } from "../api/apiSlice";
 
 export const analyticsApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        getCoursesAnalytics: builder.query({
+        getGoodiesAnalytics: builder.query({
             query: () => ({
-                url: 'get-courses-analytics',
+                url: 'get-goodies-analytics',
                 method: 'GET',
                 credentials: 'include' as const,
             }),
@@ -26,4 +26,4 @@ export const analyticsApi = apiSlice.injectEndpoints({
         }),
     }),
 });
-export const { useGetOrdersAnalyticsQuery } = analyticsApi;
+export const { useGetOrdersAnalyticsQuery , useGetGoodiesAnalyticsQuery } = analyticsApi;

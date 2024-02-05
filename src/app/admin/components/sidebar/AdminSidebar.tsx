@@ -251,21 +251,6 @@ const Sidebar = () => {
             </SubMenu>
 
             <Typography
-              variant="h5"
-              className="!text-[18px] text-black dark:text-[#ffffffc1] capitalize !font-[400]"
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              {!isCollapsed && "Controllers"}
-            </Typography>
-            <Item
-              title="Manage Team"
-              to="/admin/team"
-              icon={<Diversity3Icon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
-            <Typography
               variant="h6"
               className="!text-[18px] text-black dark:text-[#ffffffc1] capitalize !font-[400]"
               sx={{ m: "15px 0 5px 20px" }}

@@ -1,6 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 import * as React from "react";
-import { Box, Typography, Modal, Button, Divider } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Modal,
+  Button,
+  Divider,
+  useMediaQuery,
+} from "@mui/material";
 import { toast } from "react-toastify";
 
 import Spinner from "./spinner";
@@ -9,6 +16,10 @@ import myAxios from "@/app/(client)/lib/axios.config";
 
 import "./orderModal.scss";
 import { IOrderData } from "@/app/lib/interfaces";
+import { z } from "zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ErrorMessage } from "@hookform/error-message";
 
 const style = {
   position: "absolute",
@@ -24,129 +35,95 @@ const style = {
 };
 
 const OrderModal = ({
+  goodie,
   open,
   handleClose,
   message = () => "",
-  orderData,
-}: {
+}: // orderData,
+{
+  goodie: any;
   open: boolean;
   handleClose: () => void;
   message?: () => string;
-  orderData: IOrderData | undefined;
+  // orderData: IOrderData | undefined;
 }) => {
   const [number, setNumber] = React.useState(0);
   const [isSending, setIsSending] = React.useState(false);
   const [isSendOrder, setIsSendOrder] = React.useState(false);
-  console.log("L'order data dans orderModal", orderData);
+
+  const match500 = useMediaQuery("(max-width:500px)");
+
+  // console.log("L'order data dans orderModal", orderData);
   const send = () => {
-    setIsSending(true);
-    if (!number || String(number).length < 9) {
-      toast.error(
-        <div style={{ color: "#fff" }}>
-          {" "}
-          Entrer un numéro valide: 6xxxxxxxx{" "}
-        </div>,
-        {
-          style: { textAlign: "center" },
-        }
-      );
-      setIsSending(false);
-    } else {
-      if (orderData !== undefined) {
-        orderData["number"] = number;
-        console.log(orderData);
-
-        myAxios
-          .post("/order/create", orderData)
-          .then((response: any) => {
-            if (response.status === 200) {
-              window.localStorage.setItem(
-                "_devStyle-order-number",
-                String(number)
-                  .split("")
-                  .reduce(
-                    (acc, val, i) =>
-                      (acc += String.fromCharCode(val.charCodeAt(0) + 3)),
-                    ""
-                  )
-              );
-              toast.success(
-                <div style={{ color: "#fff" }}>Commande bien reçu</div>,
-                {
-                  style: { textAlign: "center" },
-                  icon: "🎉",
-                }
-              );
-              // console.log(response.data.message);
-            } else {
-              toast.error(
-                <div style={{ color: "#fff" }}>Une erreur est survenu</div>,
-                {
-                  style: { textAlign: "center" },
-                }
-              );
-              console.log(response.data.message);
-            }
-          })
-          .catch((error: any) => {
-            toast.error(
-              <div style={{ color: "#fff" }}>
-                Une erreur est survenu, réessayer
-              </div>,
-              {
-                style: { textAlign: "center" },
-                icon: "😕",
-              }
-            );
-            console.log(error);
-          })
-          .finally(() => {
-            setIsSending(false);
-            handleClose();
-          });
-      } else {
-        console.log("c'est indefinie");
-        return;
-      }
-    }
-  };
-
-  const contact = () => {
-    setIsSendOrder(true);
-    myAxios
-      .post("/order/create", orderData)
-      .then((response) => {
-        if (response.status === 200) {
-          toast.success(
-            <div style={{ color: "#fff" }}>Commande bien reçu</div>,
-            {
-              style: { textAlign: "center" },
-              icon: "🎉",
-            }
-          );
-
-          window
-            ?.open(
-              `https://api.whatsapp.com/send/?phone=237692650993&text=%0A%60%60%60%3C%20MA%20COMMANDE%20%2F%3E%60%60%60%F0%9F%9B%92%0A${
-                message() ?? ""
-              }%5B%20%C3%A0%20ne%20pas%20supprimer%F0%9F%91%86%F0%9F%8F%BD%20%5D`,
-              "_blank"
-            )
-            ?.focus();
-        }
-        console.log(response.status);
-      })
-      .catch((error) => {
-        toast.error(<div style={{ color: "#fff" }}>{error.message}</div>, {
-          icon: "🌐",
-          style: { textAlign: "center" },
-        });
-        console.log(error);
-      })
-      .finally(() => {
-        setIsSendOrder(false);
-        handleClose();
-      });
+    // setIsSending(true);
+    // if (!number || String(number).length < 9) {
+    //   toast.error(
+    //     <div style={{ color: "#fff" }}>
+    //       {" "}
+    //       Entrer un numéro valide: 6xxxxxxxx{" "}
+    //     </div>,
+    //     {
+    //       style: { textAlign: "center" },
+    //     }
+    //   );
+    //   setIsSending(false);
+    // } else {
+    //   if (orderData !== undefined) {
+    //     orderData["number"] = number;
+    //     console.log(orderData);
+    //     myAxios
+    //       .post("/order/create", orderData)
+    //       .then((response: any) => {
+    //         if (response.status === 200) {
+    //           window.localStorage.setItem(
+    //             "_devStyle-order-number",
+    //             String(number)
+    //               .split("")
+    //               .reduce(
+    //                 (acc, val, i) =>
+    //                   (acc += String.fromCharCode(val.charCodeAt(0) + 3)),
+    //                 ""
+    //               )
+    //           );
+    //           toast.success(
+    //             <div style={{ color: "#fff" }}>Commande bien reçu</div>,
+    //             {
+    //               style: { textAlign: "center" },
+    //               icon: "🎉",
+    //             }
+    //           );
+    //           // console.log(response.data.message);
+    //         } else {
+    //           toast.error(
+    //             <div style={{ color: "#fff" }}>Une erreur est survenu</div>,
+    //             {
+    //               style: { textAlign: "center" },
+    //             }
+    //           );
+    //           console.log(response.data.message);
+    //         }
+    //       })
+    //       .catch((error: any) => {
+    //         toast.error(
+    //           <div style={{ color: "#fff" }}>
+    //             Une erreur est survenu, réessayer
+    //           </div>,
+    //           {
+    //             style: { textAlign: "center" },
+    //             icon: "😕",
+    //           }
+    //         );
+    //         console.log(error);
+    //       })
+    //       .finally(() => {
+    //         setIsSending(false);
+    //         handleClose();
+    //       });
+    //   } else {
+    //     console.log("c'est indefinie");
+    //     return;
+    //   }
+    // }
   };
 
   React.useEffect(() => {
@@ -166,6 +143,81 @@ const OrderModal = ({
     }
   }, []);
 
+  const orderFormSchema = z.object({
+    name: z.string().min(2),
+    email: z.string().email().min(5),
+  });
+
+  type IOrderFormSchema = z.infer<typeof orderFormSchema>;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IOrderFormSchema>({ resolver: zodResolver(orderFormSchema) });
+
+  const onSubmit: SubmitHandler<IOrderFormSchema> = (data) => {
+    setIsSending(true);
+
+    const orderData: IOrderData | null = {
+      goodies: goodie,
+      status: "initiate",
+      number: number,
+      ...data,
+    };
+
+    myAxios
+      .post("/order/create", orderData)
+      .then((response: any) => {
+        if (response.status === 200) {
+          window.localStorage.setItem(
+            "_devStyle-order-number",
+            String(number)
+              .split("")
+              .reduce(
+                (acc, val, i) =>
+                  (acc += String.fromCharCode(val.charCodeAt(0) + 3)),
+                ""
+              )
+          );
+          toast.success(
+            <div style={{ color: "#fff" }}>Commande bien reçu</div>,
+            {
+              style: { textAlign: "center" },
+              icon: "🎉",
+            }
+          );
+          // console.log(response.data.message);
+        } else {
+          toast.error(
+            <div style={{ color: "#fff" }}>Une erreur est survenu</div>,
+            {
+              style: { textAlign: "center" },
+            }
+          );
+          console.log(response.data.message);
+        }
+      })
+      .catch((error: any) => {
+        toast.error(
+          <div style={{ color: "#fff" }}>
+            Une erreur est survenu, réessayer
+          </div>,
+          {
+            style: { textAlign: "center" },
+            icon: "😕",
+          }
+        );
+        console.log(error);
+      })
+      .finally(() => {
+        setIsSending(false);
+        handleClose();
+      });
+
+    // console.log("Voici les donnees de la commande ", orderData);
+  };
+
   return (
     <div>
       <Modal
@@ -183,65 +235,118 @@ const OrderModal = ({
           >
             {"< Commander Maintenant🛒 />"}
           </Typography>
-          <Box>
-            <p
-              style={{
-                fontSize: "12px",
-                textAlign: "center",
-                width: "100%",
-                padding: "10px 0",
-              }}
+
+          <Box className="order-form-container" paddingY={"15px"}>
+            <form
+              className="order-form"
+              style={{}}
+              onSubmit={handleSubmit(onSubmit)}
             >
-              Es-tu sur Telephone ou as tu Whatsapp web ouvert ?
-            </p>
-            <Button
-              className="button-direct"
-              onClick={() => contact()}
-              disabled={isSendOrder}
-            >
-              {isSendOrder ? (
-                <Spinner size={25} thickness={3} color={"white"} />
-              ) : (
-                "Allons-y sur whatsapp"
-              )}
-            </Button>
-            <Divider
-              light={false}
-              style={{ fontSize: "12px", margin: "18px 0" }}
-            >
-              Sinon
-            </Divider>
-            <p
-              style={{
-                fontSize: "12px",
-                textAlign: "center",
-                width: "100%",
-                paddingBottom: "10px",
-              }}
-            >
-              Laisse ton numéro, on te contact juste après
-            </p>
-            <input
-              id="whatsapp-number"
-              placeholder="Numéro whatsapp valide"
-              type={"number"}
-              value={number}
-              onChange={(e) => setNumber(Number(e.target.value))}
-            />
-            <Button
-              className="button"
-              onClick={() => send()}
-              disabled={isSending}
-            >
-              {isSending ? (
-                <Spinner size={25} thickness={3} color={"white"} />
-              ) : (
-                "Contactez moi sur whatsapp"
-              )}
-            </Button>
-            <p style={{ textAlign: "center", paddingTop: "25px" }}>
-              Dans tous les cas, retrouvons nous de l'autre côté😜
-            </p>
+              <div
+                className="orer-form-item"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  padding: "10px",
+                  // backgroundColor: "blue",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "start",
+                    gap: "5px",
+                    width: "100%",
+                  }}
+                >
+                  <label
+                    htmlFor=""
+                    style={{
+                      fontSize: "12px",
+                      textAlign: "center",
+                      width: "100%",
+                    }}
+                  >
+                    Enter your name
+                  </label>
+                  <input
+                    id="input-value"
+                    type="text"
+                    placeholder="Your name"
+                    className="input-item"
+                    {...register("name", { required: "This is required" })}
+                  />
+
+                  <ErrorMessage errors={errors} name="name" />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "start",
+                    gap: "15px",
+                    marginTop: "10px",
+                    width: "100%",
+                  }}
+                >
+                  <label
+                    htmlFor=""
+                    style={{
+                      fontSize: "12px",
+                      textAlign: "center",
+                      width: "100%",
+                    }}
+                  >
+                    Enter your Email
+                  </label>
+                  <input
+                    id="input-value"
+                    type="email"
+                    placeholder="Your email"
+                    className="input-item"
+                    {...register("email", { required: "This is required" })}
+                  />
+                  <ErrorMessage errors={errors} name="email" />
+                </div>
+              </div>
+              <Box>
+                <p
+                  style={{
+                    fontSize: "12px",
+                    textAlign: "center",
+                    width: "100%",
+                    paddingBottom: "10px",
+                  }}
+                >
+                  Laisse ton numéro, on te contact juste après
+                </p>
+                <input
+                  id="whatsapp-number"
+                  placeholder="Numéro whatsapp valide"
+                  type={"number"}
+                  value={number}
+                  onChange={(e) => setNumber(Number(e.target.value))}
+                />
+                <Button
+                  type="submit"
+                  className="button"
+                  // onClick={() => send()}
+                  disabled={isSending}
+                >
+                  {isSending ? (
+                    <Spinner size={25} thickness={3} color={"white"} />
+                  ) : (
+                    "Contactez moi sur whatsapp"
+                  )}
+                </Button>
+                <p style={{ textAlign: "center", paddingTop: "25px" }}>
+                  Dans tous les cas, retrouvons nous de l'autre côté😜
+                </p>
+              </Box>
+            </form>
           </Box>
         </Box>
       </Modal>

@@ -220,53 +220,23 @@ const Checkout = () => {
 
   const submit = () => {};
 
-  useEffect(() => {
-    scrollToTop();
-  }, []);
+  const propertiesToSelect = ["name", "price", "quantity", "total"];
 
-  const onSubmit: SubmitHandler<IOrderFormSchema> = (data) => {
-    // console.log("voici les data", data);
-    // console.log("voici le context", cartContent);
+  const goodies = Object.values(cartContent).map(
+    (child: Record<string, any>) => {
+      const selectedProperty: Record<string, string | number> = {};
 
-    const propertiesToSelect = ["name", "price", "quantity", "total"];
+      const total = child.price * child.quantity;
 
-    const allData: IOrderData | null = {
-      goodies: Object.values(cartContent).map((child: Record<string, any>) => {
-        const selectedProperty: Record<string, string | number> = {};
-
-        const total = child.price * child.quantity;
-
-        propertiesToSelect.forEach((property) => {
-          selectedProperty["total"] = total;
-          if (child.hasOwnProperty(property)) {
-            selectedProperty[property] = child[property];
-          }
-        });
-        return selectedProperty;
-      }),
-      status: "initiate",
-      ...data,
-    };
-
-    // console.log(allData);
-
-    setOrderData(allData);
-
-    // myAxios
-    //   .post("/order/create", allData)
-    //   .then((response) => {
-    //     console.log(response.status);
-    //   })
-    //   .catch((error) => {
-    //     toast.error(<div style={{ color: "#fff" }}>{error.message}</div>, {
-    //       icon: "🌐",
-    //       style: { textAlign: "center" },
-    //     });
-    //     console.log(error);
-    //   });
-
-    getTotalPrice(cartContent) ? setModalOpen(true) : null;
-  };
+      propertiesToSelect.forEach((property) => {
+        selectedProperty["total"] = total;
+        if (child.hasOwnProperty(property)) {
+          selectedProperty[property] = child[property];
+        }
+      });
+      return selectedProperty;
+    }
+  );
 
   return (
     <Fragment>
@@ -364,99 +334,23 @@ const Checkout = () => {
           </TableContainer>
         </Box>
 
-        <Box className="order-form-container" paddingY={"15px"}>
-          <form
-            className="order-form"
-            style={{}}
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <div
-              className="orer-form-item"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: !match500 ? "row" : "column",
-                padding: "10px",
-              }}
-            >
-              <div
-                style={{
-                  flex: "1",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "start",
-                  gap: "15px",
-                }}
-              >
-                <label
-                  htmlFor=""
-                  style={{
-                    fontSize: "20px",
-                    fontWeight: "400px",
-                    fontFamily: "Poppins",
-                    fontStyle: "initial",
-                  }}
-                >
-                  Enter your name
-                </label>
-                <input
-                  type="text"
-                  placeholder="Your name"
-                  className="input-item"
-                  {...register("name", { required: "This is required" })}
-                />
-
-                <ErrorMessage errors={errors} name="name" />
-              </div>
-              <div
-                style={{
-                  flex: "1",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "start",
-                  gap: "15px",
-                }}
-              >
-                <label
-                  htmlFor=""
-                  style={{
-                    fontSize: "20px",
-                    fontWeight: "400px",
-                    fontFamily: "Poppins",
-                    fontStyle: "initial",
-                  }}
-                >
-                  Enter your Email
-                </label>
-                <input
-                  type="email"
-                  placeholder="Your name"
-                  className="input-item"
-                  {...register("email", { required: "This is required" })}
-                />
-                <ErrorMessage errors={errors} name="email" />
-              </div>
-            </div>
-            <Button
-              type="submit"
-              className="button mx-auto "
-              style={{ backgroundColor: "#220F00", color: "white" }}
-              // onClick={() =>
-              //   getTotalPrice(cartContent) ? setModalOpen(true) : null
-              // }
-            >
-              Commander(
-              <Image
-                src={"/assets/icons/whatsapp-green.png"}
-                alt="whatsapp"
-                width={18}
-                height={18}
-              />
-              )
-            </Button>
-          </form>
-        </Box>
+        <Button
+          type="submit"
+          className="button mx-auto "
+          style={{ backgroundColor: "#220F00", color: "white" }}
+          onClick={() =>
+            getTotalPrice(cartContent) ? setModalOpen(true) : null
+          }
+        >
+          Commander(
+          <Image
+            src={"/assets/icons/whatsapp-green.png"}
+            alt="whatsapp"
+            width={18}
+            height={18}
+          />
+          )
+        </Button>
 
         <Box
           display={"flex"}
@@ -475,10 +369,11 @@ const Checkout = () => {
         </Box>
       </Box>
       <OrderModal
+        goodie={goodies}
         open={modalOpen}
         handleClose={() => setModalOpen(false)}
         message={() => _devstyle()}
-        orderData={orderData}
+        // order={orderData}
       />
     </Fragment>
   );

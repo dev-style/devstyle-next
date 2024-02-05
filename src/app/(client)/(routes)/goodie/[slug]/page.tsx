@@ -250,6 +250,21 @@ const Goodie = ({ slug }: { slug: string }) => {
     }
   }, [isCopied]);
 
+  const propertiesToSelect = ["name", "price", "quantity", "total"];
+
+
+
+  const goodies = [
+    {
+      name: goodie?.name,
+      price: goodie?.price,
+      quantity: goodie?.quantity,
+      total: goodie? ( goodie.price || 0) * (goodie?.quantity || 0) :0
+    }
+  ];
+
+  console.log(goodies);
+
   return (
     <React.Fragment>
       <Box className="goodie-wrapper">
@@ -786,6 +801,7 @@ const Goodie = ({ slug }: { slug: string }) => {
         </Box>
       </Box>
       <OrderModal
+        goodie={goodies}
         open={modalOpen}
         handleClose={() => setModalOpen(false)}
         message={() => _devstyle()}

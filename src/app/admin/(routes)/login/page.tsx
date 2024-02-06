@@ -10,7 +10,7 @@ import {
   InputLabel,
   OutlinedInput,
   TextField,
-  Typography
+  Typography,
 } from "@mui/material";
 import Image from "next/image";
 import { redirect } from "next/navigation";
@@ -20,7 +20,7 @@ import { useFormik } from "formik";
 import {
   AiOutlineEye,
   AiOutlineEyeInvisible,
-  AiFillGithub
+  AiFillGithub,
 } from "react-icons/ai";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
@@ -31,7 +31,7 @@ const schema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email!")
     .required("Please enter your email!"),
-  password: Yup.string().required("Please enter your password!").min(6)
+  password: Yup.string().required("Please enter your password!").min(6),
 });
 
 export default function Page() {
@@ -42,45 +42,35 @@ export default function Page() {
     validationSchema: schema,
     onSubmit: async ({ email, password }) => {
       await login({ email, password });
-    }
+    },
   });
 
-  useEffect(
-    () => {
-      if (isSuccess) {
-        console.log("Tout c'est tres bien passe");
+  useEffect(() => {
+    if (isSuccess) {
+      console.log("Tout c'est tres bien passe");
+
+      toast.error(<div style={{ color: "white" }}>success</div>, {
+        icon: "🌐",
+        style: { textAlign: "center" },
+      });
+
+      return redirect("/admin");
+    }
+    if (error) {
+      if ("data" in error) {
+        const errorData = error as any;
+        console.log(error);
 
         toast.error(
-          <div style={{ color: "#131010", backgroundColor: "green" }}>
-            success
-          </div>,
+          <div style={{ color: "white" }}>{errorData.data.message}</div>,
           {
             icon: "🌐",
-            style: { textAlign: "center" }
+            style: { textAlign: "center" },
           }
         );
-
-        return redirect("/admin");
       }
-      if (error) {
-        if ("data" in error) {
-          const errorData = error as any;
-          console.log(error);
-
-          toast.error(
-            <div style={{ color: "#0c0c0e", backgroundColor: "red" }}>
-              {errorData.data.message}
-            </div>,
-            {
-              icon: "🌐",
-              style: { textAlign: "center" }
-            }
-          );
-        }
-      }
-    },
-    [isSuccess, error]
-  );
+    }
+  }, [isSuccess, error]);
 
   const [show, setShow] = useState(false);
 
@@ -92,7 +82,7 @@ export default function Page() {
         style={{
           background: "url('/assets/images/login_bg.png')",
           backgroundSize: "cover",
-          backgroundPosition: "center"
+          backgroundPosition: "center",
         }}
         className="  w-[100%] h-[50%]   md:w-[100%] md:h-[100%] flex items-center justify-center "
       >
@@ -110,7 +100,7 @@ export default function Page() {
               Bienvenue chez Devstyle admin
             </Typography>
             <Typography className="text-white font-normal">
-              That is the header
+              Manage our product
             </Typography>
           </Box>
         </Box>
@@ -126,6 +116,29 @@ export default function Page() {
           </Typography>
 
           <form onSubmit={handleSubmit}>
+            <div className="mt-5">
+              <label
+                className="text-[16px] font-Poppins text-black dark:text-white"
+                htmlFor="email"
+              >
+                Enter your Email
+              </label>
+              <input
+                type="email"
+                name=""
+                value={values.email}
+                onChange={handleChange}
+                id="email"
+                placeholder="loginmail@gmail.com"
+                className={`${
+                  errors.email && touched.email && "border-red-500"
+                } w-full text-black dark:text-white bg-transparent border rounded h-[40px] px-2 outline-none mt-[10px] font-Poppins `}
+              />
+              {errors.email && touched.email && (
+                <span className="text-red-500 pt-2 block">{errors.email}</span>
+              )}
+            </div>
+
             <div className="w-full mt-5 relative mb-1">
               <label
                 className="text-[16px] font-Poppins text-black dark:text-white"
@@ -140,49 +153,29 @@ export default function Page() {
                 onChange={handleChange}
                 id="password"
                 placeholder="password!@%"
-                className={`${errors.password &&
-                  touched.password &&
-                  "border-red-500"} w-full text-black dark:text-white bg-transparent border rounded h-[40px] px-2 outline-none mt-[10px] font-Poppins `}
+                className={`${
+                  errors.password && touched.password && "border-red-500"
+                } w-full text-black dark:text-white bg-transparent border rounded h-[40px] px-2 outline-none mt-[10px] font-Poppins `}
               />
-              {!show
-                ? <AiOutlineEyeInvisible
-                    className="absolute bottom-3 right-2 z-1 cursor-pointer"
-                    size={20}
-                    onClick={() => setShow(true)}
-                  />
-                : <AiOutlineEye
-                    className="absolute bottom-3 right-2 z-1 cursor-pointer"
-                    size={20}
-                    onClick={() => setShow(false)}
-                  />}
-              {errors.password &&
-                touched.password &&
+              {!show ? (
+                <AiOutlineEyeInvisible
+                  className="absolute bottom-3 right-2 z-1 cursor-pointer"
+                  size={20}
+                  onClick={() => setShow(true)}
+                />
+              ) : (
+                <AiOutlineEye
+                  className="absolute bottom-3 right-2 z-1 cursor-pointer"
+                  size={20}
+                  onClick={() => setShow(false)}
+                />
+              )}
+              {errors.password && touched.password && (
                 <span className="text-red-500 pt-2 block">
                   {errors.password}
-                </span>}
+                </span>
+              )}
             </div>
-            <label
-              className="text-[16px] font-Poppins text-black dark:text-white"
-              htmlFor="email"
-            >
-              Enter your Email
-            </label>
-            <input
-              type="email"
-              name=""
-              value={values.email}
-              onChange={handleChange}
-              id="email"
-              placeholder="loginmail@gmail.com"
-              className={`${errors.email &&
-                touched.email &&
-                "border-red-500"} w-full text-black dark:text-white bg-transparent border rounded h-[40px] px-2 outline-none mt-[10px] font-Poppins `}
-            />
-            {errors.email &&
-              touched.email &&
-              <span className="text-red-500 pt-2 block">
-                {errors.email}
-              </span>}
             <input
               type="submit"
               value="Login"

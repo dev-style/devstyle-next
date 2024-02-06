@@ -5,8 +5,21 @@ import "react-pro-sidebar/dist/css/styles.css";
 
 import avatarDefault from "../../../../../public/assets/images/avatar.png";
 
-import {persistor} from "../../redux/features/store"
-import {GroupAddIcon ,RecentActorsIcon,ArrowForwardIosIcon,ExitToAppIcon, AssessmentIcon , BarChartIcon ,ChecklistRtlIcon,Diversity3Icon, ArrowBackIosIcon , HomeOutlinedIcon ,AddCircleIcon, GroupsIcon} from "./Icon"
+import { persistor } from "../../redux/features/store";
+import {
+  GroupAddIcon,
+  RecentActorsIcon,
+  ArrowForwardIosIcon,
+  ExitToAppIcon,
+  AssessmentIcon,
+  BarChartIcon,
+  ChecklistRtlIcon,
+  Diversity3Icon,
+  ArrowBackIosIcon,
+  HomeOutlinedIcon,
+  AddCircleIcon,
+  GroupsIcon,
+} from "./Icon";
 
 
 import { useSelector } from "react-redux";
@@ -53,8 +66,6 @@ const Sidebar = () => {
   });
 
 
-
-
   useEffect(() => setMounted(true), []);
 
   if (!mounted) {
@@ -65,7 +76,6 @@ const Sidebar = () => {
     setlogout(true);
     // refetch()
     persistor.purge();
-
   };
 
   return (
@@ -184,26 +194,13 @@ const Sidebar = () => {
               {!isCollapsed && "Data"}
             </Typography>
 
-            <SubMenu title={!isCollapsed ? "USER" : ""} icon={<GroupsIcon />}>
-              <Item
-                title="Create users"
-                to="/admin/users"
-                icon={<GroupAddIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-              <Item
-                title="List users"
-                to="/admin/"
-                icon={<RecentActorsIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-            </SubMenu>
 
             <SubMenu
               title={!isCollapsed ? "GOODIES" : ""}
               icon={<GroupsIcon />}
+              selected={selected}
+              setSelected={setSelected}
+
             >
               <Item
                 title="Create goodie"
@@ -219,43 +216,23 @@ const Sidebar = () => {
                 selected={selected}
                 setSelected={setSelected}
               />
-              </SubMenu>
+            </SubMenu>
 
-         
-         
-            <SubMenu  title={!isCollapsed? "ORDERS":""}  icon={<GroupsIcon />}    selected={selected}
-              setSelected={setSelected}>
-
-            <Item
-              title="List Orders"
-              to="/admin/list-orders"
-              icon={<ChecklistRtlIcon />}
+            <SubMenu
+              title={!isCollapsed ? "ORDERS" : ""}
+              icon={<GroupsIcon />}
               selected={selected}
               setSelected={setSelected}
-              />
-              </SubMenu>
 
-         
-
-       
-           
-           
-
-
-            <Typography
-              variant="h5"
-              className="!text-[18px] text-black dark:text-[#ffffffc1] capitalize !font-[400]"
-              sx={{ m: "15px 0 5px 20px" }}
             >
-              {!isCollapsed && "Controllers"}
-            </Typography>
-            <Item
-              title="Manage Team"
-              to="/admin/team"
-              icon={<Diversity3Icon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+              <Item
+                title="List Orders"
+                to="/admin/list-orders"
+                icon={<ChecklistRtlIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </SubMenu>
 
             <Typography
               variant="h6"
@@ -279,13 +256,13 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-            <Item
+            {/* <Item
               title="Users Analytics"
               to="/admin/users-analytics"
               icon={<AssessmentIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
 
             <Typography
               variant="h6"
@@ -297,7 +274,7 @@ const Sidebar = () => {
             <div onClick={logoutHandler}>
               <Item
                 title="Logout"
-                to="/"
+                to="/login"
                 icon={<ExitToAppIcon />}
                 selected={selected}
                 setSelected={setSelected}

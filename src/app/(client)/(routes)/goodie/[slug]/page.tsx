@@ -97,7 +97,7 @@ const Goodie = (props: any) => {
     myAxios
       .get("/goodie/" + props.slug)
       .then((response) => {
-        console.log(response.data);
+        console.log("Le goodieee", response.data);
         if (response.status === 200) {
           setGoodie({
             ...response.data.message,
@@ -249,6 +249,21 @@ const Goodie = (props: any) => {
       }, 2500);
     }
   }, [isCopied]);
+
+  const propertiesToSelect = ["name", "price", "quantity", "total"];
+
+
+
+  const goodies = [
+    {
+      name: goodie?.name,
+      price: goodie?.price,
+      quantity: goodie?.quantity,
+      total: goodie? ( goodie.price || 0) * (goodie?.quantity || 0) :0
+    }
+  ];
+
+  console.log(goodies);
 
   return (
     <React.Fragment>
@@ -786,6 +801,7 @@ const Goodie = (props: any) => {
         </Box>
       </Box>
       <OrderModal
+        goodie={goodies}
         open={modalOpen}
         handleClose={() => setModalOpen(false)}
         message={() => _devstyle()}

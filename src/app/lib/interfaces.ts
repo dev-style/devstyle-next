@@ -96,3 +96,11 @@ export interface IUser {
   email: string;
   authToken?: string;
 }
+
+export interface IOrderData {
+  goodies: Record<string, string | number>[];
+  email: string;
+  number?: number;
+  status: string;
+  name: string;
+}

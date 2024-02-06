@@ -8,6 +8,7 @@ const nextConfig = (module.exports = {
         port: "",
       },
     ],
+    domains: ["res.cloudinary.com"],
   },
 
   env: {

@@ -6,9 +6,11 @@ import { AiOutlineDelete } from "react-icons/ai";
 import Loader from "../Loader/Loader";
 import { DataGrid } from "@mui/x-data-grid";
 import { styles } from "../../styles/style";
-import { useDeleteOrderMutation, useGetAllOrdersQuery } from "../../redux/features/orders/ordersApi";
+import {
+  useDeleteOrderMutation,
+  useGetAllOrdersQuery,
+} from "../../redux/features/orders/ordersApi";
 import { AnyAaaaRecord } from "dns";
-
 
 type Props = {};
 
@@ -20,125 +22,123 @@ const AllOrders = (prop: Props) => {
     { refetchOnMountOrArgChange: true }
   );
 
-  const [deleteOrder , {isSuccess , error} ] = useDeleteOrderMutation({})
+  const [deleteOrder, { isSuccess, error }] = useDeleteOrderMutation({});
 
-  console.log("voici les commandes" , data)
+  console.log("voici les commandes", data);
 
-  let totalPrice=0
+  let totalPrice = 0;
 
-// useEffect(()=>{
+  // useEffect(()=>{
 
-//     data.message.goodies.forEach((item:any)=>{
+  //     data.message.goodies.forEach((item:any)=>{
 
-//         totalPrice += item.price*item.quantity
+  //         totalPrice += item.price*item.quantity
 
-//         console.log("le prix total est" , totalPrice)
+  //         console.log("le prix total est" , totalPrice)
 
-//     })
+  //     })
 
-
-// },[data])
-
+  // },[data])
 
   const columns = [
-
-    {field:"id" , headerName:"ID" , flex:0.5
-},
-{field:"name" , headerName:"name " , flex:0.5},
-{field:"goodieName" , headerName:"goodieName " , flex:1},
-{field:"totalPrice" , headerName:"totalPrice " , flex:0.5},
-{field:"status" , headerName:"status " , flex:1},
-{
-  field:"",headerName:"Edit status",flex:0.5,
-  renderCell:(params:any)=>{
-      return(
+    { field: "id", headerName: "ID", flex: 0.5 },
+    { field: "name", headerName: "name ", flex: 0.5 },
+    { field: "email", headerName: "email", flex: 1 },
+    { field: "number", headerName: "number", flex: 0.5 },
+    { field: "goodieName", headerName: "goodieName ", flex: 1 },
+    { field: "totalPrice", headerName: "totalPrice ", flex: 0.5 },
+    { field: "status", headerName: "status ", flex: 1 },
+    {
+      field: "",
+      headerName: "Edit status",
+      flex: 0.5,
+      renderCell: (params: any) => {
+        return (
           <>
-          <Link href={`/admin/edit-order/${params.row.id}`}>
-          <FiEdit2 className="dark:text-white text-black" size={20} />
-
-                </Link>
+            <Link href={`/admin/edit-order/${params.row.id}`}>
+              <FiEdit2 className="dark:text-white text-black" size={20} />
+            </Link>
           </>
-      )
+        );
+      },
+    },
+
+    {
+      field: " ",
+      headerName: "Delete",
+      flex: 0.7,
+      renderCell: (params: any) => {
+        return (
+          <>
+            <Button
+              onClick={() => {
+                setOpen(!open);
+                setOrderId(params.row.id);
+              }}
+            >
+              <AiOutlineDelete
+                className="dark:text-white text-black"
+                size={20}
+              />
+            </Button>
+          </>
+        );
+      },
+    },
+  ];
+
+  const rows: any = [];
+
+  {
+    data &&
+      data.message.forEach((item: any) => {
+        rows.push({
+          id: item._id,
+          name: item.name,
+          email: item.email,
+          number: item.number,
+          goodieName: item.goodies.map(
+            (goodie: any) => `${goodie.name} x ${goodie.quantity}`
+          ),
+          totalPrice: item.goodies.reduce(
+            (acc: any, goodie: any) => acc + goodie.price * goodie.quantity,
+            0
+          ),
+          status: item.status,
+        });
+      });
   }
 
-},
+  useEffect(() => {
+    if (isSuccess) {
+      setOpen(false);
+      refetch();
+    }
 
-{
-    field: " ",
-    headerName: "Delete",
-    flex: 0.2,
-    renderCell: (params: any) => {
-      return (
-        <>
-          <Button
-            onClick={() => {
-              setOpen(!open);
-              setOrderId(params.row.id);
-            }}
-          >
-            <AiOutlineDelete
-              className="dark:text-white text-black"
-              size={20}
-            />
-          </Button>
-        </>
+    if (error) {
+      console.log(
+        "that is the error i have when i try to delete goodie",
+        error
       );
-    },
-  },
-
-  ]
-
-  const rows:any = [];
-
-  {data && data.message.forEach((item:any)=>{
-    rows.push({
-
-        id:item._id,
-        name:item.name,
-        goodieName:item.goodies.map((goodie:any)=>`${goodie.name} x ${goodie.quantity}`),
-        totalPrice:item.goodies.reduce((acc:any , goodie:any)=>acc + goodie.price*goodie.quantity,0),
-        status:item.status
-      
-
-
-    })
-  })}
-
-
-
-  useEffect(()=>{
-
-    if(isSuccess){
-      setOpen(false)
-      refetch()
     }
-
-    if(error){
-      console.log("that is the error i have when i try to delete goodie" , error)
-    }
-
-  },[isSuccess , error , refetch])
+  }, [isSuccess, error, refetch]);
 
   const handleDelete = async () => {
     const id = orderId;
     await deleteOrder(id);
   };
 
+  return (
+    <div className="mt-[120px]">
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <Box m="20px">
+          <Box m="40px 0 0 0" height="80vh" className="overflow-x-auto">
+            <DataGrid checkboxSelection rows={rows} columns={columns} />
+          </Box>
 
-return  (
-<div className="mt-[120px]">
-
-{isLoading ? (<Loader/>) : (
-    <Box m="20px">
-        <Box m="40px 0 0 0"  height="80vh" className="overflow-x-auto" >
-
-<DataGrid checkboxSelection rows ={rows} columns={columns} />
-
-
-        </Box>
-
-
-  {open && (
+          {open && (
             <Modal
               open={open}
               onClose={() => setOpen(!open)}
@@ -166,13 +166,10 @@ return  (
               </Box>
             </Modal>
           )}
-        
-
-    </Box>
-)}
-
-
-</div>)
+        </Box>
+      )}
+    </div>
+  );
 };
 
 export default AllOrders;

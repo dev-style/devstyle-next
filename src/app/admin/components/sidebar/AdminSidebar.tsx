@@ -195,7 +195,6 @@ const Sidebar = () => {
             </Typography>
 
 
-
             <SubMenu
               title={!isCollapsed ? "GOODIES" : ""}
               icon={<GroupsIcon />}
@@ -257,13 +256,13 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-            <Item
+            {/* <Item
               title="Users Analytics"
               to="/admin/users-analytics"
               icon={<AssessmentIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
 
             <Typography
               variant="h6"

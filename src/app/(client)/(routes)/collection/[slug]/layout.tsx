@@ -2,14 +2,16 @@ import { Metadata } from "next";
 import Page from "./page";
 import myAxios from "@/app/(client)/lib/axios.config";
 
-export async function generateMetadata({
-  params: { slug },
-}: {
+interface ICollectionPageProps {
   params: {
     slug: string;
   };
-}): Promise<Metadata> {
-  const response = myAxios.get("/collection/goodies/" + slug);
+}
+
+export async function generateMetadata({
+  params,
+}: ICollectionPageProps): Promise<Metadata> {
+  const response = myAxios.get("/collection/goodies/" + params.slug);
   const collection = (await response).data.message;
 
   return {
@@ -19,13 +21,7 @@ export async function generateMetadata({
   };
 }
 
-interface CollectionPageProps {
-  params: {
-    slug: string;
-  };
-}
-
-const Layout = ({ params: { slug } }: CollectionPageProps) => {
-  return <Page slug={slug} />;
+const Layout = ({ params }: ICollectionPageProps) => {
+  return <Page slug={params.slug} />;
 };
 export default Layout;

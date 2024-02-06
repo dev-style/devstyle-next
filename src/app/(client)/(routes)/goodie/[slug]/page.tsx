@@ -43,7 +43,7 @@ import "./styles.scss";
 import Image from "next/image";
 import Spinner from "@/app/(client)/components/spinner";
 
-const Goodie = ({ slug }: { slug: string }) => {
+const Goodie = (props: any) => {
   const { cartDispatch } = useContext(CartContext);
   const match700 = useMediaQuery("(max-width:700px)");
   const match900 = useMediaQuery("(max-width:900px)");
@@ -95,7 +95,7 @@ const Goodie = ({ slug }: { slug: string }) => {
 
   useEffect(() => {
     myAxios
-      .get("/goodie/" + slug)
+      .get("/goodie/" + props.slug)
       .then((response) => {
         console.log("Le goodieee", response.data);
         if (response.status === 200) {
@@ -140,11 +140,11 @@ const Goodie = ({ slug }: { slug: string }) => {
         });
         console.log(error);
       });
-  }, [slug]);
+  }, [props.slug]);
 
   useEffect(() => {
     myAxios
-      .put("/goodie/update/views/" + slug)
+      .put("/goodie/update/views/" + props.slug)
       .then((response) => {
         if (response.status === 200) {
           // console.log(response.data.message);
@@ -153,7 +153,7 @@ const Goodie = ({ slug }: { slug: string }) => {
         }
       })
       .catch((error) => console.log(error));
-  }, [slug]);
+  }, [props.slug]);
 
   const _devstyle = () => {
     if (goodie?._id) {
@@ -208,7 +208,7 @@ const Goodie = ({ slug }: { slug: string }) => {
     setIsLiking(true);
     setHasLiked(false);
     myAxios
-      .put("/goodie/update/likes/" + slug)
+      .put("/goodie/update/likes/" + props.slug)
       .then((response) => {
         if (response.status === 200) {
           // console.log(response.data.message);

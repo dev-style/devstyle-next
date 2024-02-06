@@ -10,7 +10,7 @@ const GoodieCardSkeleton = () => {
       flexDirection={"column"}
     >
       <Skeleton
-        variant="retangular"
+        variant="rectangular"
         animation="wave"
         height={325}
         width={285}

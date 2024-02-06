@@ -21,6 +21,7 @@ import {
   GroupsIcon,
 } from "./Icon";
 
+
 import { useSelector } from "react-redux";
 import Link from "next/link";
 import Image from "next/image";
@@ -55,6 +56,7 @@ const Sidebar = () => {
   const [selected, setSelected] = useState("Dashboard");
   const [mounted, setMounted] = useState(false);
 
+
   // const {data, isLoading , refetch} = useLogOutQuery({})
 
   // const { data, error, isLoading, isSuccess, refetch } = useLogOutQuery({});
@@ -62,6 +64,7 @@ const Sidebar = () => {
   const {} = useLogOutQuery(undefined, {
     skip: !logout ? true : false,
   });
+
 
   useEffect(() => setMounted(true), []);
 
@@ -191,33 +194,14 @@ const Sidebar = () => {
               {!isCollapsed && "Data"}
             </Typography>
 
-            <SubMenu
-              title={!isCollapsed ? "USER" : ""}
-              icon={<GroupsIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            >
-              <Item
-                title="Create users"
-                to="/admin/users"
-                icon={<GroupAddIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-              <Item
-                title="List users"
-                to="/admin/"
-                icon={<RecentActorsIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-            </SubMenu>
+
 
             <SubMenu
               title={!isCollapsed ? "GOODIES" : ""}
               icon={<GroupsIcon />}
               selected={selected}
               setSelected={setSelected}
+
             >
               <Item
                 title="Create goodie"
@@ -240,6 +224,7 @@ const Sidebar = () => {
               icon={<GroupsIcon />}
               selected={selected}
               setSelected={setSelected}
+
             >
               <Item
                 title="List Orders"

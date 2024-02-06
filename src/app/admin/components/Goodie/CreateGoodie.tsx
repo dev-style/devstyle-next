@@ -3,21 +3,17 @@ import { styles } from "../../styles/style";
 import { useGetCollectionsQuery } from "../../redux/features/Collections/collectionsApi";
 import { useCreateGoodieMutation } from "../../redux/features/goodies/goodiesApi";
 import { toast } from "react-toastify";
-import { boolean } from "yup";
 import { redirect } from "next/navigation";
 import { useGetSizesQuery } from "../../redux/features/Sizes/sizesApi";
 
 type Props = {};
 
 const CreateGoodie = (props: Props) => {
-  const [
-    createGoodie,
-    { isLoading, isSuccess, error }
-  ] = useCreateGoodieMutation();
+  const [createGoodie, { isLoading, isSuccess, error }] =
+    useCreateGoodieMutation();
 
   useEffect(() => {
     if (isSuccess) {
-   
       redirect("/admin/list-goodies");
     }
     if (error) {
@@ -28,7 +24,7 @@ const CreateGoodie = (props: Props) => {
         </div>,
         {
           icon: "🌐",
-          style: { textAlign: "center" }
+          style: { textAlign: "center" },
         }
       );
     }
@@ -51,21 +47,18 @@ const CreateGoodie = (props: Props) => {
     inPromo: true || false,
     views: "",
     size: "",
-    images: [{}],
+    images: [{}] as Array<{ url: string }>,
     availableColors: [""],
     backgroundColors: [""],
     likes: "",
-    show: true || false
+    show: true || false,
   });
-  useEffect(
-    () => {
-      if (data) {
-        setCollections(data.message);
-        console.log("voici les data de la collection", data);
-      }
-    },
-    [data]
-  );
+  useEffect(() => {
+    if (data) {
+      setCollections(data.message);
+      console.log("voici les data de la collection", data);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (dataSizes) {
@@ -78,7 +71,7 @@ const CreateGoodie = (props: Props) => {
     const fileList = Array.from(e.target.files);
     const imageList: any = [];
 
-    fileList.forEach(file => {
+    fileList.forEach((file) => {
       const reader = new FileReader();
 
       reader.onload = () => {
@@ -88,7 +81,7 @@ const CreateGoodie = (props: Props) => {
           setGoodieInfo({ ...goodieInfo, images: imageList });
         }
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file as Blob);
     });
   };
 
@@ -112,7 +105,8 @@ const CreateGoodie = (props: Props) => {
               required
               value={goodieInfo.name}
               onChange={(e: any) =>
-                setGoodieInfo({ ...goodieInfo, name: e.target.value })}
+                setGoodieInfo({ ...goodieInfo, name: e.target.value })
+              }
               id="name"
               placeholder="Best goodie ever"
               className={`${styles.input}`}
@@ -132,7 +126,8 @@ const CreateGoodie = (props: Props) => {
               className={`${styles.input} !h-min !py-2`}
               value={goodieInfo.description}
               onChange={(e: any) =>
-                setGoodieInfo({ ...goodieInfo, description: e.target.value })}
+                setGoodieInfo({ ...goodieInfo, description: e.target.value })
+              }
             />
           </div>
           <br />
@@ -148,7 +143,8 @@ const CreateGoodie = (props: Props) => {
                 name=""
                 value={goodieInfo.slug}
                 onChange={(e: any) =>
-                  setGoodieInfo({ ...goodieInfo, slug: e.target.value })}
+                  setGoodieInfo({ ...goodieInfo, slug: e.target.value })
+                }
                 id="slug"
                 placeholder="MERN,Next 13,Socket io,tailwind css,LMS"
                 className={`
@@ -167,16 +163,17 @@ const CreateGoodie = (props: Props) => {
                 onChange={(e: any) =>
                   setGoodieInfo({
                     ...goodieInfo,
-                    fromCollection: e.target.value
-                  })}
+                    fromCollection: e.target.value,
+                  })
+                }
               >
                 <option value="">Select Collection</option>
                 {collections &&
-                  collections.map((item: any) =>
+                  collections.map((item: any) => (
                     <option value={item._id} key={item._id}>
                       {item.title}
                     </option>
-                  )}
+                  ))}
               </select>
             </div>
           </div>
@@ -192,7 +189,8 @@ const CreateGoodie = (props: Props) => {
                 required
                 value={goodieInfo.price}
                 onChange={(e: any) =>
-                  setGoodieInfo({ ...goodieInfo, price: e.target.value })}
+                  setGoodieInfo({ ...goodieInfo, price: e.target.value })
+                }
                 id="price"
                 placeholder="29"
                 className={`
@@ -210,8 +208,9 @@ const CreateGoodie = (props: Props) => {
                 onChange={(e: any) =>
                   setGoodieInfo({
                     ...goodieInfo,
-                    promoPercentage: e.target.value
-                  })}
+                    promoPercentage: e.target.value,
+                  })
+                }
                 id="Pro percentage"
                 placeholder="79"
                 className={`
@@ -230,7 +229,8 @@ const CreateGoodie = (props: Props) => {
                 required
                 value={goodieInfo.views}
                 onChange={(e: any) =>
-                  setGoodieInfo({ ...goodieInfo, views: e.target.value })}
+                  setGoodieInfo({ ...goodieInfo, views: e.target.value })
+                }
                 id="views"
                 placeholder="29"
                 className={`
@@ -253,8 +253,9 @@ const CreateGoodie = (props: Props) => {
                     ...goodieInfo,
                     availableColors: e.target.value
                       .split(",")
-                      .map((color: string) => color.trim())
-                  })}
+                      .map((color: string) => color.trim()),
+                  })
+                }
                 id="availableColors"
                 placeholder="29"
                 className={`
@@ -274,8 +275,9 @@ const CreateGoodie = (props: Props) => {
                     ...goodieInfo,
                     backgroundColors: e.target.value
                       .split(",")
-                      .map((color: string) => color.trim())
-                  })}
+                      .map((color: string) => color.trim()),
+                  })
+                }
                 id="backgroundColors"
                 placeholder="79"
                 className={`
@@ -293,12 +295,13 @@ const CreateGoodie = (props: Props) => {
                 name=""
                 id=""
                 className={`${styles.input}`}
-                value={goodieInfo.show}
+                value={goodieInfo.show.toString()}
                 onChange={(e: any) =>
                   setGoodieInfo({
                     ...goodieInfo,
-                    show: e.target.value === "true"
-                  })}
+                    show: e.target.value === "true",
+                  })
+                }
               >
                 <option value="true">True</option>
                 <option value="False">False</option>
@@ -310,12 +313,13 @@ const CreateGoodie = (props: Props) => {
                 name=""
                 id=""
                 className={`${styles.input}`}
-                value={goodieInfo.inPromo}
+                value={goodieInfo.inPromo.toString()}
                 onChange={(e: any) =>
                   setGoodieInfo({
                     ...goodieInfo,
-                    inPromo: e.target.value === "true"
-                  })}
+                    inPromo: e.target.value === "true",
+                  })
+                }
               >
                 <option value="true">True</option>
                 <option value="False">False</option>
@@ -336,28 +340,28 @@ const CreateGoodie = (props: Props) => {
             />
             <label
               htmlFor="file"
-              className={`w-full min-h-[10vh] dark:border-white border-[#00000026] p-3 border flex items-center justify-center ${dragging
-                ? "bg-blue-500"
-                : "bg-transparent"}`}
+              className={`w-full min-h-[10vh] dark:border-white border-[#00000026] p-3 border flex items-center justify-center ${
+                dragging ? "bg-blue-500" : "bg-transparent"
+              }`}
             >
               <span className="text-black dark:text-white">
                 Drag and drop your thumbnail here or click to browse
               </span>
             </label>
 
-            {goodieInfo.images.map((image, index) =>
+            {goodieInfo.images.map((image, index) => (
               <div key={index} className="mt-5">
                 <img
-                  src={image}
-                  alt={`Image ${image}`}
+                  src={image.url}
+                  alt={`Image ${image.url}`}
                   style={{
                     width: "100%",
                     height: "200px",
-                    objectFit: "contain"
+                    objectFit: "contain",
                   }}
                 />
               </div>
-            )}
+            ))}
           </div>
 
           <br />
@@ -371,7 +375,8 @@ const CreateGoodie = (props: Props) => {
                 required
                 value={goodieInfo.likes}
                 onChange={(e: any) =>
-                  setGoodieInfo({ ...goodieInfo, likes: e.target.value })}
+                  setGoodieInfo({ ...goodieInfo, likes: e.target.value })
+                }
                 id="likes"
                 placeholder="29"
                 className={`
@@ -388,16 +393,17 @@ const CreateGoodie = (props: Props) => {
                 onChange={(e: any) =>
                   setGoodieInfo({
                     ...goodieInfo,
-                    size: e.target.value
-                  })}
+                    size: e.target.value,
+                  })
+                }
               >
                 <option value="">Select Size</option>
                 {sizes &&
-                  sizes.map((item: any) =>
+                  sizes.map((item: any) => (
                     <option value={item._id} key={item._id}>
                       {item.size}
                     </option>
-                  )}
+                  ))}
               </select>
             </div>
           </div>

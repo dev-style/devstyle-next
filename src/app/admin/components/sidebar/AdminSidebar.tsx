@@ -241,6 +241,7 @@ const Sidebar = () => {
             >
               {!isCollapsed && "Analytics"}
             </Typography>
+            
             <Item
               title="goodies Analytics"
               to="/admin/goodies-analytics"

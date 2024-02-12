@@ -22,7 +22,6 @@ const OrderAnalytics = (props: Props) => {
     data.message.last12Months.forEach((item: any) => {
       analyticsData.push({ name: item.month, uv: item.count });
     });
-  data && console.log("Voici les commandes des 12 dernier mois", data.message);
 
   const minValue = 0;
 

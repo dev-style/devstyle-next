@@ -141,8 +141,11 @@ const Home = () => {
       .then((response) => {
         if (response.status === 200) {
           setNewGoodies(response.data.message);
+          console.log("Voici les nouveaux goodie", response.data.message);
+
+
         } else {
-          console.log(response.data.message);
+          console.log("Voici les nouveaux goodie", response.data.message);
           setNewGoodies([]);
         }
       })
@@ -385,6 +388,8 @@ const Home = () => {
             </Box>
           </Grid>
           <Grid item xs={12} md={6} className="image-side">
+            {/* Hero section here  */}
+
             {heroSection.length < 1 ? (
               <Box
                 height={"100%"}

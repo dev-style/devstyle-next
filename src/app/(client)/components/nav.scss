@@ -134,7 +134,7 @@
   // }
   > .nav-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     height: 50px;
     width: 100%;
@@ -150,36 +150,17 @@
       display: flex;
       justify-content: space-evenly;
       align-items: center;
-      // margin-right: auto;
-      // margin: auto;
-      // width: 70%;
-      // max-width: 60%;
-
+      margin: auto;
       a {
         text-decoration: none;
       }
     }
 
-    .search-bar {
-      border-radius: 50px;
-      color: #220f00;
-      font-family: "Poppins";
-      text-transform: initial;
-      font-size: 16px;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      overflow: hidden;
-      // margin-right: auto;
-    }
-
     > .right-actions {
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
       align-items: center;
-      width: 300px;
-      flex-shrink: 2;
+      // width: 230px;
       position: relative;
 
       .custom-goodies-buttom {
@@ -194,9 +175,8 @@
         font-size: 16px;
         font-weight: 500;
         margin-right: 15px;
-      
+        margin-left: 15px;
       }
-
       .cart-button {
         height: 50px;
         width: 50px;

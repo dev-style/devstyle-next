@@ -13,6 +13,8 @@ import myAxios from "@/app/(client)/lib/axios.config";
 import { ICollection, IGoodie } from "@/app/lib/interfaces";
 
 import "./styles.scss";
+import PaginationControls from "@/app/(client)/components/PaginationControls";
+import { useSearchParams } from "next/navigation";
 const ScrollToTop = dynamic(() => import("@/app/(client)/lib/scrollToTop"), {
   ssr: false,
 });
@@ -98,6 +100,23 @@ const Collection = (props: any) => {
     }
   }, [props.slug, onAllGoodies]);
   console.log(collection);
+
+  // pagination feature
+
+  const searchParams = useSearchParams();
+
+  const page = searchParams.get("page") ?? "1";
+
+  const per_page = searchParams.get("per_page") ?? "4";
+
+  const start = (Number(page) - 1) * Number(per_page);
+
+  const end = start + Number(per_page);
+
+  const goodiesFilter = collection?.goodies.slice(start, end) as IGoodie[];
+
+  console.log("le goodie slice est", collection?.goodies);
+
   return (
     <Box className="collection-wrapper">
       <ScrollToTop />
@@ -159,7 +178,7 @@ const Collection = (props: any) => {
               </Grid>
             </>
           ) : (
-            collection?.goodies.map((goodie, i) => (
+            goodiesFilter.map((goodie, i) => (
               <Grid
                 key={i + " " + goodie._id}
                 item
@@ -178,6 +197,12 @@ const Collection = (props: any) => {
             ))
           )}
         </Grid>
+        <div className="mt-10 px-5 w-full max-w-2xl mx-auto border border-slate-900/90 py-3">
+          <PaginationControls
+            hasNextPage={end < [1, 2, 3, 4, 5].length}
+            hasPrevPage={start > 0}
+          />
+        </div>
       </Box>
     </Box>
   );

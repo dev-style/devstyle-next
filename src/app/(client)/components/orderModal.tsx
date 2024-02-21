@@ -53,79 +53,6 @@ const OrderModal = ({
 
   const match500 = useMediaQuery("(max-width:500px)");
 
-  // console.log("L'order data dans orderModal", orderData);
-  const send = () => {
-    // setIsSending(true);
-    // if (!number || String(number).length < 9) {
-    //   toast.error(
-    //     <div style={{ color: "#fff" }}>
-    //       {" "}
-    //       Entrer un numéro valide: 6xxxxxxxx{" "}
-    //     </div>,
-    //     {
-    //       style: { textAlign: "center" },
-    //     }
-    //   );
-    //   setIsSending(false);
-    // } else {
-    //   if (orderData !== undefined) {
-    //     orderData["number"] = number;
-    //     console.log(orderData);
-    //     myAxios
-    //       .post("/order/create", orderData)
-    //       .then((response: any) => {
-    //         if (response.status === 200) {
-    //           window.localStorage.setItem(
-    //             "_devStyle-order-number",
-    //             String(number)
-    //               .split("")
-    //               .reduce(
-    //                 (acc, val, i) =>
-    //                   (acc += String.fromCharCode(val.charCodeAt(0) + 3)),
-    //                 ""
-    //               )
-    //           );
-    //           toast.success(
-    //             <div style={{ color: "#fff" }}>Commande bien reçu</div>,
-    //             {
-    //               style: { textAlign: "center" },
-    //               icon: "🎉",
-    //             }
-    //           );
-    //           // console.log(response.data.message);
-    //         } else {
-    //           toast.error(
-    //             <div style={{ color: "#fff" }}>Une erreur est survenu</div>,
-    //             {
-    //               style: { textAlign: "center" },
-    //             }
-    //           );
-    //           console.log(response.data.message);
-    //         }
-    //       })
-    //       .catch((error: any) => {
-    //         toast.error(
-    //           <div style={{ color: "#fff" }}>
-    //             Une erreur est survenu, réessayer
-    //           </div>,
-    //           {
-    //             style: { textAlign: "center" },
-    //             icon: "😕",
-    //           }
-    //         );
-    //         console.log(error);
-    //       })
-    //       .finally(() => {
-    //         setIsSending(false);
-    //         handleClose();
-    //       });
-    //   } else {
-    //     console.log("c'est indefinie");
-    //     return;
-    //   }
-    // }
-  };
-
   React.useEffect(() => {
     let localNumber = window.localStorage.getItem("_devStyle-order-number");
     if (localNumber) {
@@ -161,7 +88,7 @@ const OrderModal = ({
 
     const orderData: IOrderData | null = {
       goodies: goodie,
-      status: "initiate",
+      status: "Pending",
       number: number,
       ...data,
     };
@@ -339,7 +266,7 @@ const OrderModal = ({
                   {isSending ? (
                     <Spinner size={25} thickness={3} color={"white"} />
                   ) : (
-                    "Contactez moi sur whatsapp"
+                    "Passez ma commande"
                   )}
                 </Button>
                 <p style={{ textAlign: "center", paddingTop: "25px" }}>

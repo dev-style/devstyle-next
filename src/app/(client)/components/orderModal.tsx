@@ -47,7 +47,7 @@ const OrderModal = ({
   message?: () => string;
   // orderData: IOrderData | undefined;
 }) => {
-  const [number, setNumber] = React.useState(0);
+  const [number, setNumber] = React.useState<number | undefined>();
   const [isSending, setIsSending] = React.useState(false);
   const [isSendOrder, setIsSendOrder] = React.useState(false);
 
@@ -197,7 +197,7 @@ const OrderModal = ({
                       width: "100%",
                     }}
                   >
-                    Enter your name
+                    Entrer ton nom
                   </label>
                   <input
                     id="input-value"

@@ -39,13 +39,12 @@ const OrderModal = ({
   open,
   handleClose,
   message = () => "",
-}: // orderData,
+}: 
 {
   goodie: any;
   open: boolean;
   handleClose: () => void;
   message?: () => string;
-  // orderData: IOrderData | undefined;
 }) => {
   const [number, setNumber] = React.useState<number | undefined>();
   const [isSending, setIsSending] = React.useState(false);

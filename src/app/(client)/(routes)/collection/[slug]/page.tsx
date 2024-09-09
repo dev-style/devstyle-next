@@ -31,6 +31,7 @@ const Collection = ({ slug }: { slug: string }) => {
         .get("/collection/goodies/" + slug)
         .then((response) => {
           if (response.status === 200) {
+            console.log("response.data.message", response.data.message);
             setCollection({
               collection: response.data.message?.collection,
               goodies: response.data.message?.goodies,

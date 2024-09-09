@@ -111,6 +111,8 @@ const Home = () => {
       .get("/collection/all")
       .then((response) => {
         if (response.status === 200) {
+          console.log("response.data.message", response.data.message);
+
           setCollections(response.data.message);
         } else {
           console.log(response.data.message);
@@ -126,6 +128,8 @@ const Home = () => {
       .get("/goodies/hot-goodies")
       .then((response) => {
         if (response.status === 200) {
+          console.log("response.data.message", response.data.message);
+
           setTrendingGoodies(response.data.message);
         } else {
           setTrendingGoodies([]);
@@ -140,6 +144,8 @@ const Home = () => {
       .get("/goodies/new-goodies")
       .then((response) => {
         if (response.status === 200) {
+          console.log("response.data.message", response.data.message);
+
           setNewGoodies(response.data.message);
         } else {
           console.log(response.data.message);

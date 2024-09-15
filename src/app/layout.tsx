@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Poppins, Roboto_Slab } from "next/font/google";
 import "./globals.css";
 import "animate.css";
-import { useGetAllGoodiesQuery } from "./admin/redux/features/goodies/goodiesApi";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -31,11 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
 
-  const { isLoading, data, refetch } = useGetAllGoodiesQuery(
-    {},
-    { refetchOnMountOrArgChange: true }
-  );
-
+  
 
   return (
     <html lang="en">

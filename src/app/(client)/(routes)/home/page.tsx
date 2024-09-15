@@ -21,9 +21,34 @@ import Spinner from "@/app/(client)/components/spinner";
 import { importAll, scrollToTop } from "@/app/(client)/lib/utils-script";
 import myAxios from "@/app/(client)/lib/axios.config";
 import "./style.scss";
+import { useUpdateClickCountMutation } from "@/app/admin/redux/features/affiliation/affiliationsApi";
 // import { analyticsEventTracker } from "../app";
 
-const Home = () => {
+const Home = ({ searchParams }: { searchParams: { affiliate: string } }) => {
+  console.log("searchParam", searchParams?.affiliate);
+
+  const [updateClickCount, { isLoading, isSuccess, error }] =
+    useUpdateClickCountMutation();
+
+
+  useEffect(() => {
+    const getClickCount = localStorage.getItem("affiliate");
+
+    if (searchParams.affiliate) {
+      if (getClickCount) {
+      } else {
+        localStorage.setItem("affiliate", searchParams.affiliate);
+
+        console.log("testes");
+        const fetchUpdateClickCount = async () => {
+          await updateClickCount({ affiliate: searchParams?.affiliate });
+        };
+
+        fetchUpdateClickCount();
+      }
+    }
+  }, []);
+
   const HeroImages = importAll(
     require
       .context(

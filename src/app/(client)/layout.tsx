@@ -1,3 +1,4 @@
+"use client"
 import { Box, ThemeProvider } from "@mui/material";
 import { theme } from "./lib/theme";
 import CartContextProvider from "./contexts/cart/cartContextProvider";
@@ -8,6 +9,9 @@ import Customize from "@/app/(client)/components/customize";
 import Newsletter from "@/app/(client)/components/newsletter";
 import Footer from "@/app/(client)/components/footer";
 import { ToastProvider } from "./lib/toastProvider";
+import { Providers } from "../admin/Provider";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor } from "../admin/redux/features/store";
 
 export default function ClientLayout({
   children,
@@ -19,7 +23,11 @@ export default function ClientLayout({
       <ThemeProvider theme={theme}>
         <Box>
           <Nav />
-          {children}
+          <Providers>
+            <PersistGate loading={null} persistor={persistor}>
+              {children}
+            </PersistGate>
+          </Providers>
           <Customize />
           <Newsletter />
           <Footer />

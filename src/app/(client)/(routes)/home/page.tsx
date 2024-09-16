@@ -30,12 +30,11 @@ const Home = ({ searchParams }: { searchParams: { affiliate: string } }) => {
   const [updateClickCount, { isLoading, isSuccess, error }] =
     useUpdateClickCountMutation();
 
-
   useEffect(() => {
     const getClickCount = localStorage.getItem("affiliate");
 
     if (searchParams.affiliate) {
-      if (getClickCount) {
+      if (getClickCount && getClickCount === searchParams.affiliate) {
       } else {
         localStorage.setItem("affiliate", searchParams.affiliate);
 

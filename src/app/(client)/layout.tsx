@@ -24,9 +24,7 @@ export default function ClientLayout({
         <Box>
           <Nav />
           <Providers>
-            <PersistGate loading={null} persistor={persistor}>
               {children}
-            </PersistGate>
           </Providers>
           <Customize />
           <Newsletter />

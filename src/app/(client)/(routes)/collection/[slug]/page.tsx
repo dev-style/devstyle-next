@@ -11,13 +11,16 @@ import Spinner from "@/app/(client)/components/spinner";
 
 import myAxios from "@/app/(client)/lib/axios.config";
 import { ICollection, IGoodie } from "@/app/lib/interfaces";
-
 import "./styles.scss";
-const ScrollToTop = dynamic(() => import("@/app/(client)/lib/scrollToTop"), {
-  ssr: false,
-});
+
 
 const Collection = ({ slug }: { slug: string }) => {
+
+  const ScrollToTop = dynamic(() => import("@/app/(client)/lib/scrollToTop"), {
+    ssr: false,
+  });
+
+
   const [isLoadingCollection, setIsLoadingCollection] = useState(true);
   const [collection, setCollection] = useState<{
     collection: ICollection;

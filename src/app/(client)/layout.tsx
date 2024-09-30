@@ -18,15 +18,14 @@ export default function ClientLayout({
 }: {
   children: React.ReactNode;
 }) {
+  console.log("test")
   return (
     <CartContextProvider>
       <ThemeProvider theme={theme}>
         <Box>
           <Nav />
           <Providers>
-            <PersistGate loading={null} persistor={persistor}>
               {children}
-            </PersistGate>
           </Providers>
           <Customize />
           <Newsletter />

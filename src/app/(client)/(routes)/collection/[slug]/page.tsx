@@ -15,24 +15,25 @@ import { ICollection, IGoodie } from "@/app/lib/interfaces";
 import "./styles.scss";
 
 
-const Collection = ({ slug }: { slug: string }) => {
+const Collection = (slug) => {
 
   const ScrollToTop = dynamic(() => import("@/app/(client)/lib/scrollToTop"), {
     ssr: false,
   });
 
+  console.log("slug", slug);
 
   const [isLoadingCollection, setIsLoadingCollection] = useState(true);
   const [collection, setCollection] = useState<{
     collection: ICollection;
     goodies: IGoodie[];
   }>();
-  let onAllGoodies = slug === "all-goodies";
+  let onAllGoodies = slug.slug === "all-goodies";
 
   useEffect(() => {
     if (!onAllGoodies) {
       myAxios
-        .get("/collection/goodies/" + slug)
+        .get("/collection/goodies/" + slug.slug)
         .then((response) => {
           if (response.status === 200) {
             console.log("response.data.message", response.data.message);
@@ -86,12 +87,12 @@ const Collection = ({ slug }: { slug: string }) => {
           console.log(error);
         });
     }
-  }, [slug, onAllGoodies]);
+  }, [slug.slug, onAllGoodies]);
 
   useEffect(() => {
     if (!onAllGoodies) {
       myAxios
-        .put("/collection/update/views/" + slug)
+        .put("/collection/update/views/" + slug.slug)
         .then((response) => {
           if (response.status === 200) {
             console.log(response.data.message);
@@ -101,7 +102,7 @@ const Collection = ({ slug }: { slug: string }) => {
         })
         .catch((error) => console.log(error));
     }
-  }, [slug, onAllGoodies]);
+  }, [slug.slug, onAllGoodies]);
   console.log(collection);
   return (
     <Box className="collection-wrapper">

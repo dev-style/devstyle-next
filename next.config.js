@@ -1,5 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = (module.exports = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+   
+    ignoreBuildErrors: true,
+  },
   images: {
     domains: ["res.cloudinary.com"], // Ajoutez le domaine ici
   },

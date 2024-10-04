@@ -105,15 +105,15 @@ const Sidebar = () => {
                 ml="15px"
               >
                 <Link href="/" className="block">
-                  <h3 className="text-[25px] font-Poppins uppercase dark:text-white text-black">
-                    ELearning
+                  <h3 className="text-[25px] font-Poppins uppercase  text-black">
+                    DevStyle
                   </h3>
                 </Link>
                 <IconButton
                   onClick={() => setIsCollapsed(!isCollapsed)}
                   className="inline-block"
                 >
-                  <ArrowBackIosIcon className="text-black dark:text-[#ffffffc1]" />
+                  <ArrowBackIosIcon className="text-black " />
                 </IconButton>
               </Box>}
           </MenuItem>

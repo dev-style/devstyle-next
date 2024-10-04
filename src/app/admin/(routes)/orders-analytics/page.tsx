@@ -20,12 +20,7 @@ const page = () => {
             <div className=" bg-white w-full mt-[30px] h-[40vh] shadow-sm mx-auto">
               <OrderAnalytics  />
             </div>
-            <div className="p-5 w-full mx-auto">
-              <h5 className=" text-black text-[20px] font-[400] font-Poppins pb-3">
-                Recent Transactions
-              </h5>
-              <AllInvoices isDashboard={true} />
-            </div>
+           
           </div>
         </div>
       </div>

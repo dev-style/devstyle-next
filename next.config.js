@@ -11,7 +11,14 @@ typescript: {
     ignoreBuildErrors: true,
   },
   images: {
-    domains: ["res.cloudinary.com"], // Ajoutez le domaine ici
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "res.cloudinary.com",
+        port: "",
+      },
+    ],
+    domains: ["res.cloudinary.com"],
   },
 
   env: {

@@ -29,9 +29,19 @@ import {
 } from "@/app/(client)/lib/utils-script";
 import "./styles.scss";
 
+import { z } from "zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ErrorMessage } from "@hookform/error-message";
+import myAxios from "../../lib/axios.config";
+import { toast } from "react-toastify";
+import { IOrderData } from "@/app/lib/interfaces";
+
 const Checkout = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [orderData, setOrderData] = useState<IOrderData>();
   const match900 = useMediaQuery("(max-width:900px)");
+  const match500 = useMediaQuery("(max-width:500px)");
   const { cartDispatch, cartContent } = useContext(CartContext);
   const createData = (
     image: JSX.Element,
@@ -195,13 +205,47 @@ const Checkout = () => {
     return encodeURIComponent(cartDescription);
   };
 
-  useEffect(() => {
-    scrollToTop();
-  }, []);
+  const orderFormSchema = z.object({
+    name: z.string().min(2),
+    email: z.string().email().min(5),
+  });
+
+  type IOrderFormSchema = z.infer<typeof orderFormSchema>;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IOrderFormSchema>({ resolver: zodResolver(orderFormSchema) });
+
+  const submit = () => {};
+
+  const propertiesToSelect = ["name", "price", "quantity", "total"];
+
+  const goodies = Object.values(cartContent).map(
+    (child: Record<string, any>) => {
+      const selectedProperty: Record<string, string | number> = {};
+
+      const total = child.price * child.quantity;
+
+      propertiesToSelect.forEach((property) => {
+        selectedProperty["total"] = total;
+        if (child.hasOwnProperty(property)) {
+          selectedProperty[property] = child[property];
+        }
+      });
+      return selectedProperty;
+    }
+  );
 
   return (
     <Fragment>
-      <Box className="checkout-wrapper" paddingX={match900 ? 2 : 12}>
+      <Box
+        className="checkout-wrapper"
+        paddingX={match900 ? 2 : 12}
+        marginX={"auto"}
+        maxWidth={!match900 ? "80%" : "100%"}
+      >
         <Typography
           className="title"
           style={{ fontSize: match900 ? "30px" : "40px" }}
@@ -289,6 +333,25 @@ const Checkout = () => {
             </Table>
           </TableContainer>
         </Box>
+
+        <Button
+          type="submit"
+          className="button mx-auto "
+          style={{ backgroundColor: "#220F00", color: "white" }}
+          onClick={() =>
+            getTotalPrice(cartContent) ? setModalOpen(true) : null
+          }
+        >
+          Commander(
+          <Image
+            src={"/assets/icons/whatsapp-green.png"}
+            alt="whatsapp"
+            width={18}
+            height={18}
+          />
+          )
+        </Button>
+
         <Box
           display={"flex"}
           justifyContent="space-between"
@@ -304,27 +367,13 @@ const Checkout = () => {
             {getTotalPrice(cartContent) ?? 0} FCFA
           </Typography>
         </Box>
-        <Button
-          className="button"
-          style={{ backgroundColor: "#220F00", color: "white" }}
-          onClick={() =>
-            getTotalPrice(cartContent) ? setModalOpen(true) : null
-          }
-        >
-          Commander(
-          <Image
-            src={"/assets/icons/whatsapp-green.png"}
-            alt="whatsapp"
-            width={18}
-            height={18}
-          />
-          )
-        </Button>
       </Box>
       <OrderModal
+        goodie={goodies}
         open={modalOpen}
         handleClose={() => setModalOpen(false)}
         message={() => _devstyle()}
+        // order={orderData}
       />
     </Fragment>
   );

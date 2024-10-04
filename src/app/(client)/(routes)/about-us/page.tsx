@@ -11,9 +11,66 @@ const ScrollToTop = dynamic(() => import("@/app/(client)/lib/scrollToTop"), {
 });
 // import { analyticsEventTracker } from "../app";
 export const metadata: Metadata = {
-  title: "À propos de _DevStyle",
+  title:
+    "À propos de _DevStyle | La premiere boutique dedié aux amoureux de la Tech #TT237 Cameroun",
   description:
     "Tout comme vous nous sommes Developpeurs </> et passionnés de Tech💙 --- #ForDevelopersByDevelopers",
+  keywords: [
+    "devstyle",
+    "developer",
+    "developpeur",
+    "cameroon",
+    "cameroun",
+    "douala",
+    "boutique",
+    "tshirt",
+    "hoodie",
+    "sticker",
+    "pulles",
+    "chapeau",
+    "boutique",
+    "mug",
+    "hat",
+    "sweatshirt",
+    "polo",
+  ],
+  openGraph: {
+    title:
+      "À propos de _DevStyle | La premiere boutique dedié aux amoureux de la Tech #TT237 Cameroun",
+    description:
+      "Tout comme vous nous sommes Developpeurs </> et passionnés de Tech💙 --- #ForDevelopersByDevelopers",
+    type: "website",
+    locale: "fr_FR",
+    alternateLocale: ["en_US"],
+    url: "https://dev-style.com/about-us",
+    siteName: "_DevStyle",
+    countryName: "Cameroun",
+    images: [
+      {
+        url: "https://dev-style.com/assets/images/metadata/devstyle team.jpg",
+        width: 1280,
+        height: 720,
+        alt: "À propos de _DevStyle",
+      },
+    ],
+  },
+  twitter: {
+    site: "https://dev-style.com/about-us",
+    creator: "@_devstyle",
+    description:
+      "Tout comme vous nous sommes Developpeurs </> et passionnés de Tech💙 --- #ForDevelopersByDevelopers",
+    title:
+      "À propos de _DevStyle | La premiere boutique dedié aux amoureux de la Tech #TT237 Cameroun",
+    images: [
+      {
+        url: "https://dev-style.com/assets/images/metadata/devstyle team.jpg",
+        width: 1280,
+        height: 720,
+        alt: "À propos de _DevStyle",
+      },
+    ],
+    card: "summary_large_image",
+  },
 };
 
 const About = () => {

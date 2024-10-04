@@ -2,8 +2,8 @@
 import React from 'react'
 import AdminSidebar from "../../../components/sidebar/AdminSidebar"
 import DashboardHeader from '@/app/admin/components/DashboardHeader';
-import EditGoodie from '@/app/admin/components/Goodie/EditGoodie';
 import Protected from '@/app/admin/hooks/adminProtected';
+import EditOrder from '@/app/admin/components/Order/EditOrder';
 
 type Props = {}
 
@@ -21,7 +21,8 @@ const page = ({params}:any) => {
             </div>
             <div className="w-[85%]">
                <DashboardHeader />
-                <EditGoodie id={id} />
+                <EditOrder
+                 id={id} />
                 
             </div>
         </div>

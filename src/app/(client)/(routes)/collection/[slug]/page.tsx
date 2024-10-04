@@ -14,26 +14,22 @@ import myAxios from "@/app/(client)/lib/axios.config";
 import { ICollection, IGoodie } from "@/app/lib/interfaces";
 import "./styles.scss";
 
-
-const Collection = (slug) => {
-
-  const ScrollToTop = dynamic(() => import("@/app/(client)/lib/scrollToTop"), {
-    ssr: false,
-  });
-
-  console.log("slug", slug);
-
+const Collection = (props: any) => {
   const [isLoadingCollection, setIsLoadingCollection] = useState(true);
   const [collection, setCollection] = useState<{
     collection: ICollection;
     goodies: IGoodie[];
   }>();
-  let onAllGoodies = slug.slug === "all-goodies";
+  let onAllGoodies = props.slug === "all-goodies";
+
+  const ScrollToTop = dynamic(() => import("@/app/(client)/lib/scrollToTop"), {
+    ssr: false,
+  });
 
   useEffect(() => {
     if (!onAllGoodies) {
       myAxios
-        .get("/collection/goodies/" + slug.slug)
+        .get("/collection/goodies/" + props.slug)
         .then((response) => {
           if (response.status === 200) {
             console.log("response.data.message", response.data.message);
@@ -87,12 +83,12 @@ const Collection = (slug) => {
           console.log(error);
         });
     }
-  }, [slug.slug, onAllGoodies]);
+  }, [props.slug, onAllGoodies]);
 
   useEffect(() => {
     if (!onAllGoodies) {
       myAxios
-        .put("/collection/update/views/" + slug.slug)
+        .put("/collection/update/views/" + props.slug)
         .then((response) => {
           if (response.status === 200) {
             console.log(response.data.message);
@@ -102,7 +98,7 @@ const Collection = (slug) => {
         })
         .catch((error) => console.log(error));
     }
-  }, [slug.slug, onAllGoodies]);
+  }, [props.slug, onAllGoodies]);
   console.log(collection);
   return (
     <Box className="collection-wrapper">

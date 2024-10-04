@@ -5,7 +5,7 @@ const AmbassadorCardSkeleton = () => {
   return (
     <Box display={"flex"} flexDirection={"column"} alignItems={"center"}>
       <Skeleton
-        variant="retangular"
+        variant="rectangular"
         animation="wave"
         height={325}
         width={285}

@@ -1,4 +1,3 @@
-
 export interface ICart {
   [key: string]: IGoodieForCart;
 }
@@ -96,4 +95,12 @@ export interface IUser {
   name: string;
   email: string;
   authToken?: string;
+}
+
+export interface IOrderData {
+  goodies: Record<string, string | number>[];
+  email: string;
+  number?: number;
+  status: string;
+  name: string;
 }

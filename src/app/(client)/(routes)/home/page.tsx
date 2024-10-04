@@ -171,8 +171,9 @@ const Home = ({ searchParams }: { searchParams: { affiliate: string } }) => {
           console.log("response.data.message", response.data.message);
 
           setNewGoodies(response.data.message);
+          console.log("Voici les nouveaux goodie", response.data.message);
         } else {
-          console.log(response.data.message);
+          console.log("Voici les nouveaux goodie", response.data.message);
           setNewGoodies([]);
         }
       })
@@ -184,13 +185,14 @@ const Home = ({ searchParams }: { searchParams: { affiliate: string } }) => {
     myAxios
       .get("/hero/all")
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === 201) {
           setHeroSection((prevState) => [
             ...prevState,
             ...response.data.message,
           ]);
+          console.log("hero",response.data.message);
         } else {
-          console.log(response.data.message);
+          console.log("hero",response.data.message);
           setHeroSection((prevState) => [...prevState]);
         }
       })
@@ -415,6 +417,8 @@ const Home = ({ searchParams }: { searchParams: { affiliate: string } }) => {
             </Box>
           </Grid>
           <Grid item xs={12} md={6} className="image-side">
+            {/* Hero section here  */}
+
             {heroSection.length < 1 ? (
               <Box
                 height={"100%"}
@@ -436,9 +440,7 @@ const Home = ({ searchParams }: { searchParams: { affiliate: string } }) => {
                 <img
                   id="hero-image"
                   className="animate__faster"
-                  src={
-                    "/assets/images/hero/" +
-                    heroSection[heroImageIndex].image.url
+                  src={heroSection[heroImageIndex].image.url
                   }
                   alt="devstyle hero"
                   style={{

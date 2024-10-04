@@ -5,7 +5,7 @@ export default function UserAuth() {
 
   console.log("voici la valeur de l'user : ", user);
 
-  if (user) {
+  if (user.name) {
     return true;
   } else {
     return false;

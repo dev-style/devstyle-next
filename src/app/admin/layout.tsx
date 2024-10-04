@@ -9,6 +9,7 @@ import { persistor } from "./redux/features/store";
 import { PersistGate } from "redux-persist/integration/react";
 
 import socketIO from "socket.io-client";
+import Loader from "./components/Loader/Loader";
 const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || "";
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
       <PersistGate loading={null} persistor={persistor}>
         <SessionProvider>
           <Custom>
+
             <div>
               {children}
             </div>
@@ -43,7 +45,7 @@ const Custom: FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div>
       {isLoading
-        ? <div>Loading</div>
+        ? <Loader/>
         : <div>
             {children}{" "}
           </div>}

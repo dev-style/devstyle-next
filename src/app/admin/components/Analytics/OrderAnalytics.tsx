@@ -9,12 +9,12 @@ import {
 } from "recharts";
 import { styles } from "../../styles/style";
 import Loader from "../Loader/Loader";
-import { useGetGoodiesAnalyticsQuery } from "../../redux/features/analytics/analyticsApi";
+import { useGetOrdersAnalyticsQuery } from "../../redux/features/analytics/analyticsApi";
 
 type Props = {};
 
-const GoodieAnalytics = (props: Props) => {
-  const { data, isLoading } = useGetGoodiesAnalyticsQuery({});
+const OrderAnalytics = (props: Props) => {
+  const { data, isLoading } = useGetOrdersAnalyticsQuery({});
 
   const analyticsData: any = [];
 
@@ -60,4 +60,4 @@ const GoodieAnalytics = (props: Props) => {
   );
 };
 
-export default GoodieAnalytics;
+export default OrderAnalytics;

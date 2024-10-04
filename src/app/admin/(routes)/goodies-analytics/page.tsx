@@ -1,7 +1,7 @@
 "use client";
 
+import GoodieAnalytics from "../../components/Analytics/GoodieAnalytics";
 import DashboardHeader from "../../components/DashboardHeader";
-import AllGoodies from "../../components/Goodie/AllGoodie";
 import AdminSidebar from "../../components/sidebar/AdminSidebar";
 import Protected from "../../hooks/adminProtected";
 
@@ -18,7 +18,7 @@ const page = (props: Props) => {
           <div className="w-[85%]">
             <DashboardHeader />
 
-            <AllGoodies />
+            <GoodieAnalytics />
           </div>
         </div>
       </div>

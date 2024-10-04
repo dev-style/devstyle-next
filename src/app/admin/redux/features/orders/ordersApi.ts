@@ -1,48 +1,30 @@
-import { apiSlice } from '../api/apiSlice'
+import { apiSlice } from "../api/apiSlice";
 
-export const ordersApi = apiSlice.injectEndpoints({
-    endpoints: (builder) => ({
-        getAllOrders: builder.query({
-            query: (type) => ({
-                url: `get-orders`,
-                method: 'GET',
-                credentials: 'include' as const,
-            }),
-        }),
-        getStripePublishablekey: builder.query({
-            query: () => ({
-                url: `payment/stripepublishablekey`,
-                method: 'GET',
-                credentials: 'include' as const,
-            }),
-        }),
-        createPaymentIntent: builder.mutation({
-            query: (amount) => ({
-                url: 'payment',
-                method: 'POST',
-                body: {
-                    amount,
-                },
-                credentials: 'include' as const,
-            }),
-        }),
-        createOrder: builder.mutation({
-            query: ({ courseId, payment_info }) => ({
-                url: 'create-order',
-                body: {
-                    courseId,
-                    payment_info,
-                },
-                method: 'POST',
-                credentials: 'include' as const,
-            }),
-        }),
+export const orderApi = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    getAllOrders: builder.query({
+      query: () => ({
+        url: "order/all",
+        method: "GET",
+        credentials: "include" as const
+      })
     }),
-})
+    editOrder: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `order/update/${id}`,
+        method: "PUT",
+        body:data,
+        credentials: "include" as const
+      })
+    }),
+    deleteOrder: builder.mutation({
+      query: (id) => ({
+        url: `order/delete/${id}`,
+        method: "DELETE",
+        credentials: "include" as const
+      })
+    })
+  })
+});
 
-export const {
-    useGetAllOrdersQuery,
-    useGetStripePublishablekeyQuery,
-    useCreatePaymentIntentMutation,
-    useCreateOrderMutation,
-} = ordersApi
+export const {useEditOrderMutation, useGetAllOrdersQuery, useDeleteOrderMutation } = orderApi;

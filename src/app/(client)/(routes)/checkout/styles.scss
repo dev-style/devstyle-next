@@ -31,4 +31,33 @@
     text-transform: initial;
     margin: 96px auto;
   }
+
+  .order-form {
+    display: flex;
+    justify-content: center;
+
+    flex-direction: column;
+    padding: 0px 10px;
+    width: 100%;
+
+    // background-color: blue;
+
+    .orer-form-item {
+      display: flex;
+      flex-direction: column;
+
+      gap: 10px;
+
+      .input-item {
+        padding: 40px 0px;
+        border: 1px solid #220f0063;
+
+        border-radius: 5px;
+
+        width: 100%;
+        outline: none;
+        padding: 5px;
+      }
+    }
+  }
 }

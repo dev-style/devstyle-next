@@ -1,5 +1,3 @@
-import Loader from "@/app/components/Loader/Loader";
-import { useGetOrdersAnalyticsQuery } from "../../redux/features/analytics/analyticsApi";
 import React, { useEffect } from "react";
 import {
   LineChart,
@@ -11,14 +9,47 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import Loader from "../Loader/Loader";
 import { styles } from "../../styles/style";
+import { useGetOrdersAnalyticsQuery } from "../../redux/features/analytics/analyticsApi";
+
+// const analyticsData = [
+//   {
+//     name: "Page A",
+//     Count: 4000,
+//   },
+//   {
+//     name: "Page B",
+//     Count: 3000,
+//   },
+//   {
+//     name: "Page C",
+//     Count: 5000,
+//   },
+//   {
+//     name: "Page D",
+//     Count: 1000,
+//   },
+//   {
+//     name: "Page E",
+//     Count: 4000,
+//   },
+//   {
+//     name: "Page F",
+//     Count: 800,
+//   },
+//   {
+//     name: "Page G",
+//     Count: 200,
+//   },
+// ];
 
 type Props = {
   isDashboard?: boolean;
 };
 
 export default function OrdersAnalytics({ isDashboard }: Props) {
-  const { data, isLoading } = useGetOrdersAnalyticsQuery({});
+  const {data, isLoading } = useGetOrdersAnalyticsQuery({});
 
   const analyticsData: any = [];
 
@@ -28,7 +59,10 @@ export default function OrdersAnalytics({ isDashboard }: Props) {
     });
 
   return (
-
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
         <div className={isDashboard ? "h-[30vh]" : "h-screen"}>
           <div
             className={isDashboard ? "mt-[0px] pl-[40px] mb-2" : "mt-[50px]"}
@@ -76,7 +110,7 @@ export default function OrdersAnalytics({ isDashboard }: Props) {
             </ResponsiveContainer>
           </div>
         </div>
-      
-    
+      )}
+    </>
   );
 }

@@ -16,6 +16,7 @@ import {
   DeleteOutlineRounded,
   Close,
   HorizontalSplitOutlined,
+  ChevronRightRounded,
 } from "@mui/icons-material";
 
 import CartContext from "../contexts/cart/cartContext";
@@ -28,6 +29,7 @@ import {
   calculatePromoPrice,
 } from "@/app/(client)/lib/utils-script";
 import { IAnnouncement, ICart } from "@/app/lib/interfaces";
+import SearchBar from "./searchBar";
 
 const Nav = () => {
   const theme = useTheme();
@@ -36,6 +38,8 @@ const Nav = () => {
   const match400 = useMediaQuery("(min-width:400px)");
 
   const [announce, setAnnounce] = useState<IAnnouncement>();
+
+  const [collections, setCollections] = useState([]);
 
   const { cartContent: cart, cartDispatch } = useContext(CartContext);
   const handleSideNav = () => {
@@ -60,6 +64,20 @@ const Nav = () => {
           setAnnounce(response.data.message);
         } else {
           console.log(response.data.message);
+        }
+      })
+      .catch((error: any) => console.log(error));
+  }, []);
+
+  useEffect(() => {
+    myAxios
+      .get("/collection/all")
+      .then((response: any) => {
+        if (response.status == 200) {
+          console.log("Here is my collections", response.data.message);
+          setCollections(response.data.message);
+        } else {
+          console.log(response.data.messge);
         }
       })
       .catch((error: any) => console.log(error));
@@ -193,26 +211,30 @@ const Nav = () => {
           </Box>
         ) : null}
         <Box className="right-actions">
+          <SearchBar collections = {collections} />
+
           {!matches ? (
-            <Button
-              className="custom-goodies-buttom"
-              onClick={() => {
-                try {
-                  // analyticsEventTracker("CUSTOM GOODIE")(
-                  //   "go to custom goodie section"
-                  // );
-                  if (document.querySelector("#custom-section")) {
-                    document
-                      .querySelector("#custom-section")
-                      ?.scrollIntoView(true);
+            <>
+              <Button
+                className="custom-goodies-buttom"
+                onClick={() => {
+                  try {
+                    // analyticsEventTracker("CUSTOM GOODIE")(
+                    //   "go to custom goodie section"
+                    // );
+                    if (document.querySelector("#custom-section")) {
+                      document
+                        .querySelector("#custom-section")
+                        ?.scrollIntoView(true);
+                    }
+                  } catch (error) {
+                    console.log(error);
                   }
-                } catch (error) {
-                  console.log(error);
-                }
-              }}
-            >
-              Goodies customisé
-            </Button>
+                }}
+              >
+                Goodies customisé
+              </Button>
+            </>
           ) : (
             <IconButton onClick={() => handleDownNav()}>
               <HorizontalSplitOutlined fontSize="large" color="primary" />
@@ -239,9 +261,7 @@ const Nav = () => {
               <Typography className="text">{announce.text}</Typography>
               {announce.link && (
                 <Box className="icon">
-                  <Icon baseClassName="material-icons-round" color="warning">
-                    chevron_right
-                  </Icon>
+                  <ChevronRightRounded color="warning" />
                 </Box>
               )}
             </Typography>

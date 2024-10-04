@@ -43,7 +43,7 @@ import "./styles.scss";
 import Image from "next/image";
 import Spinner from "@/app/(client)/components/spinner";
 
-const Goodie = (slug) => {
+const Goodie = (props: any) => {
   const { cartDispatch } = useContext(CartContext);
   const match700 = useMediaQuery("(max-width:700px)");
   const match900 = useMediaQuery("(max-width:900px)");
@@ -95,9 +95,9 @@ const Goodie = (slug) => {
 
   useEffect(() => {
     myAxios
-      .get("/goodie/" + slug.slug)
+      .get("/goodie/" + props.slug)
       .then((response) => {
-        console.log(response.data);
+        console.log("Le goodieee", response.data);
         if (response.status === 200) {
           setGoodie({
             ...response.data.message,
@@ -140,11 +140,11 @@ const Goodie = (slug) => {
         });
         console.log(error);
       });
-  }, [slug.slug]);
+  }, [props.slug]);
 
   useEffect(() => {
     myAxios
-      .put("/goodie/update/views/" + slug.slug)
+      .put("/goodie/update/views/" + props.slug)
       .then((response) => {
         if (response.status === 200) {
           // console.log(response.data.message);
@@ -153,7 +153,7 @@ const Goodie = (slug) => {
         }
       })
       .catch((error) => console.log(error));
-  }, [slug.slug]);
+  }, [props.slug]);
 
   const _devstyle = () => {
     if (goodie?._id) {
@@ -208,7 +208,7 @@ const Goodie = (slug) => {
     setIsLiking(true);
     setHasLiked(false);
     myAxios
-      .put("/goodie/update/likes/" + slug.slug)
+      .put("/goodie/update/likes/" + props.slug)
       .then((response) => {
         if (response.status === 200) {
           // console.log(response.data.message);
@@ -249,6 +249,21 @@ const Goodie = (slug) => {
       }, 2500);
     }
   }, [isCopied]);
+
+  const propertiesToSelect = ["name", "price", "quantity", "total"];
+
+
+
+  const goodies = [
+    {
+      name: goodie?.name,
+      price: goodie?.price,
+      quantity: goodie?.quantity,
+      total: goodie? ( goodie.price || 0) * (goodie?.quantity || 0) :0
+    }
+  ];
+
+  console.log(goodies);
 
   return (
     <React.Fragment>
@@ -786,6 +801,7 @@ const Goodie = (slug) => {
         </Box>
       </Box>
       <OrderModal
+        goodie={goodies}
         open={modalOpen}
         handleClose={() => setModalOpen(false)}
         message={() => _devstyle()}

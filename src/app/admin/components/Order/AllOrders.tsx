@@ -56,7 +56,7 @@ const AllOrders = (prop: Props) => {
         return (
           <>
             <Link href={`/admin/edit-order/${params.row.id}`}>
-              <FiEdit2 className="dark:text-white text-black" size={20} />
+              <FiEdit2 className=" text-black" size={20} />
             </Link>
           </>
         );
@@ -77,7 +77,7 @@ const AllOrders = (prop: Props) => {
               }}
             >
               <AiOutlineDelete
-                className="dark:text-white text-black"
+                className=" text-black"
                 size={20}
               />
             </Button>

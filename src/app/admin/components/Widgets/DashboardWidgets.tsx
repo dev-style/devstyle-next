@@ -49,6 +49,8 @@ const DashboardWidgets: FC<Props> = ({ open }: any) => {
   const { data: ordersData, isLoading: ordersLoading } =
     useGetOrdersAnalyticsQuery({});
 
+    console.log("ordersData",ordersData)
+
   useEffect(() => {
     if (isLoading && ordersLoading) {
       return;

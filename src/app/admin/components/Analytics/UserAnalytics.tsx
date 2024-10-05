@@ -8,8 +8,8 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import Loader from "@/app/components/Loader/Loader";
 import { styles } from "../../styles/style";
+import Loader from "../Loader/Loader";
 
 type Props = {
   isDashboard?: boolean;
@@ -17,6 +17,8 @@ type Props = {
 
 const UserAnalytics = ({ isDashboard }: Props) => {
   const { data, isLoading } = useGetUsersAnalyticsQuery({});
+
+  console.log("data user",data)
 
   const analyticsData: any = [];
 

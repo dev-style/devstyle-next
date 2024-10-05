@@ -16,6 +16,8 @@ type Props = {};
 const OrderAnalytics = (props: Props) => {
   const { data, isLoading } = useGetOrdersAnalyticsQuery({});
 
+  console.log("data order",data)
+
   const analyticsData: any = [];
 
   data &&

@@ -6,23 +6,41 @@ import {
   ResponsiveContainer,
   XAxis,
   YAxis,
+  AreaChart,
+  Area,
+  Tooltip,
 } from "recharts";
 import { styles } from "../../styles/style";
 import Loader from "../Loader/Loader";
-import { useGetOrdersAnalyticsQuery } from "../../redux/features/analytics/analyticsApi";
+import {
+  useGetOrdersAnalyticsQuery,
+  useGetUsersAnalyticsQuery,
+} from "../../redux/features/analytics/analyticsApi";
 
-type Props = {};
+type Props = {
+  isCollapsed: boolean;
+};
 
-const OrderAnalytics = (props: Props) => {
+const OrderAnalytics = ({ isCollapsed }: Props) => {
   const { data, isLoading } = useGetOrdersAnalyticsQuery({});
+  const { data: userData, isLoading: loadingff } = useGetUsersAnalyticsQuery(
+    {}
+  );
 
-  console.log("data order",data)
+  console.log("isCollapsed", isCollapsed);
 
-  const analyticsData: any = [];
+  console.log("data order", data);
+
+  const analyticsDataFirst: any = [];
+  const analyticsDataSecond: any = [];
 
   data &&
     data.message.last12Months.forEach((item: any) => {
-      analyticsData.push({ name: item.month, uv: item.count });
+      analyticsDataFirst.push({ name: item.month, uv: item.count });
+    });
+  data &&
+    data.message.last12Months.forEach((item: any) => {
+      analyticsDataSecond.push({ name: item.month, count: item.count });
     });
 
   const minValue = 0;
@@ -35,7 +53,7 @@ const OrderAnalytics = (props: Props) => {
         <div className="h-screen ">
           <div className="mt-[50px]">
             <h1 className={`${styles.title} px-5 !text-start font-bold`}>
-              Goodie Analytics
+              Order Analytics
             </h1>
             <p className={`${styles.label} px-5 `}>
               {" "}
@@ -43,18 +61,47 @@ const OrderAnalytics = (props: Props) => {
             </p>
           </div>
 
-          <div className="w-full h-[90%] flex items-center justify-center">
-            <ResponsiveContainer width="90%" height="50%">
-              <BarChart width={150} height={300} data={analyticsData}>
-                <XAxis dataKey="name">
-                  <Label offset={0} position="insideBottom" />
-                </XAxis>
-                <YAxis domain={[minValue, "auto"]} />
-                <Bar dataKey="uv" fill="#3faf82">
-                  <LabelList dataKey="uv" position="top" />
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
+          <div className="flex h-[90%] mt-[50px] gap-y-5 flex-col md:flex-row justify-start items-center md:items-start">
+            <div className=" p-8 w-1/2 h-1/2   ">
+              <div className="w-full  h-full flex items-center justify-center">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart width={150} height={300} data={analyticsDataFirst}>
+                    <XAxis dataKey="name">
+                      <Label offset={0} position="insideBottom" />
+                    </XAxis>
+                    <YAxis domain={[minValue, "auto"]} />
+                    <Bar dataKey="uv" fill="#3faf82">
+                      <LabelList dataKey="uv" position="top" />
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+            <div className="p-8 w-1/2 h-1/2  ">
+              <div className="w-full  h-full flex items-center justify-center">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart
+                    data={analyticsDataSecond}
+                    margin={{
+                      top: 20,
+                      right: 30,
+                      left: 0,
+                      bottom: 0,
+                    }}
+                  >
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Area
+                      type="monotone"
+                      dataKey="count"
+                      stroke="#4d62d9"
+                      fill="#4d62d9"
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </div>{" "}
           </div>
         </div>
       )}

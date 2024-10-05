@@ -21,7 +21,6 @@ import {
   GroupsIcon,
 } from "./Icon";
 
-
 import { useSelector } from "react-redux";
 import Link from "next/link";
 import Image from "next/image";
@@ -49,13 +48,16 @@ const Item: FC<itemProps> = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = () => {
+type IChangeCollapsedValue = {
+  changeCollapsedValue?: () => void;
+};
+
+const Sidebar = ({ changeCollapsedValue }: IChangeCollapsedValue) => {
   const { user } = useSelector((state: any) => state.auth);
   const [logout, setlogout] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   const [mounted, setMounted] = useState(false);
-
 
   // const {data, isLoading , refetch} = useLogOutQuery({})
 
@@ -64,7 +66,6 @@ const Sidebar = () => {
   const {} = useLogOutQuery(undefined, {
     skip: !logout ? true : false,
   });
-
 
   useEffect(() => setMounted(true), []);
 
@@ -76,6 +77,12 @@ const Sidebar = () => {
     setlogout(true);
     // refetch()
     persistor.purge();
+  };
+
+  const updateCollapsed = () => {
+    setIsCollapsed(!isCollapsed);
+
+    changeCollapsedValue && changeCollapsedValue();
   };
 
   return (
@@ -115,7 +122,7 @@ const Sidebar = () => {
       >
         <Menu iconShape="square">
           <MenuItem
-            onClick={() => setIsCollapsed(!isCollapsed)}
+            onClick={updateCollapsed}
             icon={isCollapsed ? <ArrowForwardIosIcon /> : undefined}
             style={{
               margin: "10px 0 20px 0",
@@ -129,7 +136,7 @@ const Sidebar = () => {
                 ml="15px"
               >
                 <Link href="/" className="block">
-                  <h3 className="text-[25px] font-Poppins uppercase dark:text-white text-black">
+                  <h3 className="text-[25px] font-Poppins uppercase  text-black">
                     DevStyle
                   </h3>
                 </Link>
@@ -194,13 +201,11 @@ const Sidebar = () => {
               {!isCollapsed && "Data"}
             </Typography>
 
-
             <SubMenu
               title={!isCollapsed ? "GOODIES" : ""}
               icon={<GroupsIcon />}
               selected={selected}
               setSelected={setSelected}
-
             >
               <Item
                 title="Create goodie"
@@ -223,7 +228,6 @@ const Sidebar = () => {
               icon={<GroupsIcon />}
               selected={selected}
               setSelected={setSelected}
-
             >
               <Item
                 title="List Orders"
@@ -241,7 +245,7 @@ const Sidebar = () => {
             >
               {!isCollapsed && "Analytics"}
             </Typography>
-            
+
             <Item
               title="goodies Analytics"
               to="/admin/goodies-analytics"

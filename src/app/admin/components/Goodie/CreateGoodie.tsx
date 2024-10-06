@@ -330,7 +330,7 @@ const CreateGoodie = (props: Props) => {
           <br />
 
           <div className="w-full">
-            <input
+          <input
               type="file"
               accept="image/*"
               id="file"
@@ -340,28 +340,28 @@ const CreateGoodie = (props: Props) => {
             />
             <label
               htmlFor="file"
-              className={`w-full min-h-[10vh] dark:border-white border-[#00000026] p-3 border flex items-center justify-center ${
-                dragging ? "bg-blue-500" : "bg-transparent"
-              }`}
+              className={`w-full min-h-[10vh] dark:border-white border-[#00000026] p-3 border flex items-center justify-center ${dragging
+                ? "bg-blue-500"
+                : "bg-transparent"}`}
             >
               <span className="text-black dark:text-white">
                 Drag and drop your thumbnail here or click to browse
               </span>
             </label>
 
-            {goodieInfo.images.map((image, index) => (
+            {goodieInfo.images.map((image, index) =>
               <div key={index} className="mt-5">
                 <img
-                  src={image.url}
-                  alt={`Image ${image.url}`}
+                  src={image}
+                  alt={`Image ${image}`}
                   style={{
                     width: "100%",
                     height: "200px",
-                    objectFit: "contain",
+                    objectFit: "contain"
                   }}
                 />
               </div>
-            ))}
+            )}
           </div>
 
           <br />
